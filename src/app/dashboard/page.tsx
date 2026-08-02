@@ -1,8 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { supabase } from "@/lib/supabase";
 import {
   ShieldCheck,
   LayoutGrid,
@@ -37,6 +39,10 @@ import {
 type NavItem = "overview" | "applications" | "eligibility" | "history" | "settings";
 
 export default function DashboardPage() {
+  const router = useRouter();
+  const [user, setUser] = useState<any>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
   const [activeNav, setActiveNav] = useState<NavItem>("overview");
   const [isNewAppModalOpen, setIsNewAppModalOpen] = useState(false);
   const [appSubmitted, setAppSubmitted] = useState(false);
@@ -44,6 +50,34 @@ export default function DashboardPage() {
   // New Application Form State
   const [formCategory, setFormCategory] = useState("BLT Sembako");
   const [formNotes, setFormNotes] = useState("");
+
+  useEffect(() => {
+    const checkUser = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        router.push("/login");
+      } else {
+        setUser(session.user);
+      }
+      setIsLoading(false);
+    };
+
+    checkUser();
+
+    const { data: authListener } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        if (event === "SIGNED_OUT") {
+          router.push("/login");
+        } else if (session) {
+          setUser(session.user);
+        }
+      }
+    );
+
+    return () => {
+      authListener.subscription.unsubscribe();
+    };
+  }, [router]);
 
   const handleCreateApp = (e: React.FormEvent) => {
     e.preventDefault();
@@ -113,8 +147,8 @@ export default function DashboardPage() {
                 <span className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-emerald-500 ring-2 ring-white"></span>
               </div>
               <div className="hidden sm:block text-left">
-                <div className="font-bold text-sm text-on-surface leading-tight">Sarah Suharti</div>
-                <div className="text-[11px] text-on-surface-variant">Warga Terverifikasi • RT 04</div>
+                <div className="font-bold text-sm text-on-surface leading-tight">{user?.email?.split('@')[0] || 'Warga'}</div>
+                <div className="text-[11px] text-on-surface-variant">{user?.email}</div>
               </div>
             </div>
           </div>
@@ -190,6 +224,14 @@ export default function DashboardPage() {
                 <Settings className="w-4.5 h-4.5" />
                 <span>Pengaturan Akun</span>
               </button>
+
+              <button
+                onClick={async () => await supabase.auth.signOut()}
+                className="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-sm transition-all text-rose-600 hover:bg-rose-50 mt-2"
+              >
+                <User className="w-4.5 h-4.5" />
+                <span>Keluar Akun</span>
+              </button>
             </nav>
 
             <button
@@ -210,7 +252,7 @@ export default function DashboardPage() {
                   <Sparkles className="w-4 h-4 text-[#2563eb]" /> DASHBOARD UTAMA WARGA
                 </div>
                 <h1 className="text-2xl md:text-[32px] font-extrabold font-display text-on-surface tracking-tight mb-2">
-                  Selamat Pagi, Sarah
+                  Selamat Pagi, {user?.email?.split('@')[0] || 'Warga'}
                 </h1>
                 <div className="flex items-center gap-3 text-xs text-on-surface-variant">
                   <span>Profil warga Anda <strong>85% lengkap</strong>.</span>

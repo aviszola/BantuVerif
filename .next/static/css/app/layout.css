@@ -2868,4 +2868,16 @@ h1, h2, h3, h4, h5, h6 {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
-  .l
+  .lg\:grid-cols-\[300px_1fr\]{
+    grid-template-columns: 300px 1fr;
+  }
+
+  .lg\:grid-cols-12{
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+
+  .lg\:justify-end{
+    justify-content: flex-end;
+  }
+}
+
