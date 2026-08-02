@@ -2,6 +2,8 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { supabase } from "@/lib/supabase";
 import {
   ShieldCheck,
   ArrowRight,
@@ -16,31 +18,59 @@ import {
 } from "lucide-react";
 
 export default function LoginPage() {
+  const router = useRouter();
   const [mode, setMode] = useState<"login" | "register">("login");
   const [step, setStep] = useState<"input" | "otp">("input");
   const [identifier, setIdentifier] = useState("");
   const [otpCode, setOtpCode] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
-  const handleSubmitIdentifier = (e: React.FormEvent) => {
+  const handleSubmitIdentifier = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!identifier.trim()) return;
+    setErrorMessage("");
     setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
+
+    const { error } = await supabase.auth.signInWithOtp({
+      email: identifier,
+      options: {
+        shouldCreateUser: true,
+      },
+    });
+
+    setIsLoading(false);
+
+    if (error) {
+      setErrorMessage(error.message);
+    } else {
       setStep("otp");
-    }, 600);
+    }
   };
 
-  const handleVerifyOtp = (e: React.FormEvent) => {
+  const handleVerifyOtp = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!otpCode.trim()) return;
+    setErrorMessage("");
     setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
+
+    const { data, error } = await supabase.auth.verifyOtp({
+      email: identifier,
+      token: otpCode,
+      type: "email",
+    });
+
+    setIsLoading(false);
+
+    if (error) {
+      setErrorMessage(error.message);
+    } else if (data?.session) {
       setIsSuccess(true);
-    }, 800);
+      setTimeout(() => {
+        router.push("/dashboard");
+      }, 1500);
+    }
   };
 
   return (
@@ -123,16 +153,17 @@ export default function LoginPage() {
               <form onSubmit={handleSubmitIdentifier} className="space-y-5">
                 <div>
                   <label className="block text-xs font-bold text-on-surface mb-2 uppercase tracking-wider">
-                    {mode === "login" ? "Email atau Nomor Telepon / NIK" : "Nomor HP / NIK Terdaftar"}
+                    Alamat Email
                   </label>
                   <input
-                    type="text"
+                    type="email"
                     required
                     value={identifier}
                     onChange={(e) => setIdentifier(e.target.value)}
-                    placeholder="e.g. nama@contoh.com atau 08123456789"
+                    placeholder="e.g. nama@contoh.com"
                     className="w-full h-12 px-4 rounded-lg bg-[#f2f4f6] border border-transparent text-sm text-on-surface placeholder:text-outline outline-none focus:bg-white focus:border-primary-container focus:ring-2 focus:ring-primary-container/20 transition-all font-medium"
                   />
+                  {errorMessage && <p className="text-[#ba1a1a] text-xs font-semibold mt-2">{errorMessage}</p>}
                 </div>
 
                 <button
@@ -200,10 +231,11 @@ export default function LoginPage() {
                   />
                   <p className="text-[12px] text-on-surface-variant mt-2 text-center">
                     Tidak menerima kode?{" "}
-                    <button type="button" className="text-primary-container font-semibold hover:underline">
+                    <button type="button" onClick={handleSubmitIdentifier} className="text-primary-container font-semibold hover:underline">
                       Kirim Ulang OTP
                     </button>
                   </p>
+                  {errorMessage && <p className="text-[#ba1a1a] text-xs font-semibold mt-2 text-center">{errorMessage}</p>}
                 </div>
 
                 <button

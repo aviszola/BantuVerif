@@ -2090,6 +2090,14 @@ h1, h2, h3, h4, h5, h6 {
 .text-white\/85{
   color: rgb(255 255 255 / 0.85);
 }
+.text-\[\#ba1a1a\]{
+  --tw-text-opacity: 1;
+  color: rgb(186 26 26 / var(--tw-text-opacity, 1));
+}
+.text-rose-600{
+  --tw-text-opacity: 1;
+  color: rgb(225 29 72 / var(--tw-text-opacity, 1));
+}
 .no-underline{
   text-decoration-line: none;
 }
@@ -2436,6 +2444,11 @@ h1, h2, h3, h4, h5, h6 {
 
 .hover\:bg-white\/20:hover{
   background-color: rgb(255 255 255 / 0.2);
+}
+
+.hover\:bg-rose-50:hover{
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 241 242 / var(--tw-bg-opacity, 1));
 }
 
 .hover\:text-on-surface:hover{
@@ -2855,16 +2868,4 @@ h1, h2, h3, h4, h5, h6 {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
-  .lg\:grid-cols-\[300px_1fr\]{
-    grid-template-columns: 300px 1fr;
-  }
-
-  .lg\:grid-cols-12{
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-  }
-
-  .lg\:justify-end{
-    justify-content: flex-end;
-  }
-}
-
+  .l
