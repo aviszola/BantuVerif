@@ -28,6 +28,10 @@ import {
   Shield,
   Share2,
   Globe,
+  Sparkles,
+  ChevronRight,
+  AlertCircle,
+  FileCheck2,
 } from "lucide-react";
 
 type NavItem = "overview" | "applications" | "eligibility" | "history" | "settings";
@@ -54,13 +58,13 @@ export default function DashboardPage() {
     <div className="min-h-screen bg-[#f7f9fb] text-[#191c1e] font-body flex flex-col justify-between selection:bg-[#2563eb] selection:text-white">
       {/* Top Navbar */}
       <header className="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-[#e2e8f0]">
-        <div className="max-w-[1280px] mx-auto px-6 h-18 flex items-center justify-between">
+        <div className="max-w-[1280px] mx-auto px-6 h-20 flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2.5 group">
-            <div className="w-9 h-9 bg-primary-container rounded-lg flex items-center justify-center text-white shadow-sm group-hover:scale-105 transition-transform">
-              <ShieldCheck className="w-5 h-5" />
+            <div className="w-10 h-10 bg-primary-container rounded-xl flex items-center justify-center text-white shadow-md shadow-primary-container/20 group-hover:scale-105 transition-transform">
+              <ShieldCheck className="w-6 h-6" />
             </div>
-            <span className="font-display font-extrabold text-xl tracking-tight text-on-surface">
+            <span className="font-display font-extrabold text-2xl tracking-tight text-on-surface">
               Bantu<span className="text-primary-container">Verif</span>
             </span>
           </Link>
@@ -74,16 +78,16 @@ export default function DashboardPage() {
               Dashboard
             </Link>
             <a
-              href="#applications"
+              href="#pengajuan"
               className="text-[15px] font-medium text-on-surface-variant hover:text-primary-container transition-colors"
             >
-              Applications
+              Pengajuan
             </a>
             <a
-              href="#history"
+              href="#riwayat"
               className="text-[15px] font-medium text-on-surface-variant hover:text-primary-container transition-colors"
             >
-              History
+              Riwayat
             </a>
             <a
               href="#faq"
@@ -93,227 +97,245 @@ export default function DashboardPage() {
             </a>
           </nav>
 
-          {/* User & Notification Controls */}
+          {/* User & Controls */}
           <div className="flex items-center gap-4">
             <button
-              title="Notifications"
-              className="w-9 h-9 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-[#f2f4f6] transition-colors relative"
+              title="Notifikasi"
+              className="w-10 h-10 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-[#f2f4f6] transition-colors relative border border-transparent hover:border-[#e2e8f0]"
             >
               <Bell className="w-5 h-5" />
-              <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-rose-500 ring-2 ring-white"></span>
+              <span className="absolute top-2.5 right-2.5 w-2.5 h-2.5 rounded-full bg-rose-500 ring-2 ring-white"></span>
             </button>
 
-            <div className="flex items-center gap-2.5 pl-2 border-l border-[#e2e8f0]">
-              <div className="w-9 h-9 rounded-full bg-[#2563eb]/10 text-[#2563eb] border border-[#2563eb]/20 flex items-center justify-center font-bold text-sm">
+            <div className="flex items-center gap-3 pl-3 border-l border-[#e2e8f0]">
+              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#2563eb]/20 to-[#2563eb]/5 text-[#2563eb] border border-[#2563eb]/30 flex items-center justify-center font-bold text-sm shadow-2xs relative">
                 <User className="w-5 h-5" />
+                <span className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-emerald-500 ring-2 ring-white"></span>
               </div>
-              <span className="font-semibold text-sm text-on-surface hidden sm:inline-block">
-                Sarah
-              </span>
+              <div className="hidden sm:block text-left">
+                <div className="font-bold text-sm text-on-surface leading-tight">Sarah Suharti</div>
+                <div className="text-[11px] text-on-surface-variant">Warga Terverifikasi • RT 04</div>
+              </div>
             </div>
           </div>
         </div>
       </header>
 
-      {/* Main Content Area */}
+      {/* Main Content Container */}
       <div className="max-w-[1280px] mx-auto px-6 py-8 w-full flex-1">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          {/* Left Sidebar */}
+          {/* Left Sidebar Menu */}
           <aside className="lg:col-span-3 bg-white rounded-2xl border border-[#e2e8f0] p-5 shadow-2xs">
             <div className="text-[11px] font-bold tracking-widest text-[#737686] uppercase mb-4 px-3">
-              CITIZEN PORTAL
+              PORTAL WARGA
             </div>
 
-            <nav className="flex flex-col gap-1 mb-8">
+            <nav className="flex flex-col gap-1.5 mb-8">
               <button
                 onClick={() => setActiveNav("overview")}
-                className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-semibold text-sm transition-all ${
+                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-sm transition-all ${
                   activeNav === "overview"
-                    ? "bg-[#2563eb] text-white shadow-sm"
+                    ? "bg-[#2563eb] text-white shadow-md shadow-primary-container/20"
                     : "text-on-surface-variant hover:bg-[#f2f4f6] hover:text-on-surface"
                 }`}
               >
                 <LayoutGrid className="w-4.5 h-4.5" />
-                <span>Overview</span>
+                <span>Ringkasan Utama</span>
               </button>
 
               <button
                 onClick={() => setActiveNav("applications")}
-                className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-semibold text-sm transition-all ${
+                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-sm transition-all ${
                   activeNav === "applications"
-                    ? "bg-[#2563eb] text-white shadow-sm"
+                    ? "bg-[#2563eb] text-white shadow-md shadow-primary-container/20"
                     : "text-on-surface-variant hover:bg-[#f2f4f6] hover:text-on-surface"
                 }`}
               >
                 <FileText className="w-4.5 h-4.5" />
-                <span>My Applications</span>
+                <span>Pengajuan Saya</span>
               </button>
 
               <button
                 onClick={() => setActiveNav("eligibility")}
-                className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-semibold text-sm transition-all ${
+                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-sm transition-all ${
                   activeNav === "eligibility"
-                    ? "bg-[#2563eb] text-white shadow-sm"
+                    ? "bg-[#2563eb] text-white shadow-md shadow-primary-container/20"
                     : "text-on-surface-variant hover:bg-[#f2f4f6] hover:text-on-surface"
                 }`}
               >
                 <CheckCircle2 className="w-4.5 h-4.5" />
-                <span>Eligibility</span>
+                <span>Kriteria Kelayakan</span>
               </button>
 
               <button
                 onClick={() => setActiveNav("history")}
-                className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-semibold text-sm transition-all ${
+                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-sm transition-all ${
                   activeNav === "history"
-                    ? "bg-[#2563eb] text-white shadow-sm"
+                    ? "bg-[#2563eb] text-white shadow-md shadow-primary-container/20"
                     : "text-on-surface-variant hover:bg-[#f2f4f6] hover:text-on-surface"
                 }`}
               >
                 <History className="w-4.5 h-4.5" />
-                <span>History</span>
+                <span>Riwayat Verifikasi</span>
               </button>
 
               <button
                 onClick={() => setActiveNav("settings")}
-                className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-semibold text-sm transition-all ${
+                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-sm transition-all ${
                   activeNav === "settings"
-                    ? "bg-[#2563eb] text-white shadow-sm"
+                    ? "bg-[#2563eb] text-white shadow-md shadow-primary-container/20"
                     : "text-on-surface-variant hover:bg-[#f2f4f6] hover:text-on-surface"
                 }`}
               >
                 <Settings className="w-4.5 h-4.5" />
-                <span>Settings</span>
+                <span>Pengaturan Akun</span>
               </button>
             </nav>
 
             <button
               onClick={() => setIsNewAppModalOpen(true)}
-              className="btn-48 w-full rounded-xl font-semibold text-sm bg-[#2563eb] text-white hover:bg-[#1d4ed8] shadow-sm hover:shadow-md transition-all flex items-center justify-center gap-2"
+              className="btn-48 w-full rounded-xl font-semibold text-sm bg-[#2563eb] text-white hover:bg-[#1d4ed8] shadow-[0_4px_14px_rgba(37,99,235,0.25)] hover:shadow-[0_6px_20px_rgba(37,99,235,0.35)] transition-all flex items-center justify-center gap-2.5"
             >
-              <Plus className="w-4.5 h-4.5" />
-              <span>New Application</span>
+              <Plus className="w-5 h-5" />
+              <span>+ Pengajuan Baru</span>
             </button>
           </aside>
 
-          {/* Main Dashboard Content */}
+          {/* Main Dashboard Panel */}
           <main className="lg:col-span-9 space-y-8">
-            {/* Top Greeting Banner */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            {/* Top Greeting Header */}
+            <div className="bg-white border border-[#e2e8f0] rounded-2xl p-6 md:p-7 shadow-2xs flex flex-col md:flex-row md:items-center justify-between gap-6">
               <div>
-                <h1 className="text-3xl md:text-[34px] font-bold font-display text-on-surface tracking-tight">
-                  Good morning, Sarah
+                <div className="flex items-center gap-2 text-xs font-bold text-[#2563eb] uppercase tracking-wider mb-1.5">
+                  <Sparkles className="w-4 h-4 text-[#2563eb]" /> DASHBOARD UTAMA WARGA
+                </div>
+                <h1 className="text-2xl md:text-[32px] font-extrabold font-display text-on-surface tracking-tight mb-2">
+                  Selamat Pagi, Sarah
                 </h1>
-                <p className="text-sm text-on-surface-variant mt-1">
-                  Your citizen profile is 85% complete. You have 2 pending tasks.
-                </p>
+                <div className="flex items-center gap-3 text-xs text-on-surface-variant">
+                  <span>Profil warga Anda <strong>85% lengkap</strong>.</span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#e2e8f0]"></span>
+                  <span className="text-amber-700 font-semibold bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200">
+                    2 Tugas Memerlukan Tindakan
+                  </span>
+                </div>
               </div>
 
-              <div className="flex items-center gap-3">
-                <button className="h-10 px-4 rounded-xl border border-[#e2e8f0] bg-white text-xs font-semibold text-on-surface hover:bg-[#f2f4f6] transition-all flex items-center gap-2 shadow-2xs">
+              <div className="flex flex-wrap items-center gap-3 shrink-0">
+                <button className="h-10 px-4 rounded-xl border border-[#e2e8f0] bg-surface text-xs font-semibold text-on-surface hover:bg-[#f2f4f6] transition-all flex items-center gap-2 shadow-2xs">
                   <Download className="w-4 h-4 text-on-surface-variant" />
-                  <span>Download History</span>
+                  <span>Unduh Riwayat PDF</span>
                 </button>
 
-                <button className="h-10 px-4 rounded-xl border border-[#e2e8f0] bg-white text-xs font-semibold text-on-surface hover:bg-[#f2f4f6] transition-all flex items-center gap-2 shadow-2xs">
+                <button className="h-10 px-4 rounded-xl border border-[#e2e8f0] bg-surface text-xs font-semibold text-on-surface hover:bg-[#f2f4f6] transition-all flex items-center gap-2 shadow-2xs">
                   <Headphones className="w-4 h-4 text-on-surface-variant" />
-                  <span>Contact Support</span>
+                  <span>Bantuan Layanan</span>
                 </button>
               </div>
             </div>
 
-            {/* Grid Row 1: Active Progress (8 cols) + Updates (4 cols) */}
+            {/* Grid Row 1: Active Progress Card (8 cols) + Updates Panel (4 cols) */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-7 items-stretch">
               {/* Community Verification Card (8 cols) */}
               <div className="lg:col-span-8 bg-white border border-[#e2e8f0] rounded-2xl p-7 shadow-level1 flex flex-col justify-between">
                 <div>
                   <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
-                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-[#eff6ff] text-[#2563eb] border border-[#dbeafe]">
-                      IN PROGRESS
+                    <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold bg-emerald-500/10 text-emerald-700 border border-emerald-500/20">
+                      <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                      SEDANG BERJALAN
                     </span>
                     <div className="text-right">
-                      <div className="text-lg font-bold text-[#2563eb] font-display">Step 3/4</div>
-                      <div className="text-xs text-on-surface-variant">Expected: 2 Days</div>
+                      <div className="text-lg font-black text-[#2563eb] font-display">Langkah 3 dari 4</div>
+                      <div className="text-xs text-on-surface-variant">Estimasi Selesai: 2 Hari</div>
                     </div>
                   </div>
 
                   <h2 className="text-2xl font-bold font-display text-on-surface mb-1">
-                    Community Verification
+                    Verifikasi Konsensus Komunitas
                   </h2>
-                  <div className="text-xs text-on-surface-variant mb-8">
-                    Application ID: #BANTU-2024-8842
+                  <div className="text-xs text-on-surface-variant mb-8 flex items-center gap-2">
+                    <span>ID Pengajuan: <strong>#BANTU-2024-8842</strong></span>
+                    <span>•</span>
+                    <span className="text-[#2563eb] font-semibold">Subsidi Perumahan Warga</span>
                   </div>
 
                   {/* 4-Step Progress Rail */}
-                  <div className="relative mb-8">
-                    {/* Connecting Line */}
-                    <div className="absolute top-5 left-6 right-6 h-0.5 bg-[#e2e8f0] z-0">
-                      <div className="h-full bg-[#2563eb] w-3/4 transition-all duration-500"></div>
+                  <div className="relative mb-8 px-2">
+                    {/* Connecting Rail Line */}
+                    <div className="absolute top-5 left-8 right-8 h-1 bg-[#e2e8f0] z-0 rounded-full">
+                      <div className="h-full bg-gradient-to-r from-emerald-500 via-emerald-500 to-[#2563eb] w-3/4 rounded-full transition-all duration-500"></div>
                     </div>
 
                     <div className="grid grid-cols-4 gap-2 relative z-10 text-center">
-                      {/* Step 1: Identity */}
+                      {/* Step 1: Identitas */}
                       <div className="flex flex-col items-center">
-                        <div className="w-10 h-10 rounded-full bg-emerald-500 text-white flex items-center justify-center mb-2 shadow-sm">
-                          <CheckCircle2 className="w-5 h-5" />
+                        <div className="w-11 h-11 rounded-full bg-emerald-500 text-white flex items-center justify-center mb-2 shadow-md shadow-emerald-500/20">
+                          <CheckCircle2 className="w-6 h-6" />
                         </div>
-                        <span className="text-xs font-bold text-on-surface">Identity</span>
+                        <span className="text-xs font-bold text-on-surface">1. Identitas</span>
+                        <span className="text-[10px] text-emerald-600 font-semibold mt-0.5">Selesai</span>
                       </div>
 
-                      {/* Step 2: Documents */}
+                      {/* Step 2: Dokumen */}
                       <div className="flex flex-col items-center">
-                        <div className="w-10 h-10 rounded-full bg-emerald-500 text-white flex items-center justify-center mb-2 shadow-sm">
-                          <CheckCircle2 className="w-5 h-5" />
+                        <div className="w-11 h-11 rounded-full bg-emerald-500 text-white flex items-center justify-center mb-2 shadow-md shadow-emerald-500/20">
+                          <CheckCircle2 className="w-6 h-6" />
                         </div>
-                        <span className="text-xs font-bold text-on-surface">Documents</span>
+                        <span className="text-xs font-bold text-on-surface">2. Dokumen</span>
+                        <span className="text-[10px] text-emerald-600 font-semibold mt-0.5">Selesai</span>
                       </div>
 
-                      {/* Step 3: Verification */}
+                      {/* Step 3: Verifikasi Tetangga */}
                       <div className="flex flex-col items-center">
-                        <div className="w-10 h-10 rounded-full bg-[#2563eb] text-white flex items-center justify-center mb-2 shadow-[0_0_0_4px_rgba(37,99,235,0.2)]">
-                          <Users className="w-5 h-5" />
+                        <div className="w-11 h-11 rounded-full bg-[#2563eb] text-white flex items-center justify-center mb-2 shadow-[0_0_0_5px_rgba(37,99,235,0.25)] animate-pulse">
+                          <Users className="w-6 h-6" />
                         </div>
-                        <span className="text-xs font-bold text-[#2563eb]">Verification</span>
+                        <span className="text-xs font-bold text-[#2563eb]">3. Verifikasi</span>
+                        <span className="text-[10px] text-[#2563eb] font-bold mt-0.5">Aktif (2/3 Suara)</span>
                       </div>
 
-                      {/* Step 4: Finalize */}
+                      {/* Step 4: Persetujuan RT/RW */}
                       <div className="flex flex-col items-center opacity-60">
-                        <div className="w-10 h-10 rounded-full bg-[#eceef0] text-[#737686] flex items-center justify-center mb-2">
-                          <Clock className="w-5 h-5" />
+                        <div className="w-11 h-11 rounded-full bg-[#eceef0] text-[#737686] flex items-center justify-center mb-2">
+                          <Clock className="w-6 h-6" />
                         </div>
-                        <span className="text-xs font-medium text-on-surface-variant">Finalize</span>
+                        <span className="text-xs font-medium text-on-surface-variant">4. Persetujuan</span>
+                        <span className="text-[10px] text-outline mt-0.5">Menunggu</span>
                       </div>
                     </div>
                   </div>
                 </div>
 
                 {/* Next Action Required Box */}
-                <div className="bg-[#f2f4f6] rounded-xl p-4 border border-[#e2e8f0]/80 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                  <div className="flex gap-3 items-start">
-                    <div className="w-8 h-8 rounded-full bg-[#2563eb]/10 text-[#2563eb] flex items-center justify-center shrink-0 mt-0.5">
-                      <Info className="w-4 h-4" />
+                <div className="bg-gradient-to-r from-[#eff6ff] to-[#f8fafc] rounded-xl p-4.5 border border-[#dbeafe] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-2xs">
+                  <div className="flex gap-3.5 items-start">
+                    <div className="w-9 h-9 rounded-full bg-[#2563eb] text-white flex items-center justify-center shrink-0 mt-0.5 shadow-sm">
+                      <Info className="w-5 h-5" />
                     </div>
                     <div>
-                      <div className="font-bold text-xs text-on-surface">Next Action Required</div>
+                      <div className="font-bold text-xs text-on-surface uppercase tracking-wider text-[#2563eb] mb-0.5">
+                        Tindakan Diperlukan
+                      </div>
                       <p className="text-xs text-on-surface-variant leading-relaxed">
-                        Please schedule a 10-minute video call with your community leader to finalize the verification process.
+                        Silakan atur jadwal panggilan konfirmasi 10 menit dengan pengurus RT untuk menyelesaikan verifikasi final.
                       </p>
                     </div>
                   </div>
 
-                  <button className="h-9 px-4 rounded-lg bg-[#2563eb] text-white text-xs font-semibold hover:bg-[#1d4ed8] transition-colors shrink-0 shadow-2xs">
-                    Schedule Call
+                  <button className="h-10 px-5 rounded-xl bg-[#2563eb] text-white text-xs font-semibold hover:bg-[#1d4ed8] transition-all shrink-0 shadow-sm hover:shadow-md">
+                    Atur Jadwal Call
                   </button>
                 </div>
               </div>
 
-              {/* Updates Card (4 cols) */}
+              {/* Updates Panel (4 cols) */}
               <div className="lg:col-span-4 bg-white border border-[#e2e8f0] rounded-2xl p-6 shadow-level1 flex flex-col justify-between">
                 <div>
                   <div className="flex items-center justify-between mb-6 pb-3 border-b border-[#e2e8f0]">
-                    <div className="flex items-center gap-2">
-                      <h3 className="font-bold text-lg font-display text-on-surface">Updates</h3>
-                      <span className="w-5 h-5 rounded-full bg-rose-500 text-white text-[11px] font-bold flex items-center justify-center">
-                        2
+                    <div className="flex items-center gap-2.5">
+                      <h3 className="font-bold text-lg font-display text-on-surface">Pembaruan Terbaru</h3>
+                      <span className="px-2 py-0.5 rounded-full bg-rose-500 text-white text-[11px] font-bold">
+                        2 Baru
                       </span>
                     </div>
                   </div>
@@ -321,46 +343,47 @@ export default function DashboardPage() {
                   <div className="space-y-5">
                     {/* Item 1 */}
                     <div className="flex items-start gap-3 text-xs">
-                      <span className="w-2.5 h-2.5 rounded-full bg-[#2563eb] shrink-0 mt-1"></span>
+                      <span className="w-2.5 h-2.5 rounded-full bg-[#2563eb] shrink-0 mt-1 ring-4 ring-[#2563eb]/15"></span>
                       <div>
-                        <div className="font-bold text-on-surface text-sm mb-0.5">Verification update</div>
+                        <div className="font-bold text-on-surface text-sm mb-0.5">Verifikasi RT Diterima</div>
                         <p className="text-on-surface-variant leading-relaxed mb-1">
-                          Your community leader has acknowledged your request. Initial screening complete.
+                          Pengurus RT 04 telah mengonfirmasi berkas Anda. Penapisan tahap awal selesai.
                         </p>
-                        <span className="text-[11px] text-[#737686]">10 minutes ago</span>
+                        <span className="text-[11px] text-[#737686]">10 menit lalu</span>
                       </div>
                     </div>
 
                     {/* Item 2 */}
                     <div className="flex items-start gap-3 text-xs">
-                      <span className="w-2.5 h-2.5 rounded-full bg-rose-500 shrink-0 mt-1"></span>
+                      <span className="w-2.5 h-2.5 rounded-full bg-rose-500 shrink-0 mt-1 ring-4 ring-rose-500/15"></span>
                       <div>
-                        <div className="font-bold text-on-surface text-sm mb-0.5">New document required</div>
+                        <div className="font-bold text-on-surface text-sm mb-0.5">Pembaruan Dokumen Bukti</div>
                         <p className="text-on-surface-variant leading-relaxed mb-1">
-                          Proof of residency is outdated. Please upload a utility bill from the last 3 months.
+                          Struk pembayaran listrik/air sudah melewati 3 bulan. Harap unggah versi terbaru.
                         </p>
-                        <span className="text-[11px] text-[#737686]">2 hours ago</span>
+                        <span className="text-[11px] text-[#737686]">2 jam lalu</span>
                       </div>
                     </div>
                   </div>
                 </div>
 
-                <button className="mt-6 pt-3 border-t border-[#e2e8f0] text-center text-xs font-semibold text-on-surface-variant hover:text-primary-container transition-colors w-full">
-                  Clear all notifications
+                <button className="mt-6 pt-3 border-t border-[#e2e8f0] text-center text-xs font-semibold text-on-surface-variant hover:text-[#2563eb] transition-colors w-full">
+                  Bersihkan Semua Notifikasi
                 </button>
               </div>
             </div>
 
-            {/* Grid Row 2: Application History Table (8 cols) + Eligibility Guide (4 cols) */}
+            {/* Grid Row 2: Application History Table (8 cols) + Eligibility Banner (4 cols) */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-7 items-stretch">
-              {/* Application History Table Card (8 cols) */}
+              {/* Application History Table (8 cols) */}
               <div className="lg:col-span-8 bg-white border border-[#e2e8f0] rounded-2xl p-7 shadow-level1">
                 <div className="flex items-center justify-between mb-6">
                   <h3 className="font-bold text-xl font-display text-on-surface">
-                    Application History
+                    Riwayat Pengajuan Bantuan
                   </h3>
-                  <button className="text-xs font-bold text-[#2563eb] hover:underline">
-                    View All
+                  <button className="text-xs font-bold text-[#2563eb] hover:underline flex items-center gap-1">
+                    <span>Lihat Semua</span>
+                    <ChevronRight className="w-3.5 h-3.5" />
                   </button>
                 </div>
 
@@ -368,10 +391,10 @@ export default function DashboardPage() {
                   <table className="w-full text-left text-xs">
                     <thead>
                       <tr className="border-b border-[#e2e8f0] text-[#737686] uppercase font-bold tracking-wider">
-                        <th className="pb-3 font-semibold">SERVICE</th>
-                        <th className="pb-3 font-semibold">SUBMITTED</th>
-                        <th className="pb-3 font-semibold">STATUS</th>
-                        <th className="pb-3 font-semibold text-right">ACTION</th>
+                        <th className="pb-3.5 font-semibold">JENIS BANTUAN</th>
+                        <th className="pb-3.5 font-semibold">TANGGAL DIMAJUKAN</th>
+                        <th className="pb-3.5 font-semibold">STATUS</th>
+                        <th className="pb-3.5 font-semibold text-right">AKSI</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-[#e2e8f0]/60">
@@ -379,21 +402,24 @@ export default function DashboardPage() {
                       <tr className="hover:bg-[#f8fafc] transition-colors">
                         <td className="py-4 font-semibold text-on-surface">
                           <div className="flex items-center gap-3">
-                            <div className="w-8 h-8 rounded-lg bg-[#f2f4f6] flex items-center justify-center text-on-surface-variant">
-                              <Home className="w-4 h-4" />
+                            <div className="w-9 h-9 rounded-xl bg-[#eff6ff] text-[#2563eb] border border-[#dbeafe] flex items-center justify-center">
+                              <Home className="w-4.5 h-4.5" />
                             </div>
-                            <span>Residential Grant</span>
+                            <div>
+                              <div className="font-bold text-sm">Subsidi Perumahan Warga</div>
+                              <div className="text-[11px] text-on-surface-variant font-normal">Program RT 04</div>
+                            </div>
                           </div>
                         </td>
-                        <td className="py-4 text-on-surface-variant">Oct 12, 2023</td>
+                        <td className="py-4 text-on-surface-variant font-medium">12 Okt 2023</td>
                         <td className="py-4">
-                          <span className="px-2.5 py-1 rounded-full text-[11px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
-                            Approved
+                          <span className="px-3 py-1 rounded-full text-[11px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 inline-flex items-center gap-1">
+                            <CheckCircle2 className="w-3 h-3" /> Disetujui
                           </span>
                         </td>
                         <td className="py-4 text-right">
-                          <button className="w-7 h-7 rounded-md hover:bg-[#eceef0] inline-flex items-center justify-center text-on-surface-variant">
-                            <Eye className="w-4 h-4" />
+                          <button className="w-8 h-8 rounded-lg hover:bg-[#eceef0] inline-flex items-center justify-center text-on-surface-variant transition-colors">
+                            <Eye className="w-4.5 h-4.5" />
                           </button>
                         </td>
                       </tr>
@@ -402,21 +428,24 @@ export default function DashboardPage() {
                       <tr className="hover:bg-[#f8fafc] transition-colors">
                         <td className="py-4 font-semibold text-on-surface">
                           <div className="flex items-center gap-3">
-                            <div className="w-8 h-8 rounded-lg bg-[#f2f4f6] flex items-center justify-center text-on-surface-variant">
-                              <GraduationCap className="w-4 h-4" />
+                            <div className="w-9 h-9 rounded-xl bg-[#f2f4f6] text-on-surface-variant border border-[#e2e8f0] flex items-center justify-center">
+                              <GraduationCap className="w-4.5 h-4.5" />
                             </div>
-                            <span>Education Waiver</span>
+                            <div>
+                              <div className="font-bold text-sm">Beasiswa Pendidikan Anak</div>
+                              <div className="text-[11px] text-on-surface-variant font-normal">Tingkat Sekolah Dasar</div>
+                            </div>
                           </div>
                         </td>
-                        <td className="py-4 text-on-surface-variant">Aug 24, 2023</td>
+                        <td className="py-4 text-on-surface-variant font-medium">24 Agt 2023</td>
                         <td className="py-4">
-                          <span className="px-2.5 py-1 rounded-full text-[11px] font-bold bg-slate-100 text-slate-700 border border-slate-200">
-                            Completed
+                          <span className="px-3 py-1 rounded-full text-[11px] font-bold bg-slate-100 text-slate-700 border border-slate-200">
+                            Selesai
                           </span>
                         </td>
                         <td className="py-4 text-right">
-                          <button className="w-7 h-7 rounded-md hover:bg-[#eceef0] inline-flex items-center justify-center text-on-surface-variant">
-                            <Eye className="w-4 h-4" />
+                          <button className="w-8 h-8 rounded-lg hover:bg-[#eceef0] inline-flex items-center justify-center text-on-surface-variant transition-colors">
+                            <Eye className="w-4.5 h-4.5" />
                           </button>
                         </td>
                       </tr>
@@ -425,21 +454,24 @@ export default function DashboardPage() {
                       <tr className="hover:bg-[#f8fafc] transition-colors">
                         <td className="py-4 font-semibold text-on-surface">
                           <div className="flex items-center gap-3">
-                            <div className="w-8 h-8 rounded-lg bg-[#f2f4f6] flex items-center justify-center text-on-surface-variant">
-                              <Briefcase className="w-4 h-4" />
+                            <div className="w-9 h-9 rounded-xl bg-[#f2f4f6] text-on-surface-variant border border-[#e2e8f0] flex items-center justify-center">
+                              <Briefcase className="w-4.5 h-4.5" />
                             </div>
-                            <span>Health Card Renewal</span>
+                            <div>
+                              <div className="font-bold text-sm">Perpanjangan Kartu Sehat</div>
+                              <div className="text-[11px] text-on-surface-variant font-normal">Layanan Jaminan KIS</div>
+                            </div>
                           </div>
                         </td>
-                        <td className="py-4 text-on-surface-variant">Jan 05, 2024</td>
+                        <td className="py-4 text-on-surface-variant font-medium">05 Jan 2024</td>
                         <td className="py-4">
-                          <span className="px-2.5 py-1 rounded-full text-[11px] font-bold bg-amber-50 text-amber-700 border border-amber-200">
-                            Pending
+                          <span className="px-3 py-1 rounded-full text-[11px] font-bold bg-amber-50 text-amber-700 border border-amber-200 inline-flex items-center gap-1">
+                            <Clock className="w-3 h-3" /> Menunggu
                           </span>
                         </td>
                         <td className="py-4 text-right">
-                          <button className="w-7 h-7 rounded-md hover:bg-[#eceef0] inline-flex items-center justify-center text-on-surface-variant">
-                            <Eye className="w-4 h-4" />
+                          <button className="w-8 h-8 rounded-lg hover:bg-[#eceef0] inline-flex items-center justify-center text-on-surface-variant transition-colors">
+                            <Eye className="w-4.5 h-4.5" />
                           </button>
                         </td>
                       </tr>
@@ -448,29 +480,32 @@ export default function DashboardPage() {
                 </div>
               </div>
 
-              {/* Eligibility Guide Banner Card (4 cols) */}
-              <div className="lg:col-span-4 rounded-2xl overflow-hidden relative border border-[#e2e8f0] shadow-level1 group flex flex-col justify-end p-6 min-h-[260px]">
+              {/* Eligibility Banner Card (4 cols) */}
+              <div className="lg:col-span-4 rounded-2xl overflow-hidden relative border border-[#e2e8f0] shadow-level1 group flex flex-col justify-end p-7 min-h-[280px]">
                 <Image
                   src="/eligibility-banner.png"
-                  alt="Eligibility Guide"
+                  alt="Panduan Kelayakan"
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-500 z-0"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#1d4ed8]/90 via-[#2563eb]/70 to-transparent z-10"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-[#1d4ed8]/95 via-[#2563eb]/75 to-transparent z-10"></div>
 
                 <div className="relative z-20 text-white">
-                  <h3 className="font-bold text-xl font-display mb-2 text-white">
-                    Eligibility Guide
+                  <div className="inline-block px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-white/20 backdrop-blur-md mb-3 border border-white/30">
+                    PANDUAN KELAYAKAN 2026
+                  </div>
+                  <h3 className="font-bold text-xl font-display mb-2 text-white leading-tight">
+                    Panduan Kriteria Kelayakan Terbaru
                   </h3>
-                  <p className="text-xs text-white/80 leading-relaxed mb-4">
-                    Learn about the new criteria for 2024 housing subsidies and digital literacy programs.
+                  <p className="text-xs text-white/85 leading-relaxed mb-5">
+                    Pelajari syarat kelayakan bantuan sosial subsidi perumahan warga dan program literasi digital 2026.
                   </p>
 
                   <a
                     href="#"
-                    className="inline-flex items-center gap-1.5 text-xs font-bold text-white hover:underline"
+                    className="inline-flex items-center gap-2 text-xs font-bold text-white bg-white/10 hover:bg-white/20 px-4 py-2 rounded-xl backdrop-blur-md transition-colors border border-white/25"
                   >
-                    <span>Read Guide</span>
+                    <span>Baca Panduan Lengkap</span>
                     <ArrowRight className="w-4 h-4" />
                   </a>
                 </div>
@@ -488,44 +523,44 @@ export default function DashboardPage() {
               BANTUVERIF
             </div>
             <p className="text-xs leading-relaxed text-on-surface-variant">
-              Empowering citizens through transparent, secure, and accessible verification technology. Government as a platform, simplified for everyone.
+              Memberdayakan masyarakat melalui teknologi verifikasi bantuan sosial yang transparan, aman, dan dapat diakses oleh semua warga.
             </p>
           </div>
 
           <div>
             <div className="font-bold text-on-surface mb-3 text-xs uppercase tracking-wider">Platform</div>
             <ul className="space-y-2 text-xs">
-              <li><a href="#" className="hover:text-primary-container">Privacy Policy</a></li>
-              <li><a href="#" className="hover:text-primary-container">Terms of Service</a></li>
+              <li><a href="#" className="hover:text-primary-container">Kebijakan Privasi</a></li>
+              <li><a href="#" className="hover:text-primary-container">Syarat & Ketentuan</a></li>
             </ul>
           </div>
 
           <div>
-            <div className="font-bold text-on-surface mb-3 text-xs uppercase tracking-wider">Resources</div>
+            <div className="font-bold text-on-surface mb-3 text-xs uppercase tracking-wider">Sumber Daya</div>
             <ul className="space-y-2 text-xs">
               <li><a href="#" className="hover:text-primary-container">FAQ</a></li>
-              <li><a href="#" className="hover:text-primary-container">Audit Transparency</a></li>
+              <li><a href="#" className="hover:text-primary-container">Audit Transparansi</a></li>
             </ul>
           </div>
 
           <div>
-            <div className="font-bold text-on-surface mb-3 text-xs uppercase tracking-wider">Support</div>
+            <div className="font-bold text-on-surface mb-3 text-xs uppercase tracking-wider">Dukungan</div>
             <ul className="space-y-2 text-xs">
-              <li><a href="#" className="hover:text-primary-container">Contact Support</a></li>
-              <li><a href="#" className="hover:text-primary-container">Accessibility</a></li>
+              <li><a href="#" className="hover:text-primary-container">Layanan Bantuan</a></li>
+              <li><a href="#" className="hover:text-primary-container">Aksesibilitas</a></li>
             </ul>
           </div>
         </div>
 
         <div className="max-w-[1280px] mx-auto px-6 pt-6 border-t border-[#e2e8f0] flex flex-col sm:flex-row items-center justify-between text-[11px] text-[#737686] gap-4">
           <div>
-            © 2026 BantuVerif Citizen Platform. Secure & Transparent Civic Tech.
+            © 2026 Platform Civic BantuVerif. Teknologi Publik Aman & Transparan.
           </div>
           <div className="flex items-center gap-3">
-            <button title="Share" className="w-7 h-7 rounded-full bg-[#f2f4f6] flex items-center justify-center hover:bg-[#eceef0]">
+            <button title="Bagikan" className="w-7 h-7 rounded-full bg-[#f2f4f6] flex items-center justify-center hover:bg-[#eceef0]">
               <Share2 className="w-3.5 h-3.5" />
             </button>
-            <button title="Language" className="w-7 h-7 rounded-full bg-[#f2f4f6] flex items-center justify-center hover:bg-[#eceef0]">
+            <button title="Bahasa" className="w-7 h-7 rounded-full bg-[#f2f4f6] flex items-center justify-center hover:bg-[#eceef0]">
               <Globe className="w-3.5 h-3.5" />
             </button>
           </div>
