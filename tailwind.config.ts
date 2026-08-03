@@ -61,6 +61,10 @@ const config: Config = {
         danger: "#EF4444",
         "text-ink": "#0B0C0C",
         "border-subtle": "#E2E8F0",
+        "role-verifier": "#059669",
+        "role-verifier-container": "#d1fae5",
+        "role-rt": "#d97706",
+        "role-rt-container": "#fef3c7",
       },
       spacing: {
         gutter: "24px",
