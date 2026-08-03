@@ -70,8 +70,9 @@ export default function Navbar() {
           label: "Pengajuan Saya",
           href: "/tracking",
           matchRoutes: ["/apply", "/tracking", "/application-submitted"],
+          matchPrefixes: ["/tracking"],
         },
-        { label: "Riwayat", href: "/dashboard#riwayat" },
+        { label: "Riwayat", href: "/riwayat" },
         { label: "FAQ", href: "/dashboard#faq" },
       ];
 
@@ -93,7 +94,9 @@ export default function Navbar() {
           {navItems.map((item) => {
             const isActive =
               (!isLanding && pathname === item.href) ||
-              (item.matchRoutes && item.matchRoutes.includes(pathname));
+              (item.matchRoutes && item.matchRoutes.includes(pathname)) ||
+              (item.matchPrefixes &&
+                item.matchPrefixes.some((p) => pathname.startsWith(p)));
 
             return (
               <Link

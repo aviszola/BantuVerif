@@ -79,6 +79,18 @@ export default function DashboardPage() {
     };
   }, [router]);
 
+  useEffect(() => {
+    if (!isLoading && typeof window !== "undefined") {
+      const hash = window.location.hash;
+      if (hash === "#riwayat") {
+        setActiveNav("history");
+        setTimeout(() => {
+          document.getElementById("riwayat")?.scrollIntoView({ behavior: "smooth" });
+        }, 200);
+      }
+    }
+  }, [isLoading]);
+
   const handleCreateApp = (e: React.FormEvent) => {
     e.preventDefault();
     setAppSubmitted(true);
@@ -149,7 +161,10 @@ export default function DashboardPage() {
               </button>
 
               <button
-                onClick={() => setActiveNav("history")}
+                onClick={() => {
+                  setActiveNav("history");
+                  document.getElementById("riwayat")?.scrollIntoView({ behavior: "smooth" });
+                }}
                 className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-sm transition-all ${
                   activeNav === "history"
                     ? "bg-[#2563eb] text-white shadow-md shadow-primary-container/20"
@@ -365,7 +380,7 @@ export default function DashboardPage() {
             {/* Grid Row 2: Application History Table (8 cols) + Eligibility Banner (4 cols) */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-7 items-stretch">
               {/* Application History Table (8 cols) */}
-              <div className="lg:col-span-8 bg-white border border-[#e2e8f0] rounded-2xl p-7 shadow-level1">
+              <div id="riwayat" className="lg:col-span-8 bg-white border border-[#e2e8f0] rounded-2xl p-7 shadow-level1 scroll-mt-24">
                 <div className="flex items-center justify-between mb-6">
                   <h3 className="font-bold text-xl font-display text-on-surface">
                     Riwayat Pengajuan Bantuan
