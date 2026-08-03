@@ -100,70 +100,7 @@ export default function DashboardPage() {
 
   return (
     <div className="min-h-screen bg-[#f7f9fb] text-[#191c1e] font-body flex flex-col justify-between selection:bg-[#2563eb] selection:text-white">
-      {/* Top Navbar */}
-      <header className="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-[#e2e8f0]">
-        <div className="max-w-[1280px] mx-auto px-6 h-20 flex items-center justify-between">
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-2.5 group">
-            <div className="w-10 h-10 bg-primary-container rounded-xl flex items-center justify-center text-white shadow-md shadow-primary-container/20 group-hover:scale-105 transition-transform">
-              <ShieldCheck className="w-6 h-6" />
-            </div>
-            <span className="font-display font-extrabold text-2xl tracking-tight text-on-surface">
-              Bantu<span className="text-primary-container">Verif</span>
-            </span>
-          </Link>
-
-          {/* Top Nav Links */}
-          <nav className="hidden md:flex items-center gap-8">
-            <Link
-              href="/dashboard"
-              className="text-[15px] font-semibold text-primary-container border-b-2 border-primary-container pb-0.5"
-            >
-              Dashboard
-            </Link>
-            <a
-              href="#pengajuan"
-              className="text-[15px] font-medium text-on-surface-variant hover:text-primary-container transition-colors"
-            >
-              Pengajuan
-            </a>
-            <a
-              href="#riwayat"
-              className="text-[15px] font-medium text-on-surface-variant hover:text-primary-container transition-colors"
-            >
-              Riwayat
-            </a>
-            <a
-              href="#faq"
-              className="text-[15px] font-medium text-on-surface-variant hover:text-primary-container transition-colors"
-            >
-              FAQ
-            </a>
-          </nav>
-
-          {/* User & Controls */}
-          <div className="flex items-center gap-4">
-            <button
-              title="Notifikasi"
-              className="w-10 h-10 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-[#f2f4f6] transition-colors relative border border-transparent hover:border-[#e2e8f0]"
-            >
-              <Bell className="w-5 h-5" />
-              <span className="absolute top-2.5 right-2.5 w-2.5 h-2.5 rounded-full bg-rose-500 ring-2 ring-white"></span>
-            </button>
-
-            <div className="flex items-center gap-3 pl-3 border-l border-[#e2e8f0]">
-              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#2563eb]/20 to-[#2563eb]/5 text-[#2563eb] border border-[#2563eb]/30 flex items-center justify-center font-bold text-sm shadow-2xs relative">
-                <User className="w-5 h-5" />
-                <span className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-emerald-500 ring-2 ring-white"></span>
-              </div>
-              <div className="hidden sm:block text-left">
-                <div className="font-bold text-sm text-on-surface leading-tight">{user?.email?.split('@')[0] || 'Warga'}</div>
-                <div className="text-[11px] text-on-surface-variant">{user?.email}</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </header>
+      {/* Main Content Container */}
 
       {/* Main Content Container */}
       <div className="max-w-[1280px] mx-auto px-6 py-8 w-full flex-1">
@@ -244,13 +181,13 @@ export default function DashboardPage() {
               </button>
             </nav>
 
-            <button
-              onClick={() => setIsNewAppModalOpen(true)}
+            <Link
+              href="/apply"
               className="btn-48 w-full rounded-xl font-semibold text-sm bg-[#2563eb] text-white hover:bg-[#1d4ed8] shadow-[0_4px_14px_rgba(37,99,235,0.25)] hover:shadow-[0_6px_20px_rgba(37,99,235,0.35)] transition-all flex items-center justify-center gap-2.5"
             >
               <Plus className="w-5 h-5" />
               <span>+ Pengajuan Baru</span>
-            </button>
+            </Link>
           </aside>
 
           {/* Main Dashboard Panel */}

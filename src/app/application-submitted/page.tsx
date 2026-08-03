@@ -3,15 +3,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import {
-  ShieldCheck,
-  Bell,
-  User,
   CheckCircle2,
   Copy,
   Check,
   UserCheck,
   LayoutDashboard,
   Download,
+  ArrowRight,
 } from "lucide-react";
 
 interface Particle {
@@ -28,9 +26,7 @@ interface Particle {
 export default function ApplicationSubmittedPage() {
   const [copied, setCopied] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-
-  // TODO: sambungkan ke data asli (ID pengajuan dari Supabase setelah submit form)
-  const applicationId = "#BANTU-2024-8842";
+  const applicationId = "#BANTU-2026-8842";
 
   const handleCopy = async () => {
     try {
@@ -42,7 +38,7 @@ export default function ApplicationSubmittedPage() {
     }
   };
 
-  // Confetti burst on load (dikonversi dari skrip vanilla HTML)
+  // Confetti burst on load
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -102,166 +98,115 @@ export default function ApplicationSubmittedPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-background text-on-surface font-body flex flex-col selection:bg-primary-container selection:text-white">
-      {/* TopNavBar — pola sama dengan dashboard */}
-      <header className="sticky top-0 z-40 bg-surface/90 backdrop-blur-md border-b border-border-subtle">
-        <div className="max-w-[1280px] mx-auto px-6 h-16 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2.5 group">
-            <div className="w-9 h-9 bg-primary-container rounded-lg flex items-center justify-center text-white shadow-sm group-hover:scale-105 transition-transform">
-              <ShieldCheck className="w-5 h-5" />
-            </div>
-            <span className="font-display font-extrabold text-xl tracking-tight text-on-surface">
-              Bantu<span className="text-primary-container">Verif</span>
-            </span>
-          </Link>
-
-          <nav className="hidden md:flex items-center gap-8">
-            <Link
-              href="/dashboard"
-              className="text-[15px] font-medium text-on-surface-variant hover:text-primary-container transition-colors"
-            >
-              Dashboard
-            </Link>
-            <Link
-              href="/application-submitted"
-              className="text-[15px] font-semibold text-primary-container border-b-2 border-primary-container pb-0.5"
-            >
-              Applications
-            </Link>
-            <a
-              href="#"
-              className="text-[15px] font-medium text-on-surface-variant hover:text-primary-container transition-colors"
-            >
-              History
-            </a>
-            <a
-              href="#"
-              className="text-[15px] font-medium text-on-surface-variant hover:text-primary-container transition-colors"
-            >
-              FAQ
-            </a>
-          </nav>
-
-          <div className="flex items-center gap-4">
-            <button
-              title="Notifications"
-              className="w-9 h-9 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-surface-container transition-colors"
-            >
-              <Bell className="w-5 h-5" />
-            </button>
-            <button
-              title="Akun"
-              className="w-9 h-9 rounded-full bg-primary-container/10 text-primary-container border border-primary-container/20 flex items-center justify-center"
-            >
-              <User className="w-5 h-5" />
-            </button>
-          </div>
-        </div>
-      </header>
-
+    <div className="min-h-screen bg-[#f7f9fb] text-[#191c1e] font-body flex flex-col selection:bg-[#2563eb] selection:text-white">
       {/* Main Content */}
-      <main className="flex-1 flex items-center justify-center px-4 py-16 relative overflow-hidden">
-        {/* Background Atmospheric Element */}
-        <div className="absolute -top-24 -right-24 w-96 h-96 bg-primary/5 rounded-full blur-3xl opacity-50 pointer-events-none"></div>
-        <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-success/5 rounded-full blur-3xl opacity-50 pointer-events-none"></div>
-
-        {/* Confetti */}
+      <main className="flex-1 flex items-center justify-center px-4 py-12 md:py-16 relative overflow-hidden">
+        {/* Confetti Canvas */}
         <canvas ref={canvasRef} className="fixed inset-0 pointer-events-none z-40" />
 
-        <section className="w-full max-w-[672px] mx-auto animate-fade-in-up">
+        <section className="w-full max-w-[720px] mx-auto">
           {/* Success Card */}
-          <div className="bg-surface border border-border-subtle rounded-xl p-8 md:p-12 text-center shadow-level2 relative z-10">
+          <div className="bg-white border border-[#e2e8f0] rounded-2xl p-8 md:p-12 text-center shadow-[0_8px_30px_rgba(0,0,0,0.04)] relative z-10">
             {/* Animated Checkmark Circle */}
-            <div className="mb-8 flex justify-center">
-              <div className="w-24 h-24 md:w-32 md:h-32 bg-success/10 rounded-full flex items-center justify-center shadow-[0_0_40px_rgba(16,185,129,0.15)] relative">
-                <div className="absolute inset-0 border-4 border-success rounded-full opacity-20 scale-110 animate-ping"></div>
-                <CheckCircle2 className="w-12 h-12 md:w-16 md:h-16 text-success" />
+            <div className="mb-6 flex justify-center">
+              <div className="w-24 h-24 md:w-28 md:h-28 bg-[#ecfdf5] border border-[#a7f3d0] rounded-full flex items-center justify-center shadow-xs relative">
+                <div className="absolute inset-0 border-4 border-[#10b981] rounded-full opacity-20 scale-110 animate-ping"></div>
+                <CheckCircle2 className="w-12 h-12 md:w-14 md:h-14 text-[#10b981]" />
               </div>
             </div>
 
-            <h1 className="text-3xl md:text-5xl font-display font-extrabold text-on-surface mb-3 tracking-tight">
-              Application Submitted Successfully
+            <h1 className="text-2xl md:text-4xl font-display font-extrabold text-on-surface mb-3 tracking-tight">
+              Pengajuan Berhasil Dikirim!
             </h1>
-            <p className="text-lg text-on-surface-variant mb-8 max-w-md mx-auto leading-relaxed">
-              Thank you for submitting your verification request. We&apos;ve received
-              your details.
+            <p className="text-sm md:text-base text-on-surface-variant mb-8 max-w-md mx-auto leading-relaxed">
+              Terima kasih telah mengirimkan permohonan verifikasi Anda. Detail data Anda telah kami terima dan masuk ke sistem.
             </p>
 
             {/* Application ID Badge */}
-            <div className="inline-flex items-center gap-3 bg-surface-container-low border border-border-subtle rounded-full px-6 py-2.5 mb-12">
-              <span className="text-xs font-bold text-on-surface-variant uppercase tracking-widest">
-                Application ID
+            <div className="inline-flex items-center gap-3 bg-[#f8fafc] border border-[#e2e8f0] rounded-full px-5 py-2.5 mb-10">
+              <span className="text-xs font-bold text-on-surface-variant uppercase tracking-wider">
+                ID PENGAJUAN
               </span>
-              <span className="text-sm font-semibold text-primary">{applicationId}</span>
+              <span className="text-sm font-extrabold text-[#2563eb]">{applicationId}</span>
               <button
                 onClick={handleCopy}
-                className="ml-1 p-1 hover:bg-surface-container-highest rounded-full transition-colors"
-                title="Copy ID"
+                className="ml-1 p-1 hover:bg-[#e2e8f0] rounded-full transition-colors text-on-surface-variant"
+                title="Salin ID"
                 aria-label="Salin ID pengajuan"
               >
                 {copied ? (
-                  <Check className="w-4 h-4 text-success" />
+                  <Check className="w-4 h-4 text-emerald-600" />
                 ) : (
                   <Copy className="w-4 h-4" />
                 )}
               </button>
             </div>
 
-            {/* Next Steps Grid (Asymmetric) */}
-            <div className="text-left mb-12 grid md:grid-cols-12 gap-6">
-              <div className="md:col-span-8 bg-surface-container-lowest border border-border-subtle p-6 rounded-xl">
-                <div className="flex gap-4 items-start">
-                  <div className="bg-primary/10 p-3 rounded-lg text-primary">
-                    <UserCheck className="w-6 h-6" />
+            {/* Next Steps Grid */}
+            <div className="text-left mb-10 grid grid-cols-1 md:grid-cols-12 gap-5">
+              <div className="md:col-span-8 bg-[#f8fafc] border border-[#e2e8f0] p-5 rounded-xl">
+                <div className="flex gap-3.5 items-start">
+                  <div className="bg-[#eff6ff] p-2.5 rounded-lg text-[#2563eb] border border-[#dbeafe] shrink-0">
+                    <UserCheck className="w-5 h-5" />
                   </div>
                   <div>
-                    <h3 className="text-sm font-semibold text-on-surface mb-1">
-                      Next Steps
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-on-surface mb-1">
+                      Langkah Selanjutnya
                     </h3>
-                    <p className="text-base text-on-surface-variant leading-relaxed">
-                      Your community leader will now verify your request. This
-                      typically takes 2-3 business days.
+                    <p className="text-xs md:text-sm text-on-surface-variant leading-relaxed">
+                      Ketua komunitas / Satgas setempat sekarang akan memverifikasi permohonan Anda. Proses ini biasanya memerlukan waktu 2-3 hari kerja.
                     </p>
                   </div>
                 </div>
               </div>
-              <div className="md:col-span-4 bg-surface-container-low p-6 rounded-xl flex flex-col justify-center">
-                <p className="text-xs font-bold text-on-surface-variant uppercase tracking-widest mb-2">
-                  EXPECTED BY
+
+              <div className="md:col-span-4 bg-[#f8fafc] border border-[#e2e8f0] p-5 rounded-xl flex flex-col justify-center">
+                <p className="text-[11px] font-bold text-on-surface-variant uppercase tracking-wider mb-1">
+                  PERKIRAAN SELESAI
                 </p>
-                {/* TODO: sambungkan ke data asli (estimasi selesai verifikasi) */}
-                <p className="text-2xl font-bold font-display text-on-surface">
-                  Oct 24, 2024
+                <p className="text-xl md:text-2xl font-bold font-display text-on-surface">
+                  24 Okt 2026
                 </p>
               </div>
             </div>
 
             {/* Action Group */}
-            <div className="flex flex-col md:flex-row gap-4 items-center justify-center">
+            <div className="flex flex-col sm:flex-row gap-3 items-center justify-center">
               <Link
                 href="/dashboard"
-                className="w-full md:w-auto min-h-[48px] px-8 py-3 bg-primary text-on-primary text-sm font-semibold rounded-lg hover:bg-primary-container transition-all active:scale-95 flex items-center justify-center gap-2"
+                className="w-full sm:w-auto min-h-[48px] px-6 py-3 bg-[#2563eb] text-white text-sm font-semibold rounded-lg hover:bg-[#1d4ed8] active:scale-[0.99] transition-all flex items-center justify-center gap-2 shadow-xs"
               >
-                <LayoutDashboard className="w-4 h-4" />
-                Go to My Dashboard
+                <LayoutDashboard className="w-4.5 h-4.5" />
+                <span>Ke Dashboard Saya</span>
               </Link>
-              <button className="w-full md:w-auto min-h-[48px] px-8 py-3 border border-border-subtle bg-surface text-on-surface-variant text-sm font-semibold rounded-lg hover:bg-surface-container-low transition-all active:scale-95 flex items-center justify-center gap-2">
-                <Download className="w-4 h-4" />
-                Download Receipt
+              <Link
+                href="/tracking"
+                className="w-full sm:w-auto min-h-[48px] px-6 py-3 bg-white border border-[#e2e8f0] text-on-surface text-sm font-semibold rounded-lg hover:bg-[#f8fafc] active:scale-[0.99] transition-all flex items-center justify-center gap-2 shadow-2xs"
+              >
+                <span>Lacak Status Pengajuan</span>
+                <ArrowRight className="w-4.5 h-4.5 text-[#2563eb]" />
+              </Link>
+              <button
+                type="button"
+                onClick={() => window.print()}
+                className="w-full sm:w-auto min-h-[48px] px-5 py-3 border border-[#e2e8f0] bg-white text-on-surface-variant text-sm font-semibold rounded-lg hover:bg-[#f8fafc] transition-all flex items-center justify-center gap-2 shadow-2xs"
+              >
+                <Download className="w-4.5 h-4.5" />
+                <span>Unduh Bukti</span>
               </button>
             </div>
           </div>
 
-          {/* Support Footer Inside Content Canvas */}
-          <div className="mt-8 text-center">
-            <p className="text-sm text-on-surface-variant">
-              Need help?{" "}
-              <a href="#" className="text-primary font-bold hover:underline">
-                Contact our support desk
+          {/* Support Footer */}
+          <div className="mt-6 text-center text-xs md:text-sm text-on-surface-variant">
+            <p>
+              Butuh bantuan?{" "}
+              <a href="#" className="text-[#2563eb] font-bold hover:underline">
+                Hubungi meja bantuan kami
               </a>{" "}
-              or visit our{" "}
-              <a href="#" className="text-primary font-bold hover:underline">
-                FAQ
+              atau kunjungi{" "}
+              <a href="#" className="text-[#2563eb] font-bold hover:underline">
+                FAQ kami
               </a>
               .
             </p>
@@ -270,34 +215,21 @@ export default function ApplicationSubmittedPage() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-surface-container-low border-t border-border-subtle py-12 mt-auto">
-        <div className="max-w-[1280px] mx-auto px-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
-          <div className="flex flex-col gap-4">
-            <span className="text-xs font-bold text-on-surface-variant uppercase tracking-widest">
+      <footer className="w-full py-8 px-6 bg-white border-t border-[#e2e8f0] mt-auto">
+        <div className="max-w-[1280px] mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-on-surface-variant">
+          <div>
+            <span className="font-bold text-on-surface uppercase tracking-wider block mb-0.5">
               BANTUVERIF
             </span>
-            <p className="text-sm text-secondary">
-              © 2024 BantuVerif Citizen Platform. Secure &amp; Transparent Civic
-              Tech.
-            </p>
+            © 2026 Platform Warga BantuVerif. Teknologi Publik Aman &amp; Transparan.
           </div>
-          <nav className="flex flex-wrap gap-x-8 gap-y-4">
-            <a href="#" className="text-sm text-on-surface-variant hover:text-primary underline transition-all">
-              Privacy Policy
-            </a>
-            <a href="#" className="text-sm text-on-surface-variant hover:text-primary underline transition-all">
-              Terms of Service
-            </a>
-            <a href="#" className="text-sm text-on-surface-variant hover:text-primary underline transition-all">
-              FAQ
-            </a>
-            <a href="#" className="text-sm text-on-surface-variant hover:text-primary underline transition-all">
-              Audit Transparency
-            </a>
-            <a href="#" className="text-sm text-on-surface-variant hover:text-primary underline transition-all">
-              Contact Support
-            </a>
-          </nav>
+          <div className="flex flex-wrap gap-5 font-medium">
+            <a href="#" className="hover:text-primary-container">Kebijakan Privasi</a>
+            <a href="#" className="hover:text-primary-container">Syarat &amp; Ketentuan</a>
+            <a href="#" className="hover:text-primary-container">FAQ</a>
+            <a href="#" className="hover:text-primary-container">Transparansi Audit</a>
+            <a href="#" className="hover:text-primary-container">Hubungi Bantuan</a>
+          </div>
         </div>
       </footer>
     </div>

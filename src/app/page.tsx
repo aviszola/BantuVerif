@@ -40,7 +40,6 @@ import {
   FileText,
   Wallet,
   Send,
-  Bell,
   Globe,
   Heart,
   Mail,
@@ -191,70 +190,6 @@ export default function LandingPage() {
 
   return (
     <div className="min-h-screen bg-background text-on-surface font-body selection:bg-primary-container selection:text-white">
-      {/* Header / Navbar */}
-      <header className="sticky top-0 z-40 bg-surface/90 backdrop-blur-md border-b border-border-subtle transition-all">
-        <div className="max-w-[1280px] mx-auto px-6 h-20 flex items-center justify-between">
-          {/* Logo */}
-          <a href="#" className="flex items-center gap-2.5 group">
-            <div className="w-10 h-10 bg-primary-container rounded-lg flex items-center justify-center text-white shadow-md shadow-primary-container/20 group-hover:scale-105 transition-transform">
-              <ShieldCheck className="w-6 h-6" />
-            </div>
-            <span className="font-display font-extrabold text-2xl tracking-tight text-on-surface">
-              Bantu<span className="text-primary-container">Verif</span>
-            </span>
-          </a>
-
-          {/* Navigation Links */}
-          <nav className="hidden md:flex items-center gap-8">
-            <a href="#beranda" className="text-[15px] font-semibold text-primary-container border-b-2 border-primary-container pb-0.5">
-              Dashboard
-            </a>
-            <a href="#cara-kerja" className="text-[15px] font-medium text-on-surface-variant hover:text-primary-container transition-colors">
-              Pengajuan
-            </a>
-            <a href="#simulasi" className="text-[15px] font-medium text-on-surface-variant hover:text-primary-container transition-colors">
-              Riwayat
-            </a>
-            <a href="#faq" className="text-[15px] font-medium text-on-surface-variant hover:text-primary-container transition-colors">
-              FAQ
-            </a>
-          </nav>
-
-          {/* Header Right Actions */}
-          <div className="flex items-center gap-3">
-            <button
-              title="Notifikasi"
-              className="w-10 h-10 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-surface-container transition-colors relative"
-            >
-              <Bell className="w-5 h-5" />
-              <span className="absolute top-2.5 right-2.5 w-2 h-2 rounded-full bg-primary-container ring-2 ring-surface"></span>
-            </button>
-
-            <button
-              title="Bahasa / Wilayah"
-              className="w-10 h-10 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-surface-container transition-colors"
-            >
-              <Globe className="w-5 h-5" />
-            </button>
-
-            <div className="hidden sm:flex items-center gap-2.5 ml-2">
-              <Link
-                href="/login"
-                className="btn-48 px-5 rounded-md font-semibold text-[14px] text-on-surface hover:bg-surface-container transition-colors flex items-center justify-center"
-              >
-                Masuk
-              </Link>
-              <Link
-                href="/login"
-                className="btn-48 px-5 rounded-md font-semibold text-[14px] bg-primary-container text-white hover:bg-primary shadow-sm hover:shadow-md transition-all flex items-center justify-center"
-              >
-                Ajukan Bantuan
-              </Link>
-            </div>
-          </div>
-        </div>
-      </header>
-
       {/* Hero Section */}
       <section id="beranda" className="pt-12 md:pt-16 pb-20 md:pb-24 relative overflow-hidden bg-gradient-to-b from-[#eff6ff]/60 via-background to-background">
         <div className="max-w-[1280px] mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
