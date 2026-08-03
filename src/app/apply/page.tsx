@@ -29,6 +29,8 @@ import {
   LogOut,
 } from "lucide-react";
 
+import PortalSidebar from "@/components/PortalSidebar";
+
 export default function ApplyPage() {
   const router = useRouter();
   const [currentStep, setCurrentStep] = useState(1);
@@ -110,7 +112,6 @@ export default function ApplyPage() {
 
   const handleSubmit = async () => {
     setIsSubmitting(true);
-    // TODO: sambungkan ke data asli / Supabase
     try {
       if (user) {
         await supabase.from("applications").insert([
@@ -133,27 +134,30 @@ export default function ApplyPage() {
   };
 
   const stepsList = [
-    { id: 1, title: "1. Personal", desc: "Identitas Resmi & Kontak" },
-    { id: 2, title: "2. Household", desc: "Data Rumah Tangga" },
-    { id: 3, title: "3. Economic", desc: "Kondisi Ekonomi" },
-    { id: 4, title: "4. Reason", desc: "Alasan Pengajuan" },
-    { id: 5, title: "5. Documents", desc: "Dokumen Pendukung" },
-    { id: 6, title: "6. Review", desc: "Tinjau Kembali" },
-    { id: 7, title: "7. Submit", desc: "Kirim Pengajuan" },
+    { id: 1, title: "1. Data Pribadi", desc: "Identitas Resmi & Kontak" },
+    { id: 2, title: "2. Rumah Tangga", desc: "Data Rumah Tangga" },
+    { id: 3, title: "3. Ekonomi", desc: "Kondisi Ekonomi" },
+    { id: 4, title: "4. Alasan", desc: "Alasan Pengajuan" },
+    { id: 5, title: "5. Dokumen", desc: "Dokumen Pendukung" },
+    { id: 6, title: "6. Peninjauan", desc: "Tinjau Kembali" },
+    { id: 7, title: "7. Kirim", desc: "Kirim Pengajuan" },
   ];
 
   return (
-    <div className="bg-background text-on-background font-body min-h-screen flex flex-col selection:bg-primary-container selection:text-white">
-      {/* Progress Bar (Top Horizontal Sub-header) */}
-      <div className="w-full bg-surface border-b border-border-subtle sticky top-16 z-40">
-        <div className="max-w-container-max mx-auto px-4 md:px-margin-desktop py-4 flex flex-col gap-2">
-          <div className="flex justify-between items-center mb-1">
-            <span className="font-bold text-xs md:text-sm text-primary uppercase tracking-wider">
-              Step {currentStep} of 7
-            </span>
+    <div className="bg-[#f7f9fb] text-on-background font-body min-h-screen flex flex-col selection:bg-primary-container selection:text-white">
+      {/* Top Progress Header */}
+      <div className="w-full bg-white border-b border-border-subtle sticky top-16 z-40 shadow-2xs">
+        <div className="max-w-[1280px] mx-auto px-6 py-3.5 flex flex-col gap-2">
+          <div className="flex justify-between items-center">
+            <div className="flex items-center gap-2">
+              <span className="font-bold text-xs md:text-sm text-primary uppercase tracking-wider">
+                LANGKAH {currentStep} DARI 7
+              </span>
+              <span className="text-xs text-on-surface-variant font-medium hidden sm:inline">• Form Pengajuan Bantuan Sosial 2026</span>
+            </div>
             <div className="flex items-center gap-2 text-on-surface-variant text-xs md:text-sm">
-              <Cloud className="w-4 h-4 text-primary animate-pulse-subtle" />
-              <span>Autosaved just now</span>
+              <Cloud className="w-4 h-4 text-primary animate-pulse" />
+              <span>Disimpan otomatis</span>
             </div>
           </div>
           <div className="w-full h-2 bg-surface-container-highest rounded-full overflow-hidden">
@@ -165,560 +169,528 @@ export default function ApplyPage() {
         </div>
       </div>
 
-      {/* Main Content Layout */}
-      <main className="flex-1 flex max-w-container-max mx-auto w-full px-4 md:px-margin-desktop py-8 lg:py-10 gap-8 lg:gap-10">
-        {/* Sidebar Navigation (Desktop Only) */}
-        <aside className="hidden lg:flex flex-col w-64 shrink-0 gap-2">
-          <div className="mb-4">
-            <h3 className="font-display text-[18px] text-on-surface font-bold">
-              Application Steps
-            </h3>
-            <p className="text-on-surface-variant text-xs">Section: Social Assistance</p>
-          </div>
+      {/* Main Unified Content Layout (Matching Dashboard Grid) */}
+      <div className="max-w-[1280px] mx-auto px-6 py-8 w-full flex-1">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          {/* 1 Single Portal Sidebar on Left */}
+          <PortalSidebar
+            active="apply"
+            currentStep={currentStep}
+            stepsList={stepsList}
+            onStepClick={(stepId) => {
+              setCurrentStep(stepId);
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }}
+          />
 
-          {/* Step List */}
-          <div className="flex flex-col gap-1">
-            {stepsList.map((step) => {
-              const isActive = currentStep === step.id;
-              const isPassed = currentStep > step.id;
-
-              return (
+          {/* Main Form Content Area (9 columns) */}
+          <main className="lg:col-span-9 space-y-6">
+            {/* Mobile Steps Pill Bar (Visible on mobile screens) */}
+            <div className="lg:hidden bg-white p-3 rounded-xl border border-border-subtle overflow-x-auto flex gap-2">
+              {stepsList.map((step) => (
                 <button
                   key={step.id}
                   onClick={() => setCurrentStep(step.id)}
-                  className={`w-full text-left py-3 pl-4 pr-3 transition-all rounded-r-lg ${
-                    isActive
-                      ? "step-rail-active bg-primary-container/10 font-bold"
-                      : "step-rail-inactive opacity-60 hover:opacity-100"
+                  className={`px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all ${
+                    currentStep === step.id
+                      ? "bg-primary text-white"
+                      : currentStep > step.id
+                      ? "bg-emerald-50 text-emerald-700"
+                      : "bg-surface-container-low text-on-surface-variant"
                   }`}
                 >
-                  <span
-                    className={`text-sm block font-semibold ${
-                      isActive ? "text-primary font-bold" : "text-on-surface-variant"
-                    }`}
-                  >
-                    {step.title}
-                  </span>
-                  {isActive && (
-                    <span className="text-primary text-[12px] font-medium block mt-0.5">
-                      Currently Editing
-                    </span>
-                  )}
-                  {isPassed && (
-                    <span className="text-emerald-600 text-[11px] font-medium flex items-center gap-1 mt-0.5">
-                      <Check className="w-3.5 h-3.5 stroke-[3]" />
-                      Selesai
-                    </span>
-                  )}
+                  Langkah {step.id}
                 </button>
-              );
-            })}
-          </div>
+              ))}
+            </div>
 
-          <div className="mt-auto p-4 bg-surface-container-low rounded-xl border border-border-subtle">
-            <p className="text-on-secondary-fixed-variant text-xs italic leading-relaxed">
-              &quot;We only ask for what we need to verify your eligibility.&quot;
-            </p>
-          </div>
-        </aside>
+            {/* Step Title Header Banner */}
+            <div className="bg-white border border-border-subtle rounded-2xl p-6 md:p-8 shadow-2xs">
+              <div className="flex items-center gap-2 text-xs font-bold text-primary uppercase tracking-wider mb-2">
+                <Sparkles className="w-4 h-4 text-primary" /> PENGAJUAN BANTUAN SOSIAL RESMI
+              </div>
+              <h1 className="font-display text-2xl md:text-3xl font-extrabold text-on-surface mb-2 tracking-tight">
+                {currentStep === 1 && "Informasi Pribadi"}
+                {currentStep === 2 && "Data Rumah Tangga"}
+                {currentStep === 3 && "Kondisi Ekonomi"}
+                {currentStep === 4 && "Alasan Pengajuan"}
+                {currentStep === 5 && "Dokumen Pendukung"}
+                {currentStep === 6 && "Tinjau Pengajuan"}
+                {currentStep === 7 && "Kirim Pengajuan"}
+              </h1>
+              <p className="text-on-surface-variant text-sm md:text-base leading-relaxed">
+                {currentStep === 1 &&
+                  "Mohon isi data identitas resmi sesuai dokumen kependudukan Anda yang berlaku."}
+                {currentStep === 2 &&
+                  "Isi data tempat tinggal dan jumlah tanggungan dalam rumah tangga Anda."}
+                {currentStep === 3 &&
+                  "Berikan informasi ekonomi yang akurat untuk membantu proses penilaian kelayakan."}
+                {currentStep === 4 &&
+                  "Jelaskan alasan utama dan kondisi mendesak yang mendorong pengajuan bantuan ini."}
+                {currentStep === 5 &&
+                  "Unggah dokumen identitas Anda (KTP, Kartu Keluarga, Foto Tempat Tinggal)."}
+                {currentStep === 6 &&
+                  "Periksa kembali seluruh data sebelum pengajuan final dikirimkan."}
+                {currentStep === 7 &&
+                  "Konfirmasi persetujuan Anda dan kirim pengajuan bantuan sosial."}
+              </p>
+            </div>
 
-        {/* Main Form Canvas */}
-        <section className="flex-1 max-w-[720px] w-full">
-          {/* Step Header */}
-          <div className="mb-8">
-            <h1 className="font-display text-2xl md:text-3xl font-extrabold text-on-surface mb-2 tracking-tight">
-              {currentStep === 1 && "Personal Information"}
-              {currentStep === 2 && "Household Information"}
-              {currentStep === 3 && "Economic Condition"}
-              {currentStep === 4 && "Application Reason"}
-              {currentStep === 5 && "Supporting Documents"}
-              {currentStep === 6 && "Review Application"}
-              {currentStep === 7 && "Submit Application"}
-            </h1>
-            <p className="text-on-surface-variant text-sm md:text-base leading-relaxed">
-              {currentStep === 1 &&
-                "Please provide your legal identification details as they appear on your government documents."}
-              {currentStep === 2 &&
-                "Please provide details regarding your living conditions and dependents."}
-              {currentStep === 3 &&
-                "Provide accurate economic information to assist in eligibility evaluation."}
-              {currentStep === 4 &&
-                "Describe the primary reason and emergency condition for this application."}
-              {currentStep === 5 &&
-                "Upload your identity documents (KTP, Family Card, House Photos)."}
-              {currentStep === 6 &&
-                "Please review all information carefully before final submission."}
-              {currentStep === 7 &&
-                "Finalize your submission and confirm consent for verification."}
-            </p>
-          </div>
-
-          <div className="space-y-8">
-            {/* Step 1: Personal Information */}
-            {currentStep === 1 && (
-              <>
-                {/* Section: Legal Identity */}
-                <div className="p-6 md:p-8 bg-surface border border-border-subtle rounded-xl shadow-xs hover:shadow-md transition-shadow">
-                  <h2 className="font-display text-lg md:text-xl font-bold text-on-surface mb-6 flex items-center gap-2">
-                    <ShieldCheck className="w-5 h-5 text-primary" />
-                    Legal Identity
-                  </h2>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div className="flex flex-col gap-2">
-                      <label
-                        className="font-semibold text-xs text-on-surface uppercase tracking-wider"
-                        htmlFor="first-name"
-                      >
-                        First Name
-                      </label>
-                      <input
-                        className="h-12 bg-surface-container-low border-none rounded-lg px-4 focus:ring-2 focus:ring-primary focus:bg-surface transition-all text-sm outline-none w-full"
-                        id="first-name"
-                        placeholder="e.g. John"
-                        type="text"
-                        value={formData.firstName}
-                        onChange={(e) => handleChange("firstName", e.target.value)}
-                      />
-                    </div>
-                    <div className="flex flex-col gap-2">
-                      <label
-                        className="font-semibold text-xs text-on-surface uppercase tracking-wider"
-                        htmlFor="last-name"
-                      >
-                        Last Name
-                      </label>
-                      <input
-                        className="h-12 bg-surface-container-low border-none rounded-lg px-4 focus:ring-2 focus:ring-primary focus:bg-surface transition-all text-sm outline-none w-full"
-                        id="last-name"
-                        placeholder="e.g. Doe"
-                        type="text"
-                        value={formData.lastName}
-                        onChange={(e) => handleChange("lastName", e.target.value)}
-                      />
-                    </div>
-                    <div className="flex flex-col gap-2 md:col-span-2">
-                      <label
-                        className="font-semibold text-xs text-on-surface uppercase tracking-wider"
-                        htmlFor="id-number"
-                      >
-                        Government ID Number
-                      </label>
-                      <input
-                        className="h-12 bg-surface-container-low border-none rounded-lg px-4 focus:ring-2 focus:ring-primary focus:bg-surface transition-all text-sm outline-none w-full"
-                        id="id-number"
-                        placeholder="Enter your 12-digit national ID"
-                        type="text"
-                        maxLength={16}
-                        value={formData.nik}
-                        onChange={(e) => handleChange("nik", e.target.value)}
-                      />
-                      <span className="text-xs text-on-surface-variant">
-                        We use this to prevent duplicate applications.
-                      </span>
+            {/* Step Form Body Container */}
+            <div className="space-y-6">
+              {/* Step 1: Personal Information */}
+              {currentStep === 1 && (
+                <>
+                  {/* Section: Legal Identity */}
+                  <div className="p-6 md:p-8 bg-white border border-border-subtle rounded-2xl shadow-level1">
+                    <h2 className="font-display text-lg md:text-xl font-bold text-on-surface mb-6 flex items-center gap-2">
+                      <ShieldCheck className="w-5 h-5 text-primary" />
+                      Identitas Resmi
+                    </h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div className="flex flex-col gap-2">
+                        <label
+                          className="font-semibold text-xs text-on-surface uppercase tracking-wider"
+                          htmlFor="first-name"
+                        >
+                          Nama Depan
+                        </label>
+                        <input
+                          className="h-12 bg-surface-container-low border-none rounded-lg px-4 focus:ring-2 focus:ring-primary focus:bg-surface transition-all text-sm outline-none w-full"
+                          id="first-name"
+                          placeholder="cth. Budi"
+                          type="text"
+                          value={formData.firstName}
+                          onChange={(e) => handleChange("firstName", e.target.value)}
+                        />
+                      </div>
+                      <div className="flex flex-col gap-2">
+                        <label
+                          className="font-semibold text-xs text-on-surface uppercase tracking-wider"
+                          htmlFor="last-name"
+                        >
+                          Nama Belakang
+                        </label>
+                        <input
+                          className="h-12 bg-surface-container-low border-none rounded-lg px-4 focus:ring-2 focus:ring-primary focus:bg-surface transition-all text-sm outline-none w-full"
+                          id="last-name"
+                          placeholder="cth. Santoso"
+                          type="text"
+                          value={formData.lastName}
+                          onChange={(e) => handleChange("lastName", e.target.value)}
+                        />
+                      </div>
+                      <div className="flex flex-col gap-2 md:col-span-2">
+                        <label
+                          className="font-semibold text-xs text-on-surface uppercase tracking-wider"
+                          htmlFor="id-number"
+                        >
+                          Nomor Induk Kependudukan (NIK)
+                        </label>
+                        <input
+                          className="h-12 bg-surface-container-low border-none rounded-lg px-4 focus:ring-2 focus:ring-primary focus:bg-surface transition-all text-sm outline-none w-full"
+                          id="id-number"
+                          placeholder="Masukkan 16 digit NIK sesuai KTP Anda"
+                          type="text"
+                          maxLength={16}
+                          value={formData.nik}
+                          onChange={(e) => handleChange("nik", e.target.value)}
+                        />
+                        <span className="text-xs text-on-surface-variant">
+                          NIK digunakan untuk mencegah pengajuan ganda pada sistem.
+                        </span>
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                {/* Section: Contact Details */}
-                <div className="p-6 md:p-8 bg-surface border border-border-subtle rounded-xl shadow-xs hover:shadow-md transition-shadow">
-                  <h2 className="font-display text-lg md:text-xl font-bold text-on-surface mb-6 flex items-center gap-2">
-                    <Mail className="w-5 h-5 text-primary" />
-                    Contact Details
-                  </h2>
-                  <div className="grid grid-cols-1 gap-6">
-                    <div className="flex flex-col gap-2">
-                      <label
-                        className="font-semibold text-xs text-on-surface uppercase tracking-wider"
-                        htmlFor="email"
-                      >
-                        Email Address
-                      </label>
-                      <input
-                        className="h-12 bg-surface-container-low border-none rounded-lg px-4 focus:ring-2 focus:ring-primary focus:bg-surface transition-all text-sm outline-none w-full"
-                        id="email"
-                        placeholder="john.doe@example.com"
-                        type="email"
-                        value={formData.email}
-                        onChange={(e) => handleChange("email", e.target.value)}
-                      />
-                    </div>
-                    <div className="flex flex-col gap-2">
-                      <label
-                        className="font-semibold text-xs text-on-surface uppercase tracking-wider"
-                        htmlFor="phone"
-                      >
-                        Mobile Phone Number
-                      </label>
-                      <div className="flex gap-2">
-                        <div className="w-24 bg-surface-container-highest flex items-center justify-center rounded-lg font-semibold text-sm text-on-surface shrink-0 h-12">
-                          +1
-                        </div>
+                  {/* Section: Contact Details */}
+                  <div className="p-6 md:p-8 bg-white border border-border-subtle rounded-2xl shadow-level1">
+                    <h2 className="font-display text-lg md:text-xl font-bold text-on-surface mb-6 flex items-center gap-2">
+                      <Mail className="w-5 h-5 text-primary" />
+                      Informasi Kontak
+                    </h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div className="flex flex-col gap-2 md:col-span-2">
+                        <label
+                          className="font-semibold text-xs text-on-surface uppercase tracking-wider"
+                          htmlFor="email"
+                        >
+                          Alamat Email
+                        </label>
                         <input
-                          className="flex-1 h-12 bg-surface-container-low border-none rounded-lg px-4 focus:ring-2 focus:ring-primary focus:bg-surface transition-all text-sm outline-none w-full"
-                          id="phone"
-                          placeholder="555-0123"
-                          type="tel"
-                          value={formData.phone}
-                          onChange={(e) => handleChange("phone", e.target.value)}
+                          className="h-12 bg-surface-container-low border-none rounded-lg px-4 focus:ring-2 focus:ring-primary focus:bg-surface transition-all text-sm outline-none w-full"
+                          id="email"
+                          placeholder="contoh@email.com"
+                          type="email"
+                          value={formData.email}
+                          onChange={(e) => handleChange("email", e.target.value)}
+                        />
+                      </div>
+                      <div className="flex flex-col gap-2 md:col-span-2">
+                        <label
+                          className="font-semibold text-xs text-on-surface uppercase tracking-wider"
+                          htmlFor="phone"
+                        >
+                          Nomor Handphone
+                        </label>
+                        <div className="flex gap-2">
+                          <div className="w-20 bg-surface-container-highest flex items-center justify-center rounded-lg font-semibold text-sm text-on-surface shrink-0 h-12">
+                            +62
+                          </div>
+                          <input
+                            className="flex-1 h-12 bg-surface-container-low border-none rounded-lg px-4 focus:ring-2 focus:ring-primary focus:bg-surface transition-all text-sm outline-none w-full"
+                            id="phone"
+                            placeholder="812-3456-7890"
+                            type="tel"
+                            value={formData.phone}
+                            onChange={(e) => handleChange("phone", e.target.value)}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Section: Date of Birth */}
+                  <div className="p-6 md:p-8 bg-white border border-border-subtle rounded-2xl shadow-level1">
+                    <h2 className="font-display text-lg md:text-xl font-bold text-on-surface mb-6 flex items-center gap-2">
+                      <Calendar className="w-5 h-5 text-primary" />
+                      Tanggal Lahir
+                    </h2>
+                    <div className="grid grid-cols-3 gap-4">
+                      <div className="flex flex-col gap-2">
+                        <label className="font-semibold text-xs text-on-surface uppercase tracking-wider">
+                          Tanggal
+                        </label>
+                        <input
+                          className="h-12 bg-surface-container-low border-none rounded-lg px-4 focus:ring-2 focus:ring-primary focus:bg-surface transition-all text-sm text-center outline-none w-full"
+                          placeholder="TT"
+                          type="text"
+                          maxLength={2}
+                          value={formData.birthDay}
+                          onChange={(e) => handleChange("birthDay", e.target.value)}
+                        />
+                      </div>
+                      <div className="flex flex-col gap-2">
+                        <label className="font-semibold text-xs text-on-surface uppercase tracking-wider">
+                          Bulan
+                        </label>
+                        <select
+                          className="h-12 bg-surface-container-low border-none rounded-lg px-3 focus:ring-2 focus:ring-primary focus:bg-surface transition-all text-xs md:text-sm outline-none w-full"
+                          value={formData.birthMonth}
+                          onChange={(e) => handleChange("birthMonth", e.target.value)}
+                        >
+                          {[
+                            "Januari",
+                            "Februari",
+                            "Maret",
+                            "April",
+                            "Mei",
+                            "Juni",
+                            "Juli",
+                            "Agustus",
+                            "September",
+                            "Oktober",
+                            "November",
+                            "Desember",
+                          ].map((m) => (
+                            <option key={m} value={m}>
+                              {m}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                      <div className="flex flex-col gap-2">
+                        <label className="font-semibold text-xs text-on-surface uppercase tracking-wider">
+                          Tahun
+                        </label>
+                        <input
+                          className="h-12 bg-surface-container-low border-none rounded-lg px-4 focus:ring-2 focus:ring-primary focus:bg-surface transition-all text-sm text-center outline-none w-full"
+                          placeholder="TTTT"
+                          type="text"
+                          maxLength={4}
+                          value={formData.birthYear}
+                          onChange={(e) => handleChange("birthYear", e.target.value)}
                         />
                       </div>
                     </div>
                   </div>
-                </div>
+                </>
+              )}
 
-                {/* Section: Date of Birth */}
-                <div className="p-6 md:p-8 bg-surface border border-border-subtle rounded-xl shadow-xs hover:shadow-md transition-shadow">
-                  <h2 className="font-display text-lg md:text-xl font-bold text-on-surface mb-6 flex items-center gap-2">
-                    <Calendar className="w-5 h-5 text-primary" />
-                    Birth Date
-                  </h2>
-                  <div className="grid grid-cols-3 gap-4">
-                    <div className="flex flex-col gap-2">
-                      <label className="font-semibold text-xs text-on-surface uppercase tracking-wider">
-                        Day
-                      </label>
-                      <input
-                        className="h-12 bg-surface-container-low border-none rounded-lg px-4 focus:ring-2 focus:ring-primary focus:bg-surface transition-all text-sm text-center outline-none w-full"
-                        placeholder="DD"
-                        type="text"
-                        maxLength={2}
-                        value={formData.birthDay}
-                        onChange={(e) => handleChange("birthDay", e.target.value)}
-                      />
-                    </div>
-                    <div className="flex flex-col gap-2">
-                      <label className="font-semibold text-xs text-on-surface uppercase tracking-wider">
-                        Month
-                      </label>
-                      <select
-                        className="h-12 bg-surface-container-low border-none rounded-lg px-3 focus:ring-2 focus:ring-primary focus:bg-surface transition-all text-xs md:text-sm outline-none w-full"
-                        value={formData.birthMonth}
-                        onChange={(e) => handleChange("birthMonth", e.target.value)}
-                      >
-                        {[
-                          "January",
-                          "February",
-                          "March",
-                          "April",
-                          "May",
-                          "June",
-                          "July",
-                          "August",
-                          "September",
-                          "October",
-                          "November",
-                          "December",
-                        ].map((m) => (
-                          <option key={m} value={m}>
-                            {m}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                    <div className="flex flex-col gap-2">
-                      <label className="font-semibold text-xs text-on-surface uppercase tracking-wider">
-                        Year
-                      </label>
-                      <input
-                        className="h-12 bg-surface-container-low border-none rounded-lg px-4 focus:ring-2 focus:ring-primary focus:bg-surface transition-all text-sm text-center outline-none w-full"
-                        placeholder="YYYY"
-                        type="text"
-                        maxLength={4}
-                        value={formData.birthYear}
-                        onChange={(e) => handleChange("birthYear", e.target.value)}
-                      />
-                    </div>
+              {/* Step 2: Household */}
+              {currentStep === 2 && (
+                <div className="p-6 md:p-8 bg-white border border-border-subtle rounded-2xl shadow-level1 space-y-6">
+                  <div className="flex flex-col gap-2">
+                    <label className="font-semibold text-xs text-on-surface uppercase tracking-wider">
+                      Jumlah Tanggungan / Anggota Keluarga
+                    </label>
+                    <select
+                      className="h-12 bg-surface-container-low border-none rounded-lg px-4 focus:ring-2 focus:ring-primary focus:bg-surface text-sm outline-none"
+                      value={formData.familyMembers}
+                      onChange={(e) => handleChange("familyMembers", e.target.value)}
+                    >
+                      <option value="1">1 Orang</option>
+                      <option value="2">2 Orang</option>
+                      <option value="3">3 Orang</option>
+                      <option value="4">4 Orang</option>
+                      <option value="5+">5+ Orang</option>
+                    </select>
+                  </div>
+                  <div className="flex flex-col gap-2">
+                    <label className="font-semibold text-xs text-on-surface uppercase tracking-wider">
+                      Status Kepemilikan Tempat Tinggal
+                    </label>
+                    <select
+                      className="h-12 bg-surface-container-low border-none rounded-lg px-4 focus:ring-2 focus:ring-primary focus:bg-surface text-sm outline-none"
+                      value={formData.houseOwnership}
+                      onChange={(e) => handleChange("houseOwnership", e.target.value)}
+                    >
+                      <option value="Milik Sendiri">Milik Sendiri</option>
+                      <option value="Sewa / Kontrak">Sewa / Kontrak</option>
+                      <option value="Menumpang Keluarga">Menumpang pada Keluarga</option>
+                    </select>
+                  </div>
+                  <div className="flex flex-col gap-2">
+                    <label className="font-semibold text-xs text-on-surface uppercase tracking-wider">
+                      Alamat Lengkap (Sesuai KTP)
+                    </label>
+                    <textarea
+                      rows={3}
+                      className="p-4 bg-surface-container-low border-none rounded-lg focus:ring-2 focus:ring-primary focus:bg-surface text-sm outline-none"
+                      placeholder="Masukkan alamat lengkap sesuai KTP..."
+                      value={formData.address}
+                      onChange={(e) => handleChange("address", e.target.value)}
+                    />
                   </div>
                 </div>
-              </>
-            )}
+              )}
 
-            {/* Step 2: Household */}
-            {currentStep === 2 && (
-              <div className="p-6 md:p-8 bg-surface border border-border-subtle rounded-xl shadow-xs space-y-6">
-                <div className="flex flex-col gap-2">
-                  <label className="font-semibold text-xs text-on-surface uppercase tracking-wider">
-                    Number of Dependents / Family Members
-                  </label>
-                  <select
-                    className="h-12 bg-surface-container-low border-none rounded-lg px-4 focus:ring-2 focus:ring-primary focus:bg-surface text-sm outline-none"
-                    value={formData.familyMembers}
-                    onChange={(e) => handleChange("familyMembers", e.target.value)}
-                  >
-                    <option value="1">1 Person</option>
-                    <option value="2">2 Persons</option>
-                    <option value="3">3 Persons</option>
-                    <option value="4">4 Persons</option>
-                    <option value="5+">5+ Persons</option>
-                  </select>
-                </div>
-                <div className="flex flex-col gap-2">
-                  <label className="font-semibold text-xs text-on-surface uppercase tracking-wider">
-                    Housing Ownership Status
-                  </label>
-                  <select
-                    className="h-12 bg-surface-container-low border-none rounded-lg px-4 focus:ring-2 focus:ring-primary focus:bg-surface text-sm outline-none"
-                    value={formData.houseOwnership}
-                    onChange={(e) => handleChange("houseOwnership", e.target.value)}
-                  >
-                    <option value="Milik Sendiri">Owned</option>
-                    <option value="Sewa / Kontrak">Rented</option>
-                    <option value="Menumpang Keluarga">Living with Relatives</option>
-                  </select>
-                </div>
-                <div className="flex flex-col gap-2">
-                  <label className="font-semibold text-xs text-on-surface uppercase tracking-wider">
-                    Full Address (As per ID Card)
-                  </label>
-                  <textarea
-                    rows={3}
-                    className="p-4 bg-surface-container-low border-none rounded-lg focus:ring-2 focus:ring-primary focus:bg-surface text-sm outline-none"
-                    placeholder="Enter complete address..."
-                    value={formData.address}
-                    onChange={(e) => handleChange("address", e.target.value)}
-                  />
-                </div>
-              </div>
-            )}
-
-            {/* Step 3: Economic */}
-            {currentStep === 3 && (
-              <div className="p-6 md:p-8 bg-surface border border-border-subtle rounded-xl shadow-xs space-y-6">
-                <div className="flex flex-col gap-2">
-                  <label className="font-semibold text-xs text-on-surface uppercase tracking-wider">
-                    Estimated Monthly Household Income
-                  </label>
-                  <select
-                    className="h-12 bg-surface-container-low border-none rounded-lg px-4 focus:ring-2 focus:ring-primary focus:bg-surface text-sm outline-none"
-                    value={formData.monthlyIncome}
-                    onChange={(e) => handleChange("monthlyIncome", e.target.value)}
-                  >
-                    <option value="Kurang dari Rp 1.500.000">Below $100 / month</option>
-                    <option value="Rp 1.500.000 - Rp 2.500.000">$100 - $250 / month</option>
-                    <option value="Rp 2.500.000 - Rp 4.000.000">$250 - $400 / month</option>
-                  </select>
-                </div>
-                <div className="flex flex-col gap-2">
-                  <label className="font-semibold text-xs text-on-surface uppercase tracking-wider">
-                    Primary Occupation
-                  </label>
-                  <input
-                    className="h-12 bg-surface-container-low border-none rounded-lg px-4 focus:ring-2 focus:ring-primary focus:bg-surface text-sm outline-none"
-                    placeholder="e.g. Freelance Worker / Small Merchant"
-                    type="text"
-                    value={formData.occupation}
-                    onChange={(e) => handleChange("occupation", e.target.value)}
-                  />
-                </div>
-              </div>
-            )}
-
-            {/* Step 4: Reason */}
-            {currentStep === 4 && (
-              <div className="p-6 md:p-8 bg-surface border border-border-subtle rounded-xl shadow-xs space-y-6">
-                <div className="flex flex-col gap-2">
-                  <label className="font-semibold text-xs text-on-surface uppercase tracking-wider">
-                    Primary Category of Need
-                  </label>
-                  <select
-                    className="h-12 bg-surface-container-low border-none rounded-lg px-4 focus:ring-2 focus:ring-primary focus:bg-surface text-sm outline-none"
-                    value={formData.reasonCategory}
-                    onChange={(e) => handleChange("reasonCategory", e.target.value)}
-                  >
-                    <option value="Kehilangan Pekerjaan / Penurunan Omset">Job Loss / Reduced Income</option>
-                    <option value="Keluarga Lanjut Usia / Disabilitas">Elderly / Disability Support</option>
-                    <option value="Kebutuhan Pokok Mendesak">Urgent Basic Food Needs</option>
-                  </select>
-                </div>
-                <div className="flex flex-col gap-2">
-                  <label className="font-semibold text-xs text-on-surface uppercase tracking-wider">
-                    Brief Application Explanation
-                  </label>
-                  <textarea
-                    rows={4}
-                    className="p-4 bg-surface-container-low border-none rounded-lg focus:ring-2 focus:ring-primary focus:bg-surface text-sm outline-none"
-                    placeholder="Describe your situation..."
-                    value={formData.reasonDescription}
-                    onChange={(e) => handleChange("reasonDescription", e.target.value)}
-                  />
-                </div>
-              </div>
-            )}
-
-            {/* Step 5: Documents */}
-            {currentStep === 5 && (
-              <div className="p-6 md:p-8 bg-surface border border-border-subtle rounded-xl shadow-xs space-y-4">
-                <div className="p-4 rounded-xl border border-dashed border-border-subtle bg-surface-container-low flex items-center justify-between gap-4">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-lg bg-surface border border-border-subtle flex items-center justify-center text-primary">
-                      <Upload className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <p className="text-xs font-bold text-on-surface">National ID Card (KTP)</p>
-                      <p className="text-[11px] text-on-surface-variant">JPG/PNG format, max 5MB</p>
-                    </div>
+              {/* Step 3: Economic */}
+              {currentStep === 3 && (
+                <div className="p-6 md:p-8 bg-white border border-border-subtle rounded-2xl shadow-level1 space-y-6">
+                  <div className="flex flex-col gap-2">
+                    <label className="font-semibold text-xs text-on-surface uppercase tracking-wider">
+                      Perkiraan Penghasilan Bulanan Rumah Tangga
+                    </label>
+                    <select
+                      className="h-12 bg-surface-container-low border-none rounded-lg px-4 focus:ring-2 focus:ring-primary focus:bg-surface text-sm outline-none"
+                      value={formData.monthlyIncome}
+                      onChange={(e) => handleChange("monthlyIncome", e.target.value)}
+                    >
+                      <option value="Kurang dari Rp 1.500.000">Di bawah Rp 1.500.000 / bulan</option>
+                      <option value="Rp 1.500.000 - Rp 2.500.000">Rp 1.500.000 – Rp 2.500.000 / bulan</option>
+                      <option value="Rp 2.500.000 - Rp 4.000.000">Rp 2.500.000 – Rp 4.000.000 / bulan</option>
+                    </select>
                   </div>
+                  <div className="flex flex-col gap-2">
+                    <label className="font-semibold text-xs text-on-surface uppercase tracking-wider">
+                      Pekerjaan Utama
+                    </label>
+                    <input
+                      className="h-12 bg-surface-container-low border-none rounded-lg px-4 focus:ring-2 focus:ring-primary focus:bg-surface text-sm outline-none"
+                      placeholder="cth. Buruh Harian / Pedagang Kecil"
+                      type="text"
+                      value={formData.occupation}
+                      onChange={(e) => handleChange("occupation", e.target.value)}
+                    />
+                  </div>
+                </div>
+              )}
+
+              {/* Step 4: Reason */}
+              {currentStep === 4 && (
+                <div className="p-6 md:p-8 bg-white border border-border-subtle rounded-2xl shadow-level1 space-y-6">
+                  <div className="flex flex-col gap-2">
+                    <label className="font-semibold text-xs text-on-surface uppercase tracking-wider">
+                      Kategori Utama Kebutuhan
+                    </label>
+                    <select
+                      className="h-12 bg-surface-container-low border-none rounded-lg px-4 focus:ring-2 focus:ring-primary focus:bg-surface text-sm outline-none"
+                      value={formData.reasonCategory}
+                      onChange={(e) => handleChange("reasonCategory", e.target.value)}
+                    >
+                      <option value="Kehilangan Pekerjaan / Penurunan Omset">Kehilangan Pekerjaan / Penurunan Omset</option>
+                      <option value="Keluarga Lanjut Usia / Disabilitas">Keluarga Lanjut Usia / Penyandang Disabilitas</option>
+                      <option value="Kebutuhan Pokok Mendesak">Kebutuhan Pokok Mendesak</option>
+                    </select>
+                  </div>
+                  <div className="flex flex-col gap-2">
+                    <label className="font-semibold text-xs text-on-surface uppercase tracking-wider">
+                      Penjelasan Singkat Alasan Pengajuan
+                    </label>
+                    <textarea
+                      rows={4}
+                      className="p-4 bg-surface-container-low border-none rounded-lg focus:ring-2 focus:ring-primary focus:bg-surface text-sm outline-none"
+                      placeholder="Jelaskan kondisi dan situasi Anda secara singkat..."
+                      value={formData.reasonDescription}
+                      onChange={(e) => handleChange("reasonDescription", e.target.value)}
+                    />
+                  </div>
+                </div>
+              )}
+
+              {/* Step 5: Documents */}
+              {currentStep === 5 && (
+                <div className="p-6 md:p-8 bg-white border border-border-subtle rounded-2xl shadow-level1 space-y-4">
+                  <div className="p-4 rounded-xl border border-dashed border-border-subtle bg-surface-container-low flex items-center justify-between gap-4">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-lg bg-surface border border-border-subtle flex items-center justify-center text-primary">
+                        <Upload className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <p className="text-xs font-bold text-on-surface">KTP (Kartu Tanda Penduduk)</p>
+                        <p className="text-[11px] text-on-surface-variant">Format JPG/PNG, maks 5MB</p>
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => handleChange("ktpUploaded", !formData.ktpUploaded)}
+                      className={`px-3.5 py-2 rounded-lg text-xs font-bold transition-all ${
+                        formData.ktpUploaded
+                          ? "bg-emerald-100 text-emerald-700"
+                          : "bg-primary text-on-primary hover:bg-primary-container"
+                      }`}
+                    >
+                      {formData.ktpUploaded ? "Berhasil Diunggah ✓" : "Pilih File"}
+                    </button>
+                  </div>
+
+                  <div className="p-4 rounded-xl border border-dashed border-border-subtle bg-surface-container-low flex items-center justify-between gap-4">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-lg bg-surface border border-border-subtle flex items-center justify-center text-primary">
+                        <Upload className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <p className="text-xs font-bold text-on-surface">KK (Kartu Keluarga)</p>
+                        <p className="text-[11px] text-on-surface-variant">Format JPG/PNG, maks 5MB</p>
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => handleChange("kkUploaded", !formData.kkUploaded)}
+                      className={`px-3.5 py-2 rounded-lg text-xs font-bold transition-all ${
+                        formData.kkUploaded
+                          ? "bg-emerald-100 text-emerald-700"
+                          : "bg-primary text-on-primary hover:bg-primary-container"
+                      }`}
+                    >
+                      {formData.kkUploaded ? "Berhasil Diunggah ✓" : "Pilih File"}
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {/* Step 6: Review */}
+              {currentStep === 6 && (
+                <div className="p-6 md:p-8 bg-white border border-border-subtle rounded-2xl shadow-level1 space-y-4 text-xs md:text-sm">
+                  <div className="pb-3 border-b border-border-subtle">
+                    <p className="text-outline font-bold uppercase tracking-wider text-[10px]">Nama Lengkap</p>
+                    <p className="font-bold text-on-surface">{formData.firstName || "Budi"} {formData.lastName || "Santoso"}</p>
+                  </div>
+                  <div className="pb-3 border-b border-border-subtle">
+                    <p className="text-outline font-bold uppercase tracking-wider text-[10px]">Nomor NIK</p>
+                    <p className="font-bold text-on-surface">{formData.nik || "3171012345670001"}</p>
+                  </div>
+                  <div className="pb-3 border-b border-border-subtle">
+                    <p className="text-outline font-bold uppercase tracking-wider text-[10px]">Email & Kontak</p>
+                    <p className="font-bold text-on-surface">{formData.email || "contoh@email.com"} • +62 {formData.phone || "812-3456-7890"}</p>
+                  </div>
+                  <div>
+                    <p className="text-outline font-bold uppercase tracking-wider text-[10px]">Kategori Bantuan</p>
+                    <p className="font-bold text-primary">Bantuan Sosial 2026</p>
+                  </div>
+                </div>
+              )}
+
+              {/* Step 7: Submit */}
+              {currentStep === 7 && (
+                <div className="p-6 md:p-8 bg-white border border-border-subtle rounded-2xl shadow-level1 space-y-6">
+                  <label className="flex items-start gap-3 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={formData.agreeTerms}
+                      onChange={(e) => handleChange("agreeTerms", e.target.checked)}
+                      className="w-5 h-5 rounded border-border-subtle text-primary focus:ring-primary mt-0.5"
+                    />
+                    <span className="text-xs text-on-surface leading-relaxed">
+                      Saya menyatakan bahwa seluruh data yang diisikan adalah benar dan bersedia dilakukan verifikasi oleh tim validator publik resmi.
+                    </span>
+                  </label>
+
                   <button
                     type="button"
-                    onClick={() => handleChange("ktpUploaded", !formData.ktpUploaded)}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
-                      formData.ktpUploaded
-                        ? "bg-emerald-100 text-emerald-700"
-                        : "bg-primary text-on-primary hover:bg-primary-container"
-                    }`}
+                    disabled={!formData.agreeTerms || isSubmitting}
+                    onClick={handleSubmit}
+                    className="w-full h-12 bg-primary text-on-primary font-bold rounded-xl hover:bg-primary-container active:scale-[0.99] transition-all flex items-center justify-center gap-2 shadow-md disabled:opacity-50"
                   >
-                    {formData.ktpUploaded ? "Uploaded ✓" : "Choose File"}
+                    {isSubmitting ? (
+                      <span>Memproses Pengajuan...</span>
+                    ) : (
+                      <>
+                        <span>Kirim Pengajuan Bantuan Sosial</span>
+                        <ArrowRight className="w-4.5 h-4.5" />
+                      </>
+                    )}
                   </button>
                 </div>
+              )}
 
-                <div className="p-4 rounded-xl border border-dashed border-border-subtle bg-surface-container-low flex items-center justify-between gap-4">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-lg bg-surface border border-border-subtle flex items-center justify-center text-primary">
-                      <Upload className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <p className="text-xs font-bold text-on-surface">Family Registration Card (KK)</p>
-                      <p className="text-[11px] text-on-surface-variant">JPG/PNG format, max 5MB</p>
-                    </div>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() => handleChange("kkUploaded", !formData.kkUploaded)}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
-                      formData.kkUploaded
-                        ? "bg-emerald-100 text-emerald-700"
-                        : "bg-primary text-on-primary hover:bg-primary-container"
-                    }`}
-                  >
-                    {formData.kkUploaded ? "Uploaded ✓" : "Choose File"}
-                  </button>
-                </div>
-              </div>
-            )}
-
-            {/* Step 6: Review */}
-            {currentStep === 6 && (
-              <div className="p-6 md:p-8 bg-surface border border-border-subtle rounded-xl shadow-xs space-y-4 text-xs md:text-sm">
-                <div className="pb-3 border-b border-border-subtle">
-                  <p className="text-outline font-bold uppercase tracking-wider text-[10px]">Full Name</p>
-                  <p className="font-bold text-on-surface">{formData.firstName || "John"} {formData.lastName || "Doe"}</p>
-                </div>
-                <div className="pb-3 border-b border-border-subtle">
-                  <p className="text-outline font-bold uppercase tracking-wider text-[10px]">ID Number</p>
-                  <p className="font-bold text-on-surface">{formData.nik || "123456789012"}</p>
-                </div>
-                <div className="pb-3 border-b border-border-subtle">
-                  <p className="text-outline font-bold uppercase tracking-wider text-[10px]">Email & Contact</p>
-                  <p className="font-bold text-on-surface">{formData.email || "john.doe@example.com"} • +1 {formData.phone || "555-0123"}</p>
-                </div>
+              {/* Integrated Secure Verification Trust Banner */}
+              <div className="p-5 bg-blue-50/70 border border-blue-200/60 rounded-2xl flex items-start gap-3 text-xs text-blue-900">
+                <CheckCircle className="w-5 h-5 text-primary shrink-0 mt-0.5" />
                 <div>
-                  <p className="text-outline font-bold uppercase tracking-wider text-[10px]">Assistance Category</p>
-                  <p className="font-bold text-primary">Social Assistance 2026</p>
+                  <h4 className="font-bold text-sm text-primary mb-1">Keamanan Data Terjamin (256-bit SSL)</h4>
+                  <p className="text-on-surface-variant text-xs leading-relaxed">
+                    Data pengajuan Anda dilindungi enkripsi standar pemerintah dan hanya digunakan untuk keperluan verifikasi kelayakan bantuan sosial.
+                  </p>
                 </div>
               </div>
-            )}
 
-            {/* Step 7: Submit */}
-            {currentStep === 7 && (
-              <div className="p-6 md:p-8 bg-surface border border-border-subtle rounded-xl shadow-xs space-y-6">
-                <label className="flex items-start gap-3 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    checked={formData.agreeTerms}
-                    onChange={(e) => handleChange("agreeTerms", e.target.checked)}
-                    className="w-5 h-5 rounded border-border-subtle text-primary focus:ring-primary mt-0.5"
-                  />
-                  <span className="text-xs text-on-surface leading-relaxed">
-                    I declare that all information provided is accurate and consent to verification by authorized community consensus protocols.
-                  </span>
-                </label>
-
+              {/* Navigation Actions Footer */}
+              <div className="flex items-center justify-between pt-6 border-t border-border-subtle">
                 <button
                   type="button"
-                  disabled={!formData.agreeTerms || isSubmitting}
-                  onClick={handleSubmit}
-                  className="w-full h-12 bg-primary text-on-primary font-bold rounded-lg hover:bg-primary-container active:scale-[0.99] transition-all flex items-center justify-center gap-2 shadow-sm disabled:opacity-50"
+                  onClick={() => router.push("/dashboard")}
+                  className="px-5 h-12 flex items-center gap-2 text-on-surface-variant font-semibold hover:bg-surface-container-low rounded-xl transition-all active:scale-95 text-xs md:text-sm"
                 >
-                  {isSubmitting ? (
-                    <span>Processing Submission...</span>
-                  ) : (
-                    <>
-                      <span>Submit Assistance Application</span>
-                      <ArrowRight className="w-4.5 h-4.5" />
-                    </>
-                  )}
+                  <LogOut className="w-4 h-4" />
+                  Simpan & Keluar
                 </button>
-              </div>
-            )}
 
-            {/* Navigation Controls */}
-            <div className="flex items-center justify-between pt-8 border-t border-border-subtle">
-              <button
-                type="button"
-                onClick={() => router.push("/dashboard")}
-                className="px-6 h-12 flex items-center gap-2 text-on-surface-variant font-semibold hover:bg-surface-container-low rounded-lg transition-all active:scale-95 text-xs md:text-sm"
-              >
-                <LogOut className="w-4 h-4" />
-                Save and Exit
-              </button>
+                <div className="flex items-center gap-3">
+                  {currentStep > 1 && (
+                    <button
+                      type="button"
+                      onClick={handlePrev}
+                      className="px-5 h-12 flex items-center gap-1.5 text-on-surface font-semibold bg-white border border-border-subtle hover:bg-surface-container-low rounded-xl transition-all active:scale-95 text-xs md:text-sm shadow-2xs"
+                    >
+                      <ArrowLeft className="w-4 h-4" />
+                      Sebelumnya
+                    </button>
+                  )}
 
-              <div className="flex items-center gap-3">
-                {currentStep > 1 && (
-                  <button
-                    type="button"
-                    onClick={handlePrev}
-                    className="px-6 h-12 flex items-center gap-1.5 text-on-surface font-semibold bg-surface border border-border-subtle hover:bg-surface-container-low rounded-lg transition-all active:scale-95 text-xs md:text-sm"
-                  >
-                    <ArrowLeft className="w-4 h-4" />
-                    Previous
-                  </button>
-                )}
-
-                {currentStep < 7 && (
-                  <button
-                    type="button"
-                    onClick={handleNext}
-                    className="px-8 md:px-10 h-12 bg-primary-container text-on-primary-container font-semibold rounded-lg shadow-md hover:shadow-lg transition-all hover:opacity-90 active:scale-95 flex items-center gap-2 text-xs md:text-sm"
-                  >
-                    Next Step
-                    <ArrowRight className="w-4 h-4" />
-                  </button>
-                )}
+                  {currentStep < 7 && (
+                    <button
+                      type="button"
+                      onClick={handleNext}
+                      className="px-6 md:px-8 h-12 bg-primary text-white font-semibold rounded-xl shadow-md hover:bg-primary-container transition-all active:scale-95 flex items-center gap-2 text-xs md:text-sm"
+                    >
+                      Langkah Selanjutnya
+                      <ArrowRight className="w-4 h-4" />
+                    </button>
+                  )}
+                </div>
               </div>
             </div>
-          </div>
-        </section>
-
-        {/* Atmospheric Illustration Area (Desktop Only) */}
-        <aside className="hidden xl:flex flex-col w-80 shrink-0 gap-6">
-          <div className="sticky top-44 space-y-6">
-            <div className="aspect-square w-full rounded-2xl overflow-hidden bg-surface-container-high relative border border-border-subtle">
-              <img
-                className="w-full h-full object-cover opacity-90 transition-transform duration-500 hover:scale-105"
-                alt="A minimalist, soft-modern illustration of a diverse community standing before a clean government building."
-                src="https://images.unsplash.com/photo-1577495508048-b635879837f1?q=80&w=800&auto=format&fit=crop"
-              />
-            </div>
-            <div className="p-6 bg-secondary-fixed text-on-secondary-fixed rounded-2xl border border-secondary-fixed-dim/30">
-              <div className="flex items-center gap-2 mb-3">
-                <CheckCircle className="w-5 h-5 text-secondary" />
-                <h4 className="font-display text-[18px] font-bold leading-tight">
-                  Secure Verification
-                </h4>
-              </div>
-              <p className="text-xs font-body leading-relaxed opacity-90">
-                All data entered is encrypted using 256-bit SSL technology. Your information is only visible to authorized case workers.
-              </p>
-            </div>
-          </div>
-        </aside>
-      </main>
+          </main>
+        </div>
+      </div>
 
       {/* Footer */}
-      <footer className="w-full py-12 px-4 md:px-margin-desktop bg-surface-container-low mt-auto border-t border-border-subtle dark:border-outline-variant">
-        <div className="max-w-container-max mx-auto flex flex-col md:flex-row justify-between items-center gap-8 text-xs text-on-surface-variant">
-          <div className="flex flex-col gap-2">
-            <span className="font-bold tracking-wider uppercase text-on-surface-variant">
+      <footer className="w-full py-8 px-6 bg-white mt-auto border-t border-border-subtle">
+        <div className="max-w-[1280px] mx-auto flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-on-surface-variant">
+          <div className="flex flex-col gap-1">
+            <span className="font-bold tracking-wider uppercase text-on-surface">
               BANTUVERIF
             </span>
             <p className="text-secondary">
@@ -726,24 +698,15 @@ export default function ApplyPage() {
             </p>
           </div>
           <nav className="flex flex-wrap justify-center gap-6 font-medium">
-            <a className="hover:text-primary underline transition-all" href="#">
-              Privacy Policy
-            </a>
-            <a className="hover:text-primary underline transition-all" href="#">
-              Terms of Service
-            </a>
-            <a className="hover:text-primary underline transition-all" href="#">
-              FAQ
-            </a>
-            <a className="hover:text-primary underline transition-all" href="#">
-              Audit Transparency
-            </a>
-            <a className="hover:text-primary underline transition-all" href="#">
-              Contact Support
-            </a>
+            <a className="hover:text-primary transition-all" href="#">Kebijakan Privasi</a>
+            <a className="hover:text-primary transition-all" href="#">Syarat Layanan</a>
+            <a className="hover:text-primary transition-all" href="#">FAQ</a>
+            <a className="hover:text-primary transition-all" href="#">Transparansi Audit</a>
+            <a className="hover:text-primary transition-all" href="#">Kontak Dukungan</a>
           </nav>
         </div>
       </footer>
     </div>
   );
 }
+

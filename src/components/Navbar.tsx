@@ -12,7 +12,9 @@ import {
   FileText,
   LayoutDashboard,
   ChevronDown,
-  Sparkles,
+  History,
+  ClipboardCheck,
+  Settings,
 } from "lucide-react";
 
 export default function Navbar() {
@@ -44,7 +46,6 @@ export default function Navbar() {
   }, []);
 
   // Jangan tampilkan Navbar utama di halaman login
-  // (semua hooks harus dipanggil dulu sebelum early return)
   if (pathname === "/login") {
     return null;
   }
@@ -60,32 +61,44 @@ export default function Navbar() {
   const navItems = isLanding
     ? [
         { label: "Dashboard", href: "#beranda" },
-        { label: "Pengajuan", href: "#cara-kerja" },
-        { label: "Riwayat", href: "#simulasi" },
-        { label: "FAQ", href: "#faq" },
+        { label: "Pengajuan Saya", href: "/tracking" },
+        { label: "Riwayat", href: "/history" },
+        { label: "FAQ & Kriteria", href: "/riwayat" },
       ]
     : [
-        { label: "Dashboard", href: "/dashboard" },
+        {
+          label: "Dashboard",
+          href: "/dashboard",
+        },
         {
           label: "Pengajuan Saya",
           href: "/tracking",
           matchRoutes: ["/apply", "/tracking", "/application-submitted"],
-          matchPrefixes: ["/tracking"],
+          matchPrefixes: ["/tracking", "/apply"],
         },
-        { label: "Riwayat", href: "/riwayat" },
-        { label: "FAQ", href: "/dashboard#faq" },
+        {
+          label: "Riwayat",
+          href: "/history",
+          matchRoutes: ["/history", "/distribution-confirmation", "/application-approved"],
+          matchPrefixes: ["/history", "/distribution-confirmation"],
+        },
+        {
+          label: "FAQ & Kriteria",
+          href: "/riwayat",
+          matchRoutes: ["/riwayat"],
+        },
       ];
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-white/90 backdrop-blur-md border-b border-[#e2e8f0] transition-all">
-      <div className="max-w-[1280px] mx-auto px-4 md:px-6 h-16 md:h-20 flex items-center justify-between">
+    <header className="sticky top-0 z-50 w-full bg-white/95 backdrop-blur-md border-b border-border-subtle transition-all shadow-2xs">
+      <div className="max-w-[1280px] mx-auto px-4 md:px-6 h-16 md:h-18 flex items-center justify-between">
         {/* Brand Logo */}
         <Link href={isLanding ? "#beranda" : "/dashboard"} className="flex items-center gap-2.5 group">
-          <div className="w-9 h-9 md:w-10 md:h-10 bg-primary-container rounded-xl flex items-center justify-center text-white shadow-md shadow-primary-container/20 group-hover:scale-105 transition-transform">
-            <ShieldCheck className="w-5 h-5 md:w-6 md:h-6" />
+          <div className="w-9 h-9 md:w-10 md:h-10 bg-primary rounded-xl flex items-center justify-center text-white shadow-md shadow-primary/20 group-hover:scale-105 transition-all duration-200">
+            <ShieldCheck className="w-5 h-5 md:w-6 md:h-6 stroke-[2.2]" />
           </div>
-          <span className="font-display font-extrabold text-xl md:text-2xl tracking-tight text-on-surface">
-            Bantu<span className="text-primary-container">Verif</span>
+          <span className="font-display font-black text-xl md:text-2xl tracking-tight text-on-surface">
+            Bantu<span className="text-primary">Verif</span>
           </span>
         </Link>
 
@@ -102,10 +115,10 @@ export default function Navbar() {
               <Link
                 key={item.label}
                 href={item.href}
-                className={`text-[15px] transition-all relative py-1 ${
+                className={`text-sm font-semibold transition-all relative py-5 border-b-2 ${
                   isActive
-                    ? "font-bold text-primary-container border-b-2 border-primary-container"
-                    : "font-medium text-on-surface-variant hover:text-primary-container"
+                    ? "font-bold text-primary border-primary"
+                    : "text-on-surface-variant hover:text-primary border-transparent hover:border-primary/30"
                 }`}
               >
                 {item.label}
@@ -118,7 +131,7 @@ export default function Navbar() {
         <div className="flex items-center gap-3 md:gap-4">
           <button
             title="Notifikasi"
-            className="w-9 h-9 md:w-10 md:h-10 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-[#f2f4f6] transition-colors relative border border-transparent hover:border-[#e2e8f0]"
+            className="w-9 h-9 md:w-10 md:h-10 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-surface-container-low transition-colors relative border border-transparent hover:border-border-subtle"
           >
             <Bell className="w-5 h-5" />
             <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-rose-500 ring-2 ring-white"></span>
@@ -128,9 +141,9 @@ export default function Navbar() {
             <div className="relative">
               <button
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                className="flex items-center gap-2.5 p-1 md:pl-2 md:pr-3 rounded-full hover:bg-[#f2f4f6] border border-transparent hover:border-[#e2e8f0] transition-all"
+                className="flex items-center gap-2.5 p-1 md:pl-2 md:pr-3 rounded-full hover:bg-surface-container-low border border-transparent hover:border-border-subtle transition-all"
               >
-                <div className="w-9 h-9 rounded-full bg-primary-container/10 border border-primary-container/20 text-primary-container font-extrabold text-sm flex items-center justify-center shadow-2xs">
+                <div className="w-9 h-9 rounded-full bg-primary/10 border border-primary/20 text-primary font-extrabold text-sm flex items-center justify-center shadow-2xs">
                   {user.email ? user.email.charAt(0).toUpperCase() : <User className="w-4 h-4" />}
                 </div>
                 <span className="hidden sm:block text-xs font-bold text-on-surface max-w-[120px] truncate">
@@ -141,8 +154,8 @@ export default function Navbar() {
 
               {/* Profile Dropdown */}
               {isDropdownOpen && (
-                <div className="absolute right-0 mt-2 w-56 bg-white rounded-2xl border border-[#e2e8f0] shadow-lg py-2 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
-                  <div className="px-4 py-2.5 border-b border-[#e2e8f0]">
+                <div className="absolute right-0 mt-2 w-56 bg-white rounded-2xl border border-border-subtle shadow-xl py-2 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
+                  <div className="px-4 py-2.5 border-b border-border-subtle">
                     <p className="text-xs font-bold text-on-surface truncate">
                       {user.email}
                     </p>
@@ -155,22 +168,49 @@ export default function Navbar() {
                   <Link
                     href="/dashboard"
                     onClick={() => setIsDropdownOpen(false)}
-                    className="flex items-center gap-2.5 px-4 py-2.5 text-xs font-semibold text-on-surface-variant hover:bg-[#f2f4f6] hover:text-primary-container transition-colors"
+                    className="flex items-center gap-2.5 px-4 py-2.5 text-xs font-semibold text-on-surface-variant hover:bg-surface-container-low hover:text-primary transition-colors"
                   >
-                    <LayoutDashboard className="w-4 h-4" />
+                    <LayoutDashboard className="w-4 h-4 text-primary" />
                     <span>Dashboard Utama</span>
                   </Link>
 
                   <Link
                     href="/tracking"
                     onClick={() => setIsDropdownOpen(false)}
-                    className="flex items-center gap-2.5 px-4 py-2.5 text-xs font-semibold text-on-surface-variant hover:bg-[#f2f4f6] hover:text-primary-container transition-colors"
+                    className="flex items-center gap-2.5 px-4 py-2.5 text-xs font-semibold text-on-surface-variant hover:bg-surface-container-low hover:text-primary transition-colors"
                   >
-                    <FileText className="w-4 h-4" />
+                    <FileText className="w-4 h-4 text-primary" />
                     <span>Pengajuan Saya</span>
                   </Link>
 
-                  <div className="pt-1 mt-1 border-t border-[#e2e8f0]">
+                  <Link
+                    href="/history"
+                    onClick={() => setIsDropdownOpen(false)}
+                    className="flex items-center gap-2.5 px-4 py-2.5 text-xs font-semibold text-on-surface-variant hover:bg-surface-container-low hover:text-primary transition-colors"
+                  >
+                    <History className="w-4 h-4 text-primary" />
+                    <span>Riwayat Pencairan</span>
+                  </Link>
+
+                  <Link
+                    href="/riwayat"
+                    onClick={() => setIsDropdownOpen(false)}
+                    className="flex items-center gap-2.5 px-4 py-2.5 text-xs font-semibold text-on-surface-variant hover:bg-surface-container-low hover:text-primary transition-colors"
+                  >
+                    <ClipboardCheck className="w-4 h-4 text-primary" />
+                    <span>Kriteria Kelayakan</span>
+                  </Link>
+
+                  <Link
+                    href="/settings"
+                    onClick={() => setIsDropdownOpen(false)}
+                    className="flex items-center gap-2.5 px-4 py-2.5 text-xs font-semibold text-on-surface-variant hover:bg-surface-container-low hover:text-primary transition-colors"
+                  >
+                    <Settings className="w-4 h-4 text-primary" />
+                    <span>Pengaturan Akun</span>
+                  </Link>
+
+                  <div className="pt-1 mt-1 border-t border-border-subtle">
                     <button
                       onClick={handleSignOut}
                       className="w-full flex items-center gap-2.5 px-4 py-2.5 text-xs font-semibold text-rose-600 hover:bg-rose-50 transition-colors"
@@ -186,13 +226,13 @@ export default function Navbar() {
             <div className="hidden sm:flex items-center gap-2.5 ml-2">
               <Link
                 href="/login"
-                className="btn-48 px-5 rounded-md font-semibold text-[14px] text-on-surface hover:bg-surface-container transition-colors flex items-center justify-center h-10"
+                className="px-4 py-2 rounded-xl font-semibold text-xs md:text-sm text-on-surface hover:bg-surface-container-low transition-colors"
               >
                 Masuk
               </Link>
               <Link
                 href="/login"
-                className="btn-48 px-5 rounded-md font-semibold text-[14px] bg-primary-container text-white hover:bg-primary shadow-sm hover:shadow-md transition-all flex items-center justify-center h-10"
+                className="px-5 py-2.5 rounded-xl font-bold text-xs md:text-sm bg-primary text-white hover:bg-primary-container shadow-md hover:shadow-lg transition-all"
               >
                 Ajukan Bantuan
               </Link>
@@ -200,7 +240,7 @@ export default function Navbar() {
           ) : (
             <Link
               href="/login"
-              className="px-4 py-2 rounded-xl bg-primary-container text-white text-xs md:text-sm font-semibold hover:bg-primary transition-all shadow-2xs"
+              className="px-4 py-2 rounded-xl bg-primary text-white text-xs md:text-sm font-semibold hover:bg-primary-container transition-all shadow-2xs"
             >
               Masuk Akun
             </Link>

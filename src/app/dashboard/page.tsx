@@ -36,6 +36,8 @@ import {
   FileCheck2,
 } from "lucide-react";
 
+import PortalSidebar from "@/components/PortalSidebar";
+
 type NavItem = "overview" | "applications" | "eligibility" | "history" | "settings";
 
 export default function DashboardPage() {
@@ -113,97 +115,11 @@ export default function DashboardPage() {
   return (
     <div className="min-h-screen bg-[#f7f9fb] text-[#191c1e] font-body flex flex-col justify-between selection:bg-[#2563eb] selection:text-white">
       {/* Main Content Container */}
-
-      {/* Main Content Container */}
       <div className="max-w-[1280px] mx-auto px-6 py-8 w-full flex-1">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          {/* Left Sidebar Menu */}
-          <aside className="lg:col-span-3 bg-white rounded-2xl border border-[#e2e8f0] p-5 shadow-2xs">
-            <div className="text-[11px] font-bold tracking-widest text-[#737686] uppercase mb-4 px-3">
-              PORTAL WARGA
-            </div>
+          {/* Unified Portal Sidebar */}
+          <PortalSidebar active="dashboard" />
 
-            <nav className="flex flex-col gap-1.5 mb-8">
-              <button
-                onClick={() => setActiveNav("overview")}
-                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-sm transition-all ${
-                  activeNav === "overview"
-                    ? "bg-[#2563eb] text-white shadow-md shadow-primary-container/20"
-                    : "text-on-surface-variant hover:bg-[#f2f4f6] hover:text-on-surface"
-                }`}
-              >
-                <LayoutGrid className="w-4.5 h-4.5" />
-                <span>Ringkasan Utama</span>
-              </button>
-
-              <button
-                onClick={() => setActiveNav("applications")}
-                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-sm transition-all ${
-                  activeNav === "applications"
-                    ? "bg-[#2563eb] text-white shadow-md shadow-primary-container/20"
-                    : "text-on-surface-variant hover:bg-[#f2f4f6] hover:text-on-surface"
-                }`}
-              >
-                <FileText className="w-4.5 h-4.5" />
-                <span>Pengajuan Saya</span>
-              </button>
-
-              <button
-                onClick={() => setActiveNav("eligibility")}
-                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-sm transition-all ${
-                  activeNav === "eligibility"
-                    ? "bg-[#2563eb] text-white shadow-md shadow-primary-container/20"
-                    : "text-on-surface-variant hover:bg-[#f2f4f6] hover:text-on-surface"
-                }`}
-              >
-                <CheckCircle2 className="w-4.5 h-4.5" />
-                <span>Kriteria Kelayakan</span>
-              </button>
-
-              <button
-                onClick={() => {
-                  setActiveNav("history");
-                  document.getElementById("riwayat")?.scrollIntoView({ behavior: "smooth" });
-                }}
-                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-sm transition-all ${
-                  activeNav === "history"
-                    ? "bg-[#2563eb] text-white shadow-md shadow-primary-container/20"
-                    : "text-on-surface-variant hover:bg-[#f2f4f6] hover:text-on-surface"
-                }`}
-              >
-                <History className="w-4.5 h-4.5" />
-                <span>Riwayat Verifikasi</span>
-              </button>
-
-              <button
-                onClick={() => setActiveNav("settings")}
-                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-sm transition-all ${
-                  activeNav === "settings"
-                    ? "bg-[#2563eb] text-white shadow-md shadow-primary-container/20"
-                    : "text-on-surface-variant hover:bg-[#f2f4f6] hover:text-on-surface"
-                }`}
-              >
-                <Settings className="w-4.5 h-4.5" />
-                <span>Pengaturan Akun</span>
-              </button>
-
-              <button
-                onClick={async () => await supabase.auth.signOut()}
-                className="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-sm transition-all text-rose-600 hover:bg-rose-50 mt-2"
-              >
-                <User className="w-4.5 h-4.5" />
-                <span>Keluar Akun</span>
-              </button>
-            </nav>
-
-            <Link
-              href="/apply"
-              className="btn-48 w-full rounded-xl font-semibold text-sm bg-[#2563eb] text-white hover:bg-[#1d4ed8] shadow-[0_4px_14px_rgba(37,99,235,0.25)] hover:shadow-[0_6px_20px_rgba(37,99,235,0.35)] transition-all flex items-center justify-center gap-2.5"
-            >
-              <Plus className="w-5 h-5" />
-              <span>+ Pengajuan Baru</span>
-            </Link>
-          </aside>
 
           {/* Main Dashboard Panel */}
           <main className="lg:col-span-9 space-y-8">
