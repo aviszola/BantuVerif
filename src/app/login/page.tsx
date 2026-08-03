@@ -33,19 +33,27 @@ export default function LoginPage() {
     setErrorMessage("");
     setIsLoading(true);
 
-    const { error } = await supabase.auth.signInWithOtp({
-      email: identifier,
-      options: {
-        shouldCreateUser: true,
-      },
-    });
+    try {
+      const { error } = await supabase.auth.signInWithOtp({
+        email: identifier,
+        options: {
+          shouldCreateUser: true,
+        },
+      });
 
-    setIsLoading(false);
+      setIsLoading(false);
 
-    if (error) {
-      setErrorMessage(error.message);
-    } else {
-      setStep("otp");
+      if (error) {
+        console.error("Supabase signInWithOtp error:", error);
+        const msg = error.message && error.message !== "{}" ? error.message : "Gagal mengirim OTP. Periksa konfigurasi SMTP/Auth Logs di Supabase.";
+        setErrorMessage(msg);
+      } else {
+        setStep("otp");
+      }
+    } catch (err: any) {
+      console.error("Unexpected signIn error:", err);
+      setIsLoading(false);
+      setErrorMessage("Terjadi kesalahan koneksi.");
     }
   };
 
@@ -55,21 +63,29 @@ export default function LoginPage() {
     setErrorMessage("");
     setIsLoading(true);
 
-    const { data, error } = await supabase.auth.verifyOtp({
-      email: identifier,
-      token: otpCode,
-      type: "email",
-    });
+    try {
+      const { data, error } = await supabase.auth.verifyOtp({
+        email: identifier,
+        token: otpCode,
+        type: "email",
+      });
 
-    setIsLoading(false);
+      setIsLoading(false);
 
-    if (error) {
-      setErrorMessage(error.message);
-    } else if (data?.session) {
-      setIsSuccess(true);
-      setTimeout(() => {
-        router.push("/dashboard");
-      }, 1500);
+      if (error) {
+        console.error("Supabase verifyOtp error:", error);
+        const msg = error.message && error.message !== "{}" ? error.message : "Kode OTP tidak valid atau kedaluwarsa.";
+        setErrorMessage(msg);
+      } else if (data?.session) {
+        setIsSuccess(true);
+        setTimeout(() => {
+          router.push("/dashboard");
+        }, 1500);
+      }
+    } catch (err: any) {
+      console.error("Unexpected verify error:", err);
+      setIsLoading(false);
+      setErrorMessage("Terjadi kesalahan koneksi.");
     }
   };
 
@@ -223,10 +239,10 @@ export default function LoginPage() {
                   <input
                     type="text"
                     required
-                    maxLength={6}
+                    maxLength={8}
                     value={otpCode}
                     onChange={(e) => setOtpCode(e.target.value)}
-                    placeholder="Masukkan 6 angka OTP"
+                    placeholder="Masukkan kode OTP (6-8 digit)"
                     className="w-full h-12 px-4 text-center tracking-[0.3em] text-lg font-bold rounded-lg bg-[#f2f4f6] border border-transparent text-on-surface placeholder:tracking-normal placeholder:text-sm placeholder:font-normal outline-none focus:bg-white focus:border-primary-container focus:ring-2 focus:ring-primary-container/20 transition-all"
                   />
                   <p className="text-[12px] text-on-surface-variant mt-2 text-center">
