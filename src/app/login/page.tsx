@@ -287,7 +287,7 @@ export default function LoginPage() {
               </form>
             ) : mode === "register" && roleStep === "role" ? (
               /* Step 2: Role Selection */
-              <div className="space-y-4">
+              <div className="space-y-4 animate-fade-in-up">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                   {REGISTER_ROLES.map((role) => {
                     const isSelected = selectedRole === role.id;
@@ -331,7 +331,7 @@ export default function LoginPage() {
                         }`}
                       >
                         {role.badge && (
-                          <span className={`absolute top-2.5 right-2.5 px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider border ${s.bg} ${s.text} ${s.border}`}>
+                          <span className={`inline-block mx-auto mt-0.5 mb-1.5 px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider border ${s.bg} ${s.text} ${s.border}`}>
                             {role.badge}
                           </span>
                         )}
@@ -379,7 +379,7 @@ export default function LoginPage() {
               </div>
             ) : mode === "register" && roleStep === "wilayah" ? (
               /* Step 3: RT/RW Wilayah Verification */
-              <form onSubmit={handleContinueWilayah} className="space-y-5">
+              <form onSubmit={handleContinueWilayah} className="space-y-5 animate-fade-in-up">
                 <div className="flex items-start gap-3 p-3.5 rounded-xl bg-[#fef3c7]/50 border border-[#fde68a] text-xs text-[#92400e] leading-relaxed">
                   <Shield className="w-4 h-4 shrink-0 mt-0.5 text-[#d97706]" />
                   <p>
@@ -410,7 +410,7 @@ export default function LoginPage() {
                   </label>
                   <label className="flex flex-col items-center justify-center gap-1.5 w-full h-32 rounded-xl border-2 border-dashed border-border-subtle bg-[#f8fafc] cursor-pointer hover:border-primary-container hover:bg-[#eff6ff] transition-all text-center px-4">
                     <UploadCloud className="w-6 h-6 text-primary-container" />
-                    <span className="text-xs font-semibold text-on-surface">
+                    <span className="text-xs font-semibold text-on-surface truncate max-w-full">
                       {skFile ? skFile.name : "Klik untuk mengunggah dokumen SK"}
                     </span>
                     <span className="text-[11px] text-on-surface-variant">

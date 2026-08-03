@@ -29,11 +29,7 @@ interface AccordionItem {
   content: React.ReactNode;
 }
 
-export default function ApplicationDetailPage({
-  params,
-}: {
-  params: { id: string };
-}) {
+export default function ApplicationDetailPage() {
   const [openAccordion, setOpenAccordion] = useState<string | null>("acc-1");
   const [dotPulse, setDotPulse] = useState(true);
 

@@ -43,11 +43,7 @@ const evidenceFiles = [
   },
 ];
 
-export default function VerificationDetailPage({
-  params,
-}: {
-  params: { id: string };
-}) {
+export default function VerificationDetailPage() {
   const [decision, setDecision] = useState<Decision | null>(null);
   const [notes, setNotes] = useState("");
 
