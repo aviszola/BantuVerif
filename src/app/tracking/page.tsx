@@ -43,70 +43,79 @@ export default function TrackingPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-background text-on-background font-body flex flex-col selection:bg-primary-container selection:text-white">
-      <div className="flex flex-1">
-        {/* SideNavBar */}
-        <aside className="hidden lg:flex flex-col h-[calc(100vh-64px)] sticky top-16 p-4 border-r border-border-subtle bg-surface-container-low w-64 shrink-0">
-          <div className="flex items-center gap-3 mb-8 px-2">
-            <div className="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-white shadow-sm">
-              <User className="w-5 h-5 fill-current" />
+    <div className="min-h-screen bg-[#f7f9fb] text-[#191c1e] font-body flex flex-col justify-between selection:bg-[#2563eb] selection:text-white">
+      <div className="max-w-[1280px] mx-auto px-6 py-8 w-full flex-1">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          {/* Left Sidebar Menu */}
+          <aside className="hidden lg:block lg:col-span-3 bg-white rounded-2xl border border-[#e2e8f0] p-5 shadow-2xs">
+            <div className="text-[11px] font-bold tracking-widest text-[#737686] uppercase mb-4 px-3">
+              PORTAL WARGA
             </div>
-            <div className="overflow-hidden">
-              <p className="text-sm font-semibold text-on-surface truncate">
-                {user?.email ? user.email.split("@")[0] : "Profil Warga"}
-              </p>
-              <p className="text-xs text-on-surface-variant">Akses Portal Warga</p>
-            </div>
-          </div>
-          <nav className="flex-1 space-y-1">
-            <Link
-              href="/dashboard"
-              className="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-highest rounded-lg transition-colors text-sm font-semibold"
-            >
-              <LayoutDashboard className="w-5 h-5" />
-              Ringkasan
-            </Link>
-            <Link
-              href="/tracking"
-              className="flex items-center gap-3 px-3 py-2 bg-primary-container text-white rounded-lg font-bold text-sm transition-transform shadow-xs"
-            >
-              <FileText className="w-5 h-5 fill-current" />
-              Pengajuan Saya
-            </Link>
-            <a
-              href="#"
-              className="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-highest rounded-lg transition-colors text-sm font-semibold"
-            >
-              <ClipboardCheck className="w-5 h-5" />
-              Kelayakan (Eligibility)
-            </a>
-            <a
-              href="#"
-              className="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-highest rounded-lg transition-colors text-sm font-semibold"
-            >
-              <History className="w-5 h-5" />
-              Riwayat
-            </a>
-            <a
-              href="#"
-              className="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-highest rounded-lg transition-colors text-sm font-semibold"
-            >
-              <Settings className="w-5 h-5" />
-              Pengaturan
-            </a>
-          </nav>
-          <Link
-            href="/dashboard"
-            className="mt-auto w-full py-3 px-4 bg-primary text-white text-sm font-semibold rounded-lg hover:opacity-90 transition-all flex items-center justify-center gap-2 shadow-sm"
-          >
-            <Plus className="w-5 h-5" />
-            Pengajuan Baru
-          </Link>
-        </aside>
 
-        {/* Main Content Canvas */}
-        <main className="flex-1 p-4 md:p-10 overflow-y-auto">
-          <div className="max-w-[1280px] mx-auto">
+            <nav className="flex flex-col gap-1.5 mb-8">
+              <Link
+                href="/dashboard"
+                className="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-sm transition-all text-on-surface-variant hover:bg-[#f2f4f6] hover:text-on-surface"
+              >
+                <LayoutDashboard className="w-4.5 h-4.5" />
+                <span>Ringkasan Utama</span>
+              </Link>
+
+              <Link
+                href="/tracking"
+                className="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-sm transition-all bg-[#2563eb] text-white shadow-md shadow-primary-container/20"
+              >
+                <FileText className="w-4.5 h-4.5" />
+                <span>Pengajuan Saya</span>
+              </Link>
+
+              <Link
+                href="/dashboard"
+                className="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-sm transition-all text-on-surface-variant hover:bg-[#f2f4f6] hover:text-on-surface"
+              >
+                <ClipboardCheck className="w-4.5 h-4.5" />
+                <span>Kriteria Kelayakan</span>
+              </Link>
+
+              <Link
+                href="/dashboard"
+                className="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-sm transition-all text-on-surface-variant hover:bg-[#f2f4f6] hover:text-on-surface"
+              >
+                <History className="w-4.5 h-4.5" />
+                <span>Riwayat Verifikasi</span>
+              </Link>
+
+              <Link
+                href="/dashboard"
+                className="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-sm transition-all text-on-surface-variant hover:bg-[#f2f4f6] hover:text-on-surface"
+              >
+                <Settings className="w-4.5 h-4.5" />
+                <span>Pengaturan Akun</span>
+              </Link>
+
+              <button
+                onClick={async () => {
+                  await supabase.auth.signOut();
+                  window.location.href = "/login";
+                }}
+                className="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-sm transition-all text-rose-600 hover:bg-rose-50 mt-2"
+              >
+                <User className="w-4.5 h-4.5" />
+                <span>Keluar Akun</span>
+              </button>
+            </nav>
+
+            <Link
+              href="/apply"
+              className="btn-48 w-full rounded-xl font-semibold text-sm bg-[#2563eb] text-white hover:bg-[#1d4ed8] shadow-[0_4px_14px_rgba(37,99,235,0.25)] hover:shadow-[0_6px_20px_rgba(37,99,235,0.35)] transition-all flex items-center justify-center gap-2.5 h-12"
+            >
+              <Plus className="w-5 h-5" />
+              <span>+ Pengajuan Baru</span>
+            </Link>
+          </aside>
+
+          {/* Main Content Canvas */}
+          <main className="lg:col-span-9 space-y-8">
             {/* Header & Summary Section */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-10">
               <div>
@@ -335,10 +344,9 @@ export default function TrackingPage() {
                 </div>
               </div>
             </div>
-          </div>
         </main>
       </div>
-
+    </div>
       {/* Footer */}
       <footer className="w-full py-8 md:py-10 px-6 md:px-10 bg-surface-container-low border-t border-border-subtle mt-auto">
         <div className="max-w-[1280px] mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
