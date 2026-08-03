@@ -69,8 +69,8 @@ export default function SettingsPage() {
 
   return (
     <div className="min-h-screen bg-[#f7f9fb] text-on-surface font-body flex flex-col selection:bg-primary-container selection:text-white">
-      <div className="max-w-[1280px] mx-auto px-6 py-8 w-full flex-1">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      <div className="max-w-[1280px] mx-auto px-4 md:px-6 py-6 md:py-8 w-full flex-1">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8 items-start">
           {/* Unified Left Navigation Sidebar */}
           <PortalSidebar active="settings" />
 

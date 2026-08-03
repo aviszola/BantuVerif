@@ -37,7 +37,7 @@ export default function DistributionConfirmationPage() {
 
 
       {/* Main Content Area */}
-      <main className="flex-grow py-10 md:py-14 px-6 max-w-[1280px] mx-auto w-full">
+      <main className="flex-grow py-8 md:py-14 px-4 md:px-6 max-w-[1280px] mx-auto w-full">
         {/* Success Status Header */}
         <section className="text-center mb-10">
           <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-emerald-100/70 text-emerald-600 mb-5 border border-emerald-200/80 shadow-2xs">

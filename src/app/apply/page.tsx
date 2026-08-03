@@ -170,8 +170,8 @@ export default function ApplyPage() {
       </div>
 
       {/* Main Unified Content Layout (Matching Dashboard Grid) */}
-      <div className="max-w-[1280px] mx-auto px-6 py-8 w-full flex-1">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      <div className="max-w-[1280px] mx-auto px-4 md:px-6 py-6 md:py-8 w-full flex-1">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8 items-start">
           {/* 1 Single Portal Sidebar on Left */}
           <PortalSidebar
             active="apply"

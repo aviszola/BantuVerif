@@ -37,14 +37,14 @@ export default function TrackingPage() {
 
   return (
     <div className="min-h-screen bg-[#f7f9fb] text-[#191c1e] font-body flex flex-col justify-between selection:bg-[#2563eb] selection:text-white">
-      <div className="max-w-[1280px] mx-auto px-6 py-8 w-full flex-1">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      <div className="max-w-[1280px] mx-auto px-4 md:px-6 py-6 md:py-8 w-full flex-1">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8 items-start">
           <PortalSidebar active="applications" />
 
           {/* Main Content Canvas */}
           <main className="lg:col-span-9 space-y-8">
             {/* Header & Summary Section */}
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-10">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 md:mb-10">
               <div>
                 <div className="flex items-center gap-3 mb-2">
                   <span
@@ -65,14 +65,14 @@ export default function TrackingPage() {
                   Diperbarui 2 jam lalu oleh Auditor Sistem
                 </p>
               </div>
-              <div className="flex gap-3">
-                <button className="px-5 h-11 border border-border-subtle bg-white text-on-surface rounded-lg text-sm font-semibold hover:bg-surface-container-low transition-colors flex items-center gap-2 shadow-2xs">
-                  <Download className="w-4.5 h-4.5 text-on-surface-variant" />
-                  Ekspor Data
+              <div className="flex gap-2">
+                <button className="px-3 md:px-5 h-10 md:h-11 border border-border-subtle bg-white text-on-surface rounded-lg text-sm font-semibold hover:bg-surface-container-low transition-colors flex items-center gap-2 shadow-2xs">
+                  <Download className="w-4 h-4 text-on-surface-variant" />
+                  <span className="hidden sm:inline">Ekspor Data</span>
                 </button>
-                <button className="px-5 h-11 bg-primary-container text-white rounded-lg text-sm font-semibold hover:bg-primary transition-all flex items-center gap-2 shadow-sm">
-                  <HelpCircle className="w-4.5 h-4.5" />
-                  Bantuan
+                <button className="px-3 md:px-5 h-10 md:h-11 bg-primary-container text-white rounded-lg text-sm font-semibold hover:bg-primary transition-all flex items-center gap-2 shadow-sm">
+                  <HelpCircle className="w-4 h-4" />
+                  <span className="hidden sm:inline">Bantuan</span>
                 </button>
               </div>
             </div>

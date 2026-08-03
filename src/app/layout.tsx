@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+import MobileBottomNav from "@/components/MobileBottomNav";
 
 export const metadata: Metadata = {
   title: "BantuVerif — Platform Verifikasi Bantuan Sosial Berbasis Konsensus Komunitas",
@@ -17,7 +18,10 @@ export default function RootLayout({
     <html lang="id">
       <body className="antialiased bg-background text-on-surface flex flex-col min-h-screen">
         <Navbar />
-        {children}
+        <div className="flex-1 pb-[60px] lg:pb-0">
+          {children}
+        </div>
+        <MobileBottomNav />
       </body>
     </html>
   );

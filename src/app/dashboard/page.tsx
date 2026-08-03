@@ -115,8 +115,8 @@ export default function DashboardPage() {
   return (
     <div className="min-h-screen bg-[#f7f9fb] text-[#191c1e] font-body flex flex-col justify-between selection:bg-[#2563eb] selection:text-white">
       {/* Main Content Container */}
-      <div className="max-w-[1280px] mx-auto px-6 py-8 w-full flex-1">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      <div className="max-w-[1280px] mx-auto px-4 md:px-6 py-6 md:py-8 w-full flex-1">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8 items-start">
           {/* Unified Portal Sidebar */}
           <PortalSidebar active="dashboard" />
 
@@ -124,7 +124,7 @@ export default function DashboardPage() {
           {/* Main Dashboard Panel */}
           <main className="lg:col-span-9 space-y-8">
             {/* Top Greeting Header */}
-            <div className="bg-white border border-[#e2e8f0] rounded-2xl p-6 md:p-7 shadow-2xs flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div className="bg-white border border-[#e2e8f0] rounded-2xl p-5 md:p-7 shadow-2xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div>
                 <div className="flex items-center gap-2 text-xs font-bold text-[#2563eb] uppercase tracking-wider mb-1.5">
                   <Sparkles className="w-4 h-4 text-[#2563eb]" /> DASHBOARD UTAMA WARGA
@@ -141,23 +141,23 @@ export default function DashboardPage() {
                 </div>
               </div>
 
-              <div className="flex flex-wrap items-center gap-3 shrink-0">
-                <button className="h-10 px-4 rounded-xl border border-[#e2e8f0] bg-surface text-xs font-semibold text-on-surface hover:bg-[#f2f4f6] transition-all flex items-center gap-2 shadow-2xs">
-                  <Download className="w-4 h-4 text-on-surface-variant" />
-                  <span>Unduh Riwayat PDF</span>
+              <div className="flex items-center gap-2.5 shrink-0">
+                <button className="h-9 px-3 md:px-4 rounded-xl border border-[#e2e8f0] bg-surface text-xs font-semibold text-on-surface hover:bg-[#f2f4f6] transition-all flex items-center gap-1.5 shadow-2xs">
+                  <Download className="w-3.5 h-3.5 text-on-surface-variant" />
+                  <span className="hidden sm:inline">Unduh PDF</span>
                 </button>
 
-                <button className="h-10 px-4 rounded-xl border border-[#e2e8f0] bg-surface text-xs font-semibold text-on-surface hover:bg-[#f2f4f6] transition-all flex items-center gap-2 shadow-2xs">
-                  <Headphones className="w-4 h-4 text-on-surface-variant" />
-                  <span>Bantuan Layanan</span>
+                <button className="h-9 px-3 md:px-4 rounded-xl border border-[#e2e8f0] bg-surface text-xs font-semibold text-on-surface hover:bg-[#f2f4f6] transition-all flex items-center gap-1.5 shadow-2xs">
+                  <Headphones className="w-3.5 h-3.5 text-on-surface-variant" />
+                  <span className="hidden sm:inline">Bantuan</span>
                 </button>
               </div>
             </div>
 
             {/* Grid Row 1: Active Progress Card (8 cols) + Updates Panel (4 cols) */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-7 items-stretch">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 md:gap-7 items-stretch">
               {/* Community Verification Card (8 cols) */}
-              <div className="lg:col-span-8 bg-white border border-[#e2e8f0] rounded-2xl p-7 shadow-level1 flex flex-col justify-between">
+              <div className="lg:col-span-8 bg-white border border-[#e2e8f0] rounded-2xl p-5 md:p-7 shadow-level1 flex flex-col justify-between">
                 <div>
                   <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
                     <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold bg-emerald-500/10 text-emerald-700 border border-emerald-500/20">
@@ -294,9 +294,9 @@ export default function DashboardPage() {
             </div>
 
             {/* Grid Row 2: Application History Table (8 cols) + Eligibility Banner (4 cols) */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-7 items-stretch">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 md:gap-7 items-stretch">
               {/* Application History Table (8 cols) */}
-              <div id="riwayat" className="lg:col-span-8 bg-white border border-[#e2e8f0] rounded-2xl p-7 shadow-level1 scroll-mt-24">
+              <div id="riwayat" className="lg:col-span-8 bg-white border border-[#e2e8f0] rounded-2xl p-5 md:p-7 shadow-level1 scroll-mt-24">
                 <div className="flex items-center justify-between mb-6">
                   <h3 className="font-bold text-xl font-display text-on-surface">
                     Riwayat Pengajuan Bantuan
@@ -437,7 +437,7 @@ export default function DashboardPage() {
 
       {/* Footer */}
       <footer className="bg-white border-t border-[#e2e8f0] pt-12 pb-8 text-xs text-on-surface-variant mt-12">
-        <div className="max-w-[1280px] mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-8 mb-10">
+        <div className="max-w-[1280px] mx-auto px-4 md:px-6 grid grid-cols-1 md:grid-cols-4 gap-8 mb-10">
           <div>
             <div className="font-bold text-sm text-on-surface font-display mb-3 uppercase tracking-wider">
               BANTUVERIF
@@ -472,7 +472,7 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        <div className="max-w-[1280px] mx-auto px-6 pt-6 border-t border-[#e2e8f0] flex flex-col sm:flex-row items-center justify-between text-[11px] text-[#737686] gap-4">
+        <div className="max-w-[1280px] mx-auto px-4 md:px-6 pt-6 border-t border-[#e2e8f0] flex flex-col sm:flex-row items-center justify-between text-[11px] text-[#737686] gap-4">
           <div>
             © 2026 Platform Civic BantuVerif. Teknologi Publik Aman & Transparan.
           </div>
