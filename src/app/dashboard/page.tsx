@@ -58,9 +58,25 @@ export default function DashboardPage() {
       const { data: { session } } = await supabase.auth.getSession();
       if (!session) {
         router.push("/login");
-      } else {
-        setUser(session.user);
+        return;
       }
+      setUser(session.user);
+
+      // Cek role dari profiles; jika rtrw atau verifikator, alihkan ke dashboard khusus role tersebut
+      const { data: profile } = await supabase
+        .from("profiles")
+        .select("role")
+        .eq("id", session.user.id)
+        .maybeSingle();
+
+      if (profile?.role === "rtrw") {
+        router.replace("/dashboard-rt");
+        return;
+      } else if (profile?.role === "verifikator" || profile?.role === "admin") {
+        router.replace("/ops/dashboard");
+        return;
+      }
+
       setIsLoading(false);
     };
 

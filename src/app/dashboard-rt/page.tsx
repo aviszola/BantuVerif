@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { supabase } from "@/lib/supabase";
+import { supabase, getDefaultRouteForRole, type AppRole } from "@/lib/supabase";
 import {
   ShieldCheck,
   CheckCircle2,
@@ -64,9 +64,9 @@ export default function DashboardRtPage() {
         .eq("id", session.user.id)
         .maybeSingle();
 
-      // Proteksi role: bukan RT/RW/admin → lempar ke dashboard warga
+      // Proteksi role: bukan RT/RW/admin → lempar ke dashboard rolenya
       if (!profile || !["rtrw", "admin"].includes(profile.role)) {
-        router.push("/dashboard");
+        router.replace(getDefaultRouteForRole(profile?.role as AppRole));
         return;
       }
       setProfile(profile);
