@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import {
   ShieldCheck,
   ArrowRight,
@@ -28,12 +27,11 @@ import {
   Zap,
 } from "lucide-react";
 import { REGISTER_ROLES, type RegisterRole } from "@/lib/register";
-import { supabase, isDemoMode, type AppRole } from "@/lib/supabase";
+import { supabase, isDemoMode, type AppRole, DEFAULT_ROUTE_BY_ROLE } from "@/lib/supabase";
 
 const DEMO_BYPASS = isDemoMode();
 
 export default function LoginPage() {
-  const router = useRouter();
   const [mode, setMode] = useState<"login" | "register">("login");
   const [step, setStep] = useState<"input" | "otp">("input");
   const [identifier, setIdentifier] = useState("");
@@ -49,32 +47,58 @@ export default function LoginPage() {
   const [skFile, setSkFile] = useState<File | null>(null);
   const [roleError, setRoleError] = useState("");
 
-  // Helper mapping destination URL & Label based on selected role
-  const getDashboardUrlForRole = (role: RegisterRole) => {
-    if (role === "rtrw") return "/dashboard-rt";
-    if (role === "verifikator") return "/ops/verifications";
-    return "/dashboard";
-  };
-
+  // Helper: label tampilan per role
   const getRoleName = (role: RegisterRole) => {
     if (role === "rtrw") return "Pengurus RT/RW";
     if (role === "verifikator") return "Verifikator Lapangan (Ops)";
     return "Warga Pemohon";
   };
 
-  // Simpan role ke tabel profiles setelah auth sukses (jika belum ada)
+  // Helper: URL dashboard — ambil dari konstanta terpusat
+  const getDashboardUrlForRole = (role: RegisterRole): string =>
+    DEFAULT_ROUTE_BY_ROLE[role as AppRole] ?? "/dashboard";
+
+  // Simpan role ke tabel profiles setelah auth sukses
   const persistRole = async (userId: string, role: AppRole) => {
-    const { error } = await supabase.from("profiles").upsert(
-      { id: userId, role },
-      { onConflict: "id" }
-    );
-    if (error) console.warn("Persist role gagal:", error.message);
+    try {
+      // Upsert baris profile secara langsung
+      const { error } = await supabase
+        .from("profiles")
+        .upsert(
+          {
+            id: userId,
+            role: role,
+            updated_at: new Date().toISOString(),
+          },
+          { onConflict: "id" }
+        );
+
+      if (error) {
+        console.warn("Upsert role gagal, mencoba update fallback:", error.message);
+        await supabase
+          .from("profiles")
+          .update({ role, updated_at: new Date().toISOString() })
+          .eq("id", userId);
+      }
+    } catch (err) {
+      console.error("Gagal simpan role ke DB:", err);
+    }
   };
 
-  const goToDashboard = (role: RegisterRole, delayMs = 1000) => {
-    const targetUrl = getDashboardUrlForRole(role);
-    setTimeout(() => router.push(targetUrl), delayMs);
-    return targetUrl;
+  /**
+   * Navigasi ke dashboard yang benar setelah login sukses.
+   * Menggunakan full-page navigation (window.location.href) agar cookie Supabase
+   * dibaca secara instan oleh middleware Next.js.
+   */
+  const goToDashboard = async (targetRole: AppRole) => {
+    const targetUrl = DEFAULT_ROUTE_BY_ROLE[targetRole] ?? "/dashboard";
+
+    const params = new URLSearchParams(window.location.search);
+    const nextUrl = params.get("next");
+
+    const finalDest = nextUrl && nextUrl.startsWith("/") ? nextUrl : targetUrl;
+
+    window.location.href = finalDest;
   };
 
   const handleSubmitIdentifier = async (e: React.FormEvent) => {
@@ -146,9 +170,8 @@ export default function LoginPage() {
 
       if (data?.session) {
         await persistRole(data.session.user.id, selectedRole);
-        setIsLoading(false);
         setIsSuccess(true);
-        goToDashboard(selectedRole);
+        await goToDashboard(selectedRole as AppRole);
       }
     } catch {
       setIsLoading(false);
@@ -161,21 +184,26 @@ export default function LoginPage() {
       setErrorMessage("Fitur demo dinonaktifkan. Gunakan email + OTP.");
       return;
     }
-    const demoEmail = identifier || "warga.terverifikasi@bantuverif.go.id";
+    const roleDemoEmails: Record<RegisterRole, string> = {
+      warga: "warga.terverifikasi@bantuverif.go.id",
+      verifikator: "verifikator.terverifikasi@bantuverif.go.id",
+      rtrw: "rtrw.terverifikasi@bantuverif.go.id",
+    };
+    const demoEmail = identifier.trim() || roleDemoEmails[selectedRole] || "warga.terverifikasi@bantuverif.go.id";
     setIdentifier(demoEmail);
     setIsLoading(true);
     const { data, error } = await supabase.auth.signInWithPassword({
       email: demoEmail,
       password: "BantuVerif!2026",
     });
-    setIsLoading(false);
     if (error || !data.session) {
+      setIsLoading(false);
       setErrorMessage("Akun demo belum dibuat. Daftar dulu lewat email + OTP.");
       return;
     }
-    await persistRole(data.session.user.id, selectedRole);
+    await persistRole(data.session.user.id, selectedRole as AppRole);
     setIsSuccess(true);
-    goToDashboard(selectedRole);
+    await goToDashboard(selectedRole as AppRole);
   };
 
   const handleContinueRole = async () => {
@@ -233,7 +261,7 @@ export default function LoginPage() {
     }
     await persistRole(data.session.user.id, "rtrw");
     setIsSuccess(true);
-    goToDashboard("rtrw");
+    await goToDashboard("rtrw");
   };
 
   // Quick switch role from side panel
@@ -390,12 +418,13 @@ export default function LoginPage() {
                       <p className="text-xs text-blue-600 font-bold mb-6">
                         Menuju: {getRoleName(selectedRole)} ({getDashboardUrlForRole(selectedRole)})
                       </p>
-                      <Link
-                        href={getDashboardUrlForRole(selectedRole)}
-                        className="btn-48 w-full rounded-lg font-semibold text-sm bg-primary-container text-white hover:bg-primary flex items-center justify-center gap-2 shadow-sm"
+                      <button
+                        type="button"
+                        onClick={() => goToDashboard(selectedRole as AppRole)}
+                        className="btn-48 w-full rounded-lg font-semibold text-sm bg-primary-container text-white hover:bg-primary flex items-center justify-center gap-2 shadow-sm cursor-pointer"
                       >
                         Buka Dashboard ({getRoleName(selectedRole)}) <ArrowRight className="w-4 h-4" />
-                      </Link>
+                      </button>
                     </div>
                   ) : step === "input" && !(mode === "register" && roleStep !== "input") ? (
                     /* STEP 1: Email Form */
@@ -758,7 +787,7 @@ export default function LoginPage() {
 
                       <div className="mt-3 pt-2 border-t border-slate-200/60 flex items-center justify-between text-[10px] font-semibold">
                         <span className={active ? "text-blue-700 font-bold" : "text-slate-500"}>
-                          {r.id === "warga" ? "→ /dashboard" : r.id === "verifikator" ? "→ /ops/verifications" : "→ /dashboard-rt"}
+                          {r.id === "warga" ? "→ /dashboard" : r.id === "verifikator" ? "→ /ops/dashboard" : "→ /dashboard-rt"}
                         </span>
                         <ChevronRight
                           className={`w-3.5 h-3.5 transition-transform ${
