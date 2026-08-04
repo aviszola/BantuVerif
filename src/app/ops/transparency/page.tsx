@@ -90,7 +90,7 @@ export default function TransparencyDashboardPage() {
               </span>
             </div>
             <h1 className="font-display text-3xl md:text-4xl font-extrabold text-on-surface mb-2 tracking-tight">
-              BantuVerif Dashboard
+              BantuVerif Dasbor
             </h1>
             <p className="text-lg text-on-surface-variant max-w-2xl leading-relaxed">
               Metrik tata kelola dan penyaluran secara real-time. BantuVerif
@@ -499,8 +499,8 @@ export default function TransparencyDashboardPage() {
         </div>
         <div className="max-w-container-max mx-auto mt-12 pt-8 border-t border-border-subtle flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-xs text-outline">
-            © 2026 BantuVerif Transparency Portal. Public information provided
-            under Open Government License.
+            © 2026 Portal Transparansi BantuVerif. Informasi publik disediakan
+            di bawah Lisensi Pemerintah Terbuka.
           </p>
           <div className="flex gap-6 text-xs text-outline">
             {["Privasi", "Ketentuan", "Aksesibilitas"].map((l) => (

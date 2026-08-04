@@ -29,106 +29,106 @@ const verificationQueue = [
   {
     id: "BV-2024-8891",
     ref: "USR-9921-X",
-    name: "Anonymous Applicant",
-    sector: "Sector 4-B, Northern District",
-    type: "New Residency",
+    name: "Pemohon Anonim",
+    sector: "Sektor 4-B, Distrik Utara",
+    type: "Domisili Baru",
     status: "urgent",
     votes: 2,
     totalVotes: 3,
-    submittedAgo: "2h ago",
-    deadline: "4h left",
-    tags: ["Priority", "Address Mismatch"],
+    submittedAgo: "2 jam lalu",
+    deadline: "4 jam lagi",
+    tags: ["Prioritas", "Alamat Tidak Cocok"],
   },
   {
     id: "BV-2024-8890",
     ref: "USR-1044-A",
-    name: "Anonymous Applicant",
-    sector: "Sector 2-A, Eastern District",
-    type: "Family Card Edit",
+    name: "Pemohon Anonim",
+    sector: "Sektor 2-A, Distrik Timur",
+    type: "Edit Kartu Keluarga",
     status: "pending",
     votes: 1,
     totalVotes: 3,
-    submittedAgo: "5h ago",
-    deadline: "19h left",
-    tags: ["Standard"],
+    submittedAgo: "5 jam lalu",
+    deadline: "19 jam lagi",
+    tags: ["Standar"],
   },
   {
     id: "BV-2024-8887",
     ref: "USR-0567-K",
-    name: "Anonymous Applicant",
-    sector: "Sector 7-C, Southern District",
-    type: "Residency Exit",
+    name: "Pemohon Anonim",
+    sector: "Sektor 7-C, Distrik Selatan",
+    type: "Perpindahan Domisili",
     status: "in_review",
     votes: 2,
     totalVotes: 3,
-    submittedAgo: "8h ago",
-    deadline: "16h left",
-    tags: ["Duplication Flag"],
+    submittedAgo: "8 jam lalu",
+    deadline: "16 jam lagi",
+    tags: ["Bendera Duplikasi"],
   },
   {
     id: "BV-2024-8882",
     ref: "USR-3310-M",
-    name: "Anonymous Applicant",
-    sector: "Sector 1-D, Central District",
-    type: "Identity Update",
+    name: "Pemohon Anonim",
+    sector: "Sektor 1-D, Distrik Pusat",
+    type: "Pembaruan Identitas",
     status: "in_review",
     votes: 1,
     totalVotes: 3,
-    submittedAgo: "1d ago",
-    deadline: "8h left",
-    tags: ["Standard"],
+    submittedAgo: "1 hari lalu",
+    deadline: "8 jam lagi",
+    tags: ["Standar"],
   },
   {
     id: "BV-2024-8878",
     ref: "USR-6621-B",
-    name: "Anonymous Applicant",
-    sector: "Sector 9-F, Western District",
-    type: "New Residency",
+    name: "Pemohon Anonim",
+    sector: "Sektor 9-F, Distrik Barat",
+    type: "Domisili Baru",
     status: "completed",
     votes: 3,
     totalVotes: 3,
-    submittedAgo: "2d ago",
-    deadline: "Closed",
-    tags: ["Approved"],
+    submittedAgo: "2 hari lalu",
+    deadline: "Ditutup",
+    tags: ["Disetujui"],
   },
   {
     id: "BV-2024-8875",
     ref: "USR-4412-Z",
-    name: "Anonymous Applicant",
-    sector: "Sector 3-B, Northern District",
-    type: "Family Card Edit",
+    name: "Pemohon Anonim",
+    sector: "Sektor 3-B, Distrik Utara",
+    type: "Edit Kartu Keluarga",
     status: "rejected",
     votes: 3,
     totalVotes: 3,
-    submittedAgo: "2d ago",
-    deadline: "Closed",
-    tags: ["Rejected", "Data Fraud"],
+    submittedAgo: "2 hari lalu",
+    deadline: "Ditutup",
+    tags: ["Ditolak", "Penipuan Data"],
   },
   {
     id: "BV-2024-8869",
     ref: "USR-7703-P",
-    name: "Anonymous Applicant",
-    sector: "Sector 6-A, Eastern District",
-    type: "Residency Transfer",
+    name: "Pemohon Anonim",
+    sector: "Sektor 6-A, Distrik Timur",
+    type: "Pindah Domisili",
     status: "pending",
     votes: 0,
     totalVotes: 3,
-    submittedAgo: "3h ago",
-    deadline: "21h left",
-    tags: ["New"],
+    submittedAgo: "3 jam lalu",
+    deadline: "21 jam lagi",
+    tags: ["Baru"],
   },
   {
     id: "BV-2024-8861",
     ref: "USR-1188-R",
-    name: "Anonymous Applicant",
-    sector: "Sector 5-E, Southern District",
-    type: "Identity Update",
+    name: "Pemohon Anonim",
+    sector: "Sektor 5-E, Distrik Selatan",
+    type: "Pembaruan Identitas",
     status: "urgent",
     votes: 1,
     totalVotes: 3,
-    submittedAgo: "6h ago",
-    deadline: "2h left",
-    tags: ["Priority", "Expired Doc"],
+    submittedAgo: "6 jam lalu",
+    deadline: "2 jam lagi",
+    tags: ["Prioritas", "Dokumen Kedaluwarsa"],
   },
 ];
 
@@ -174,15 +174,15 @@ const statusConfig: Record<
 };
 
 const tagColorMap: Record<string, string> = {
-  Priority: "bg-danger/10 text-danger border-danger/20",
-  "Address Mismatch": "bg-warning/10 text-warning border-warning/20",
-  "Duplication Flag": "bg-warning/10 text-warning border-warning/20",
-  "Data Fraud": "bg-danger/10 text-danger border-danger/20",
-  "Expired Doc": "bg-danger/10 text-danger border-danger/20",
-  Standard: "bg-surface-container-high text-on-surface-variant border-border-subtle",
-  New: "bg-primary/10 text-primary border-primary/20",
-  Approved: "bg-success/10 text-success border-success/20",
-  Rejected: "bg-danger/10 text-danger border-danger/20",
+  Prioritas: "bg-danger/10 text-danger border-danger/20",
+  "Alamat Tidak Cocok": "bg-warning/10 text-warning border-warning/20",
+  "Bendera Duplikasi": "bg-warning/10 text-warning border-warning/20",
+  "Penipuan Data": "bg-danger/10 text-danger border-danger/20",
+  "Dokumen Kedaluwarsa": "bg-danger/10 text-danger border-danger/20",
+  Standar: "bg-surface-container-high text-on-surface-variant border-border-subtle",
+  Baru: "bg-primary/10 text-primary border-primary/20",
+  Disetujui: "bg-success/10 text-success border-success/20",
+  Ditolak: "bg-danger/10 text-danger border-danger/20",
 };
 
 const statusFilters: { key: StatusFilter; label: string; count?: number }[] = [
@@ -222,7 +222,7 @@ export default function VerificationsListPage() {
           <div className="flex justify-between items-center px-4 md:px-gutter h-16 w-full max-w-container-max mx-auto">
             <div className="flex items-center gap-8">
               <h1 className="font-display text-lg font-extrabold text-on-surface">
-                Ops Dashboard
+                Dasbor Operasi
               </h1>
               <nav className="hidden md:flex gap-6 text-sm font-semibold">
                 <Link
@@ -409,7 +409,7 @@ export default function VerificationsListPage() {
                 className="flex items-center gap-1.5 px-3 py-2 bg-surface-container-low rounded-lg text-xs font-semibold text-on-surface-variant hover:bg-surface-container-high transition-colors"
               >
                 <SlidersHorizontal className="w-3.5 h-3.5" />
-                Filters
+                Filter
               </button>
             </div>
           </div>
@@ -508,7 +508,7 @@ export default function VerificationsListPage() {
                           className={`text-xs font-bold ${
                             item.status === "urgent"
                               ? "text-danger"
-                              : item.deadline === "Closed"
+                              : item.deadline === "Ditutup"
                               ? "text-on-surface-variant"
                               : "text-on-surface"
                           }`}
@@ -532,7 +532,7 @@ export default function VerificationsListPage() {
                           href={`/ops/verifications/${item.id}`}
                           className="flex items-center gap-2 px-4 py-2 bg-primary text-white text-xs font-bold rounded-lg hover:bg-primary-container transition-all group-hover:shadow-md"
                         >
-                          Review
+                          Tinjau
                           <ChevronRight className="w-3.5 h-3.5" />
                         </Link>
                       ) : (

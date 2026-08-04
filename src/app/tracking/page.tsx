@@ -253,11 +253,11 @@ export default function TrackingPage() {
                   </h4>
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-on-surface text-xs md:text-sm font-semibold">
-                      Ledger Blockchain
+                      Buku Besar Blockchain
                     </span>
                     <div className="flex items-center gap-1.5">
                       <div className="w-2 h-2 rounded-full bg-success"></div>
-                      <span className="text-success text-xs font-extrabold">LIVE</span>
+                      <span className="text-success text-xs font-extrabold">AKTIF</span>
                     </div>
                   </div>
                   <div className="w-full bg-[#e2e8f0] h-1.5 rounded-full overflow-hidden">

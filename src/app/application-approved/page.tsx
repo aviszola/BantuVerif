@@ -228,25 +228,24 @@ export default function ApplicationApprovedPage() {
               BantuVerif
             </span>
             <p className="text-secondary">
-              © 2026 BantuVerif Citizen Platform. Secure &amp; Transparent
-              Civic Tech.
+              © 2026 BantuVerif — Platform Warga yang Aman &amp; Transparan.
             </p>
           </div>
           <nav className="flex flex-wrap justify-center gap-6 font-medium">
             <a className="hover:text-primary underline transition-all" href="#">
-              Privacy Policy
+              Kebijakan Privasi
             </a>
             <a className="hover:text-primary underline transition-all" href="#">
-              Terms of Service
+              Ketentuan Layanan
             </a>
             <a className="hover:text-primary underline transition-all" href="#">
               FAQ
             </a>
             <a className="hover:text-primary underline transition-all" href="#">
-              Audit Transparency
+              Transparansi Audit
             </a>
             <a className="hover:text-primary underline transition-all" href="#">
-              Contact Support
+              Hubungi Dukungan
             </a>
           </nav>
         </div>

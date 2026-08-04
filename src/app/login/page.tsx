@@ -338,7 +338,7 @@ export default function LoginPage() {
                       </div>
                       <div>
                         <div className="text-[10px] font-bold text-blue-900 uppercase tracking-wider">
-                          Target Peran / Dashboard
+                          Target Peran / Dasbor
                         </div>
                         <div className="text-xs font-bold text-blue-700">
                           {getRoleName(selectedRole)}
@@ -394,7 +394,7 @@ export default function LoginPage() {
                         href={getDashboardUrlForRole(selectedRole)}
                         className="btn-48 w-full rounded-lg font-semibold text-sm bg-primary-container text-white hover:bg-primary flex items-center justify-center gap-2 shadow-sm"
                       >
-                        Buka Dashboard ({getRoleName(selectedRole)}) <ArrowRight className="w-4 h-4" />
+                        Buka Dasbor ({getRoleName(selectedRole)}) <ArrowRight className="w-4 h-4" />
                       </Link>
                     </div>
                   ) : step === "input" && !(mode === "register" && roleStep !== "input") ? (
@@ -598,7 +598,7 @@ export default function LoginPage() {
                         type="submit"
                         className="btn-48 w-full rounded-xl font-semibold text-sm bg-[#2563eb] text-white hover:bg-[#1d4ed8] transition-all flex items-center justify-center gap-2"
                       >
-                        <span>Kirim Dokumen & Masuk Dashboard RT/RW</span>
+                        <span>Kirim Dokumen & Masuk Dasbor RT/RW</span>
                         <ArrowRight className="w-4 h-4" />
                       </button>
                     </form>
@@ -632,7 +632,7 @@ export default function LoginPage() {
                           <span>Memverifikasi...</span>
                         ) : (
                           <>
-                            <span>Verifikasi & Masuk Dashboard {getRoleName(selectedRole)}</span>
+                            <span>Verifikasi & Masuk Dasbor {getRoleName(selectedRole)}</span>
                             <CheckCircle2 className="w-4 h-4" />
                           </>
                         )}
@@ -774,7 +774,7 @@ export default function LoginPage() {
               {/* Dynamic Feature Checklist based on Selected Role */}
               <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
                 <div className="text-xs font-bold text-slate-800 flex items-center justify-between">
-                  <span>Tujuan Dashboard: <span className="text-blue-600 font-extrabold">{getDashboardUrlForRole(selectedRole)}</span></span>
+                  <span>Tujuan Dasbor: <span className="text-blue-600 font-extrabold">{getDashboardUrlForRole(selectedRole)}</span></span>
                   <Zap className="w-4 h-4 text-amber-500" />
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px] text-slate-600">
@@ -822,7 +822,7 @@ export default function LoginPage() {
                     <>
                       <div className="flex items-center gap-1.5">
                         <CheckCircle2 className="w-3.5 h-3.5 text-amber-600 shrink-0" />
-                        Dashboard Rekapitulasi RT/RW
+                        Dasbor Rekapitulasi RT/RW
                       </div>
                       <div className="flex items-center gap-1.5">
                         <CheckCircle2 className="w-3.5 h-3.5 text-amber-600 shrink-0" />

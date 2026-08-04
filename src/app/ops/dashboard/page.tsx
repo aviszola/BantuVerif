@@ -140,7 +140,7 @@ export default function VerifierDashboardPage() {
           <section className="flex flex-col md:flex-row justify-between items-end gap-4">
             <div>
               <h2 className="font-display text-2xl md:text-3xl font-bold text-on-surface">
-                Dashboard Verifikator
+                Dasbor Verifikator
               </h2>
               {/* TODO: sambungkan ke data asli — nama verifier & jumlah tugas */}
               <p className="text-sm md:text-base text-on-surface-variant">
@@ -404,12 +404,12 @@ export default function VerifierDashboardPage() {
                         USR-8821-M Terverifikasi
                       </p>
                       <p className="text-[10px] text-on-surface-variant uppercase font-bold tracking-tighter">
-                        Selesai 2j yang lalu
+                        Selesai 2 jam lalu
                       </p>
                     </div>
                     <div className="text-right">
                       <p className="text-xs font-bold text-on-surface">
-                        +$12.00
+                        +Rp 150.000
                       </p>
                     </div>
                   </div>
@@ -419,15 +419,15 @@ export default function VerifierDashboardPage() {
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-semibold text-on-surface truncate">
-                        USR-7712-P Verified
+                        USR-7712-P Terverifikasi
                       </p>
                       <p className="text-[10px] text-on-surface-variant uppercase font-bold tracking-tighter">
-                        Completed 5h ago
+                        Selesai 5 jam lalu
                       </p>
                     </div>
                     <div className="text-right">
                       <p className="text-xs font-bold text-on-surface">
-                        +$8.50
+                        +Rp 100.000
                       </p>
                     </div>
                   </div>
@@ -437,15 +437,15 @@ export default function VerifierDashboardPage() {
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-semibold text-on-surface truncate">
-                        USR-4410-L Rejected
+                        USR-4410-L Ditolak
                       </p>
                       <p className="text-[10px] text-on-surface-variant uppercase font-bold tracking-tighter">
-                        Completed yesterday
+                        Selesai kemarin
                       </p>
                     </div>
                     <div className="text-right">
                       <p className="text-xs font-bold text-on-surface">
-                        +$4.00
+                        +Rp 50.000
                       </p>
                     </div>
                   </div>
@@ -465,14 +465,14 @@ export default function VerifierDashboardPage() {
                 ></div>
                 <div className="absolute inset-0 bg-gradient-to-t from-surface/80 to-transparent p-4 flex flex-col justify-end">
                   <p className="font-semibold text-on-surface">
-                    Tasks Near You
+                    Tugas di Sekitar Anda
                   </p>
                   <p className="text-xs text-on-surface-variant">
-                    Accra Central District
+                    Kecamatan Gambir, Jakarta Pusat
                   </p>
                 </div>
                 <div className="absolute top-4 right-4 bg-primary text-white px-3 py-1 rounded-full text-[10px] font-bold shadow-level2">
-                  Active Map
+                  Peta Aktif
                 </div>
               </div>
 
@@ -481,20 +481,20 @@ export default function VerifierDashboardPage() {
                 <div className="absolute -top-4 -right-4 w-24 h-24 bg-primary/10 rounded-full blur-2xl"></div>
                 <h4 className="text-sm font-semibold text-white mb-2 flex items-center gap-2">
                   <Lightbulb className="w-5 h-5" />
-                  Pro Tip
+                  Kiat Pro
                 </h4>
                 <p className="text-sm text-white/90 leading-relaxed">
-                  Completing 3 more verifications today will trigger a{" "}
+                  Selesaikan 3 verifikasi lagi hari ini untuk memicu{" "}
                   <span className="font-bold underline">
-                    1.5x Reward Multiplier
+                    Pengali Imbalan 1,5x
                   </span>{" "}
-                  for your next week&apos;s contributions!
+                  untuk kontribusi Anda minggu depan!
                 </p>
                 <button
                   type="button"
                   className="mt-4 text-xs font-bold text-white underline decoration-2 underline-offset-4"
                 >
-                  Learn More
+                  Pelajari Lebih Lanjut
                 </button>
               </div>
             </section>

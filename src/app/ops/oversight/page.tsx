@@ -18,22 +18,22 @@ import OpsSidebar from "@/components/OpsSidebar";
 const criticalReviews = [
   {
     name: "Bambang Susanto",
-    time: "2h ago",
-    note: "Address verification mismatch in Kelurahan Senayan. Needs manual site survey.",
+    time: "2 jam lalu",
+    note: "Ketidakcocokan verifikasi alamat di Kelurahan Senayan. Perlu survei lapangan manual.",
     border: "border-l-danger",
     rejectHover: true,
   },
   {
     name: "Siti Aminah",
-    time: "5h ago",
-    note: "Duplicate NIK detected across two RW regions. Potential residency update required.",
+    time: "5 jam lalu",
+    note: "NIK duplikat terdeteksi di dua wilayah RW. Kemungkinan perlu pembaruan domisili.",
     border: "border-l-warning",
     rejectHover: false,
   },
   {
     name: "Agus Mulyadi",
-    time: "1d ago",
-    note: "Incomplete document upload: Missing RT Stamp of Approval.",
+    time: "1 hari lalu",
+    note: "Unggahan dokumen tidak lengkap: Stempel Persetujuan RT belum ada.",
     border: "border-l-danger",
     rejectHover: false,
   },
@@ -44,42 +44,42 @@ const operationsLog = [
     initials: "DW",
     name: "Dewi Wulansari",
     nik: "3174**********01",
-    type: "New Residency",
+    type: "Domisili Baru",
     dot: "bg-success",
     status: "text-success",
-    label: "Approved",
+    label: "Disetujui",
     admin: "Admin RT 04",
   },
   {
     initials: "RM",
     name: "Rian Mahendra",
     nik: "3174**********05",
-    type: "Family Card Edit",
+    type: "Edit Kartu Keluarga",
     dot: "bg-warning",
     status: "text-warning",
-    label: "In Consensus",
+    label: "Dalam Konsensus",
     admin: "Admin RW 08",
   },
   {
     initials: "LS",
     name: "Lestari Sari",
     nik: "3174**********12",
-    type: "Residency Exit",
+    type: "Perpindahan Domisili",
     dot: "bg-primary",
     status: "text-primary",
-    label: "Final Review",
-    admin: "System (AI)",
+    label: "Review Akhir",
+    admin: "Sistem (AI)",
   },
 ];
 
 const chartBars = [
-  { day: "MON", total: "60%", inner: "60%", tooltip: "120 App." },
-  { day: "TUE", total: "50%", inner: "50%" },
-  { day: "WED", total: "70%", inner: "70%" },
-  { day: "THU", total: "45%", inner: "45%" },
-  { day: "FRI", total: "85%", inner: "85%" },
-  { day: "SAT", total: "40%", inner: "40%" },
-  { day: "SUN", total: "25%", inner: "25%" },
+  { day: "SEN", total: "60%", inner: "60%", tooltip: "120 Pengajuan" },
+  { day: "SEL", total: "50%", inner: "50%" },
+  { day: "RAB", total: "70%", inner: "70%" },
+  { day: "KAM", total: "45%", inner: "45%" },
+  { day: "JUM", total: "85%", inner: "85%" },
+  { day: "SAB", total: "40%", inner: "40%" },
+  { day: "MIN", total: "25%", inner: "25%" },
 ];
 
 export default function OversightDashboardPage() {
@@ -93,7 +93,7 @@ export default function OversightDashboardPage() {
           <div className="flex justify-between items-center px-4 md:px-gutter h-16 w-full max-w-container-max mx-auto">
             <div className="flex items-center gap-8">
               <h1 className="font-display text-lg font-extrabold text-on-surface">
-                Dashboard Ops
+                Dasbor Operasi
               </h1>
               <nav className="hidden md:flex gap-6 text-sm font-semibold">
                 <a
@@ -112,7 +112,7 @@ export default function OversightDashboardPage() {
                   className="text-on-surface-variant hover:text-on-surface transition-colors"
                   href="#"
                 >
-                  Audit Logs
+                  Log Audit
                 </a>
               </nav>
             </div>
@@ -287,19 +287,19 @@ export default function OversightDashboardPage() {
                     type="button"
                     className="p-1.5 px-3 bg-surface-container-low text-on-surface rounded text-[11px] font-bold"
                   >
-                    Day
+                    Hari
                   </button>
                   <button
                     type="button"
                     className="p-1.5 px-3 bg-primary text-white rounded text-[11px] font-bold"
                   >
-                    Week
+                    Minggu
                   </button>
                   <button
                     type="button"
                     className="p-1.5 px-3 bg-surface-container-low text-on-surface rounded text-[11px] font-bold"
                   >
-                    Month
+                    Bulan
                   </button>
                 </div>
               </div>
@@ -339,7 +339,7 @@ export default function OversightDashboardPage() {
             <div className="bg-surface border border-border-subtle rounded-2xl p-8 shadow-level2">
               <div className="flex items-center justify-between mb-6">
                 <h3 className="font-display text-xl font-bold text-on-surface">
-                  Critical Reviews
+                  Ulasan Kritis
                 </h3>
                 <span className="w-6 h-6 bg-danger text-white text-[10px] font-black flex items-center justify-center rounded-full">
                   4
@@ -368,7 +368,7 @@ export default function OversightDashboardPage() {
                         type="button"
                         className="flex-1 py-2 bg-primary text-white text-[11px] font-bold rounded"
                       >
-                        Approve
+                        Setujui
                       </button>
                       <button
                         type="button"
@@ -378,7 +378,7 @@ export default function OversightDashboardPage() {
                             : "hover:bg-danger/10 hover:border-danger hover:text-danger"
                         }`}
                       >
-                        Reject
+                        Tolak
                       </button>
                     </div>
                   </div>
@@ -388,7 +388,7 @@ export default function OversightDashboardPage() {
                 type="button"
                 className="w-full mt-6 py-3 border border-dashed border-outline text-on-surface-variant text-sm font-semibold rounded-lg hover:border-primary hover:text-primary transition-all"
               >
-                View All Critical Items
+                Lihat Semua Item Kritis
               </button>
             </div>
           </div>
@@ -397,19 +397,19 @@ export default function OversightDashboardPage() {
           <div className="mt-8 bg-surface border border-border-subtle rounded-2xl shadow-level2 overflow-hidden">
             <div className="p-6 border-b border-border-subtle flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
               <h3 className="font-display text-xl font-bold text-on-surface">
-                Recent Operations Log
+                Log Operasi Terbaru
               </h3>
               {/* TODO: sambungkan ke data asli — filter jurisdiksi & status */}
               <div className="flex gap-4">
                 <select className="bg-surface-container-low border-none rounded-lg text-sm font-semibold text-on-surface-variant focus:ring-primary">
-                  <option>All Jurisdictions</option>
+                  <option>Semua Yurisdiksi</option>
                   <option>RT 01</option>
                   <option>RT 02</option>
                 </select>
                 <select className="bg-surface-container-low border-none rounded-lg text-sm font-semibold text-on-surface-variant focus:ring-primary">
-                  <option>All Status</option>
-                  <option>Approved</option>
-                  <option>Pending</option>
+                  <option>Semua Status</option>
+                  <option>Disetujui</option>
+                  <option>Menunggu</option>
                 </select>
               </div>
             </div>
@@ -417,12 +417,12 @@ export default function OversightDashboardPage() {
               <table className="w-full text-left">
                 <thead className="bg-surface-container-lowest">
                   <tr>
-                    {["Citizen Name", "ID (NIK)", "Process Type", "Status", "Admin In Charge", "Actions"].map(
+                    {["Nama Warga", "ID (NIK)", "Jenis Proses", "Status", "Admin Penanggung Jawab", "Aksi"].map(
                       (h) => (
                         <th
                           key={h}
                           className={`px-6 py-4 text-xs font-bold tracking-[0.05em] text-on-surface-variant uppercase ${
-                            h === "Actions" ? "text-right" : ""
+                            h === "Aksi" ? "text-right" : ""
                           }`}
                         >
                           {h}
@@ -486,7 +486,7 @@ export default function OversightDashboardPage() {
                 type="button"
                 className="text-primary text-sm font-semibold flex items-center gap-2 hover:underline"
               >
-                Load more activity records
+                Muat lebih banyak catatan aktivitas
                 <ChevronDown className="w-4 h-4" />
               </button>
             </div>

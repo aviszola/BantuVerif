@@ -165,7 +165,7 @@ export default function DistributionConfirmationPage() {
                 className="flex-1 h-12 bg-primary text-white font-bold rounded-xl hover:bg-primary-container active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-md hover:shadow-lg text-sm"
               >
                 <LayoutDashboard className="w-4.5 h-4.5" />
-                Kembali ke Dashboard
+                Kembali ke Dasbor
               </Link>
               <button
                 type="button"
@@ -278,7 +278,7 @@ export default function DistributionConfirmationPage() {
               BANTUVERIF CITIZEN PLATFORM
             </span>
             <p className="text-secondary">
-              © 2026 BantuVerif Citizen Platform. Secure &amp; Transparent Civic Tech.
+              © 2026 BantuVerif — Platform Warga yang Aman &amp; Transparan.
             </p>
           </div>
           <nav className="flex flex-wrap justify-center gap-6 font-medium">

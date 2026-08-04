@@ -82,7 +82,7 @@ export default function Navbar() {
         { label: "Kriteria & FAQ", href: "#faq" },
       ]
     : [
-        { label: "Dashboard", href: "/dashboard", matchRoutes: ["/dashboard"] },
+        { label: "Dasbor", href: "/dashboard", matchRoutes: ["/dashboard"] },
         {
           label: "Pengajuan Saya",
           href: "/tracking",
@@ -201,7 +201,7 @@ export default function Navbar() {
                       </div>
 
                       {[
-                        { href: "/dashboard", icon: LayoutDashboard, label: "Dashboard Utama" },
+                        { href: "/dashboard", icon: LayoutDashboard, label: "Dasbor Utama" },
                         { href: "/tracking", icon: FileText, label: "Pengajuan Saya" },
                         { href: "/history", icon: History, label: "Riwayat Pencairan" },
                         { href: "/riwayat", icon: ClipboardCheck, label: "Kriteria Kelayakan" },

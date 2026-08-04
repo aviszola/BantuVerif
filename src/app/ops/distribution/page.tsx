@@ -251,13 +251,13 @@ export default function DistributionLogisticsPage() {
                     type="button"
                     className="flex-1 py-2 bg-primary text-white rounded-lg text-sm font-semibold"
                   >
-                    Today
+                    Hari Ini
                   </button>
                   <button
                     type="button"
                     className="flex-1 py-2 bg-surface-container-low text-on-surface-variant rounded-lg text-sm font-semibold"
                   >
-                    Week
+                    Minggu
                   </button>
                 </div>
               </div>
@@ -293,7 +293,7 @@ export default function DistributionLogisticsPage() {
               {/* Delivery Form */}
               <div className="bg-surface rounded-xl border border-border-subtle p-6 shadow-level1">
                 <h3 className="font-display text-xl font-bold text-on-surface mb-6">
-                  Confirm Delivery
+                  Konfirmasi Penyaluran
                 </h3>
                 <form
                   className="space-y-4"
@@ -302,12 +302,12 @@ export default function DistributionLogisticsPage() {
                   {/* TODO: sambungkan ke data asli — scan & cek recipient */}
                   <div>
                     <label className="block text-sm font-semibold mb-2">
-                      Recipient ID Scan / Entry
+                      ID Penerima (Scan / Input)
                     </label>
                     <div className="flex gap-2">
                       <input
                         type="text"
-                        placeholder="Enter ID..."
+                        placeholder="Masukkan ID..."
                         className="flex-1 h-12 bg-surface-container-low border border-border-subtle rounded-lg focus:ring-primary focus:border-primary placeholder:text-on-surface-variant"
                       />
                       <button
@@ -321,13 +321,13 @@ export default function DistributionLogisticsPage() {
                   </div>
                   <div>
                     <label className="block text-sm font-semibold mb-2">
-                      Delivery Category
+                      Kategori Penyaluran
                     </label>
                     <select className="w-full h-12 bg-surface-container-low border border-border-subtle rounded-lg focus:ring-primary focus:border-primary">
-                      <option>Select Item Category</option>
-                      <option>Essential Food Packet</option>
-                      <option>Hygiene Kit (Standard)</option>
-                      <option>Infant Support Pack</option>
+                      <option>Pilih Kategori Barang</option>
+                      <option>Paket Sembako Esensial</option>
+                      <option>Perlengkapan Higienis (Standar)</option>
+                      <option>Paket Dukungan Bayi</option>
                     </select>
                   </div>
                   <div>
@@ -336,7 +336,7 @@ export default function DistributionLogisticsPage() {
                     </label>
                     <div className="w-full h-32 bg-surface-container-lowest border-2 border-dashed border-outline-variant rounded-lg flex items-center justify-center relative group">
                       <span className="text-on-surface-variant text-sm font-semibold group-hover:hidden">
-                        Signature required
+                        Tanda tangan diperlukan
                       </span>
                       <canvas
                         ref={signatureRef}
@@ -348,7 +348,7 @@ export default function DistributionLogisticsPage() {
                     type="submit"
                     className="w-full h-12 bg-primary text-white rounded-lg text-sm font-semibold mt-4 transition-transform active:scale-[0.99] shadow-lg shadow-primary/20"
                   >
-                    Confirm &amp; Issue Receipt
+                    Konfirmasi &amp; Terbitkan Struk
                   </button>
                 </form>
               </div>
@@ -361,11 +361,10 @@ export default function DistributionLogisticsPage() {
                 </div>
                 <div>
                   <h3 className="font-display text-xl font-bold text-on-surface mb-2">
-                    Receipt Preview
+                    Pratinjau Struk
                   </h3>
                   <p className="text-sm text-on-surface-variant mb-6 leading-relaxed">
-                    Real-time digital confirmation generated for verified
-                    delivery.
+                    Konfirmasi digital real-time untuk penyaluran terverifikasi.
                   </p>
                 </div>
                 <div className="bg-surface-container-low rounded-lg p-6 border border-dashed border-outline-variant relative">
@@ -380,29 +379,29 @@ export default function DistributionLogisticsPage() {
                       </p>
                     </div>
                     <div className="text-right">
-                      <p className="text-sm font-semibold">Oct 24, 2023</p>
+                      <p className="text-sm font-semibold">24 Okt 2023</p>
                       <p className="text-[10px] text-on-surface-variant">
-                        14:32 Local Time
+                        14:32 Waktu Lokal
                       </p>
                     </div>
                   </div>
                   <div className="space-y-2 mb-6">
                     <div className="flex justify-between text-sm">
-                      <span className="text-on-surface-variant">Recipient</span>
+                      <span className="text-on-surface-variant">Penerima</span>
                       <span className="text-sm font-semibold">
                         J. Doe (#AID-99230)
                       </span>
                     </div>
                     <div className="flex justify-between text-sm">
-                      <span className="text-on-surface-variant">Items</span>
+                      <span className="text-on-surface-variant">Barang</span>
                       <span className="text-sm font-semibold">
-                        1x Essential Food, 1x Hygiene
+                        1x Sembako, 1x Higienis
                       </span>
                     </div>
                     <div className="flex justify-between text-sm">
-                      <span className="text-on-surface-variant">Point</span>
+                      <span className="text-on-surface-variant">Titik</span>
                       <span className="text-sm font-semibold">
-                        Sector 7G Station
+                        Stasiun Sektor 7G
                       </span>
                     </div>
                   </div>
@@ -413,7 +412,7 @@ export default function DistributionLogisticsPage() {
                       src="https://lh3.googleusercontent.com/aida-public/AB6AXuBjXILTb-1ec6T7aDoD4Hvp3RMhX6qdOwlOuP93MknzmYI8IXm9-VVAYoE0Gjg9K-2651cEz7Xb7t7rrSgrEXboakk2oLHOezvRCC6KMZtZjJboq4g1r8DBusI_sXM0a0HSh4FY5jOqhjtsKpTOmQ1qaBR93vYxkzvSgYeRZY14hqEbGniy0QhHxPW9imwMeV4YbJIyS8BWm6WZqZRlcMWHWHpLOlZgPVaIf6BOf-dLYc49IXr-g78a5w"
                     />
                     <p className="text-[10px] text-on-surface-variant">
-                      Scan to verify authenticity
+                      Pindai untuk verifikasi keaslian
                     </p>
                   </div>
                 </div>
@@ -422,13 +421,13 @@ export default function DistributionLogisticsPage() {
                     type="button"
                     className="flex-1 py-2 px-4 border border-border-subtle rounded-lg text-sm font-semibold flex items-center justify-center gap-2 hover:bg-surface-container-low transition-colors"
                   >
-                    <Printer className="w-4 h-4" /> Print
+                    <Printer className="w-4 h-4" /> Cetak
                   </button>
                   <button
                     type="button"
                     className="flex-1 py-2 px-4 border border-border-subtle rounded-lg text-sm font-semibold flex items-center justify-center gap-2 hover:bg-surface-container-low transition-colors"
                   >
-                    <Share2 className="w-4 h-4" /> Share
+                    <Share2 className="w-4 h-4" /> Bagikan
                   </button>
                 </div>
               </div>
@@ -438,16 +437,16 @@ export default function DistributionLogisticsPage() {
             <section className="col-span-12 bg-surface rounded-xl border border-border-subtle overflow-hidden shadow-level1 h-[400px] relative">
               <div className="absolute top-4 left-4 z-10 bg-white/90 backdrop-blur p-4 rounded-lg border border-border-subtle max-w-xs shadow-level2">
                 <h4 className="text-sm font-semibold mb-2">
-                  Live Unit Tracking
+                  Pelacakan Unit Langsung
                 </h4>
                 {/* TODO: sambungkan ke data asli — posisi unit realtime */}
                 <div className="space-y-3">
                   <div className="flex items-center gap-3">
                     <div className="w-2 h-2 rounded-full bg-success animate-pulse"></div>
                     <p className="text-xs font-semibold">
-                      Truck #001{" "}
+                      Truk #001{" "}
                       <span className="text-on-surface-variant font-normal">
-                        - Delivering Sector 4
+                        - Mengantar Sektor 4
                       </span>
                     </p>
                   </div>
@@ -456,7 +455,7 @@ export default function DistributionLogisticsPage() {
                     <p className="text-xs font-semibold">
                       Unit #009{" "}
                       <span className="text-on-surface-variant font-normal">
-                        - Staging Sector 7
+                        - Persiapan Sektor 7
                       </span>
                     </p>
                   </div>

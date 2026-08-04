@@ -30,12 +30,12 @@ interface OpsSidebarProps {
 /** Sidebar portal ops/verifikator — dipakai ulang di /ops/* */
 export default function OpsSidebar({ active = "verifications" }: OpsSidebarProps) {
   const navItems: { key: ActiveItem; label: string; href: string; icon: typeof LayoutDashboard }[] = [
-    { key: "dashboard", label: "Dashboard", href: "/ops/dashboard", icon: LayoutDashboard },
+    { key: "dashboard", label: "Dasbor", href: "/ops/dashboard", icon: LayoutDashboard },
     { key: "verifications", label: "Verifikasi", href: "/ops/verifications", icon: ShieldCheck },
     { key: "approvals", label: "Persetujuan", href: "/ops/oversight", icon: Clipboard },
     { key: "distribution", label: "Penyaluran", href: "/ops/distribution", icon: Truck },
     { key: "transparency", label: "Transparansi", href: "/ops/transparency", icon: Globe },
-    { key: "audit", label: "Audit Logs", href: "/ops/oversight", icon: History },
+    { key: "audit", label: "Log Audit", href: "/ops/dashboard", icon: History },
   ];
 
   return (
@@ -46,7 +46,7 @@ export default function OpsSidebar({ active = "verifications" }: OpsSidebarProps
         </div>
         <div>
           <h1 className="font-display text-xl font-bold text-primary">BantuVerif</h1>
-          <p className="text-sm text-on-surface-variant">Platform Ops</p>
+          <p className="text-sm text-on-surface-variant">Platform Operasi</p>
         </div>
       </div>
 

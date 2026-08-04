@@ -100,7 +100,7 @@ export default function VerificationDetailPage() {
               <div className="h-8 w-px bg-border-subtle"></div>
               {/* TODO: sambungkan ke data asli — ID kasus */}
               <h2 className="font-display text-base md:text-lg font-extrabold text-on-surface">
-                Case #BV-2024-8891
+                Kasus #BV-2024-8891
               </h2>
             </div>
             <div className="hidden lg:flex items-center gap-4 flex-1 max-w-md mx-8">
@@ -178,7 +178,7 @@ export default function VerificationDetailPage() {
                     </div>
                     <div>
                       <h3 className="font-display text-xl md:text-2xl font-bold text-on-surface">
-                        Anonymous Applicant
+                        Pemohon Anonim
                       </h3>
                       <p className="text-on-surface-variant flex items-center gap-2 text-sm">
                         <MapPin className="w-4 h-4" />

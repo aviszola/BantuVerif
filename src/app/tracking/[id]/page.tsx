@@ -61,25 +61,25 @@ export default function ApplicationDetailPage() {
   const accordions: AccordionItem[] = [
     {
       id: "acc-1",
-      title: "Proof of Residency.pdf",
-      meta: "Verified by Node #102 • Oct 24",
+      title: "Bukti Domisili.pdf",
+      meta: "Diverifikasi oleh Node #102 • 24 Okt",
       icon: FileText,
       status: "Verified",
       content: (
         <div className="py-4 space-y-4">
           <p className="text-sm text-on-surface-variant leading-relaxed">
-            The digital signature on this document matches the issuer&apos;s
-            public key (National ID Database). Verification hash:{" "}
+            Tanda tangan digital pada dokumen ini cocok dengan kunci publik
+            penerbit (Database Kependudukan). Hash verifikasi:{" "}
             <code className="bg-surface-container rounded px-1 text-on-surface">
               0x88f...e92a
             </code>
           </p>
           <div className="flex gap-4">
             <button className="text-primary font-semibold text-sm flex items-center gap-1 hover:underline">
-              <Download className="w-4 h-4" /> View File
+              <Download className="w-4 h-4" /> Lihat Berkas
             </button>
             <button className="text-on-surface-variant font-semibold text-sm flex items-center gap-1 hover:underline">
-              <Info className="w-4 h-4" /> Details
+              <Info className="w-4 h-4" /> Detail
             </button>
           </div>
         </div>
@@ -87,15 +87,15 @@ export default function ApplicationDetailPage() {
     },
     {
       id: "acc-2",
-      title: "Income Statement_Q3.png",
-      meta: "Manual Review Pending",
+      title: "Slip Penghasilan_Q3.png",
+      meta: "Menunggu Review Manual",
       icon: Receipt,
       status: "Reviewing",
       content: (
         <div className="py-4">
           <p className="text-sm text-on-surface-variant leading-relaxed">
-            This document is currently being compared against taxation
-            records. Expected verification by EOD tomorrow.
+            Dokumen ini sedang dibandingkan dengan catatan pajak. Verifikasi
+            diharapkan selesai besok sore.
           </p>
         </div>
       ),
@@ -237,10 +237,10 @@ export default function ApplicationDetailPage() {
                     <div className="flex items-center justify-between mb-8">
                       <h2 className="font-display text-2xl flex items-center gap-2 font-bold">
                         <Lock className="w-6 h-6 text-primary" />
-                        Privacy &amp; Encryption
+                        Privasi &amp; Enkripsi
                       </h2>
                       <span className="px-3 py-1 bg-primary-container/20 text-primary-container rounded-lg text-sm font-semibold">
-                        AES-256 Enabled
+                        AES-256 Aktif
                       </span>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -249,11 +249,10 @@ export default function ApplicationDetailPage() {
                           <ShieldCheck className="w-5 h-5 text-success" />
                         </div>
                         <p className="text-sm font-semibold mb-1">
-                          End-to-End Encryption
+                          Enkripsi End-to-End
                         </p>
                         <p className="text-sm text-on-surface-variant leading-relaxed">
-                          Personal data is hashed before being stored on the
-                          ledger.
+                          Data pribadi di-hash sebelum disimpan pada ledger.
                         </p>
                       </div>
                       <div className="p-4 bg-surface-container-low rounded-lg border border-border-subtle">
@@ -261,11 +260,11 @@ export default function ApplicationDetailPage() {
                           <Eye className="w-5 h-5 text-warning" />
                         </div>
                         <p className="text-sm font-semibold mb-1">
-                          Access Tracking
+                          Pelacakan Akses
                         </p>
                         <p className="text-sm text-on-surface-variant leading-relaxed">
-                          3 Ministry Officials have accessed your PII in the
-                          last 48h.
+                          3 Pejabat telah mengakses data pribadi Anda dalam 48
+                          jam terakhir.
                         </p>
                       </div>
                       <div className="p-4 bg-surface-container-low rounded-lg border border-border-subtle">
@@ -273,35 +272,35 @@ export default function ApplicationDetailPage() {
                           <Activity className="w-5 h-5 text-primary" />
                         </div>
                         <p className="text-sm font-semibold mb-1">
-                          Zero-Knowledge Proof
+                          Bukti Tanpa Pengetahuan (ZKP)
                         </p>
                         <p className="text-sm text-on-surface-variant leading-relaxed">
-                          Validators check eligibility without seeing raw income
-                          data.
+                          Validator memeriksa kelayakan tanpa melihat data
+                          penghasilan mentah.
                         </p>
                       </div>
                     </div>
                     <div className="mt-8 pt-6 border-t border-border-subtle">
                       <h3 className="text-sm font-semibold mb-4">
-                        Recent Data Access Logs
+                        Log Akses Data Terbaru
                       </h3>
                       <div className="space-y-3">
                         <div className="flex items-center justify-between py-2 text-sm">
                           <span className="flex items-center gap-2">
                             <span className="w-2 h-2 rounded-full bg-primary"></span>
-                            Ministry of Social Welfare (Auth Node #44)
+                            Kementerian Sosial (Auth Node #44)
                           </span>
                           <span className="text-on-surface-variant">
-                            Today, 09:15 AM
+                            Hari ini, 09:15
                           </span>
                         </div>
                         <div className="flex items-center justify-between py-2 text-sm">
                           <span className="flex items-center gap-2">
                             <span className="w-2 h-2 rounded-full bg-outline"></span>
-                            Automated Risk Scoring Engine
+                            Mesin Penilaian Risiko Otomatis
                           </span>
                           <span className="text-on-surface-variant">
-                            Oct 25, 04:00 PM
+                            25 Okt, 16:00
                           </span>
                         </div>
                       </div>
@@ -312,7 +311,7 @@ export default function ApplicationDetailPage() {
                   <div className="bg-surface border border-border-subtle rounded-xl overflow-hidden shadow-level1">
                     <div className="p-8 pb-4">
                       <h2 className="font-display text-2xl font-bold">
-                        Supporting Documents
+                        Dokumen Pendukung
                       </h2>
                     </div>
                     <div className="divide-y divide-border-subtle">
@@ -354,7 +353,7 @@ export default function ApplicationDetailPage() {
                                       : "bg-warning/10 text-warning"
                                   }`}
                                 >
-                                  {item.status}
+                                  {item.status === "Verified" ? "Terverifikasi" : "Dalam Review"}
                                 </span>
                                 <ChevronDown
                                   className={`w-5 h-5 text-on-surface-variant transition-transform duration-300 ${
@@ -384,16 +383,16 @@ export default function ApplicationDetailPage() {
                   {/* Audit Timeline */}
                   <div className="bg-surface border border-border-subtle rounded-xl p-6 shadow-level1">
                     <h3 className="font-display text-xl font-bold mb-6">
-                      Audit Timeline
+                      Linimasa Audit
                     </h3>
                     <div className="relative pl-6 border-l-2 border-primary/20 space-y-8">
                       <div className="relative">
                         <div className="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-success ring-4 ring-white"></div>
                         <p className="text-sm font-semibold">
-                          Submission Recorded
+                          Pengajuan Tercatat
                         </p>
                         <p className="text-sm text-on-surface-variant">
-                          Oct 24, 14:32:01
+                          24 Okt, 14:32:01
                         </p>
                         <p className="text-xs font-mono bg-surface-container-low px-2 py-1 rounded mt-1 inline-block">
                           TX: 0x4f...9c2
@@ -403,10 +402,10 @@ export default function ApplicationDetailPage() {
                       <div className="relative">
                         <div className="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-primary ring-4 ring-white"></div>
                         <p className="text-sm font-semibold">
-                          Consensus Voting Initiated
+                          Voting Konsensus Dimulai
                         </p>
                         <p className="text-sm text-on-surface-variant">
-                          Oct 24, 15:45:12
+                          24 Okt, 15:45:12
                         </p>
                         <div className="mt-2 flex -space-x-2">
                           <div className="w-6 h-6 rounded-full bg-surface-container-highest border border-white flex items-center justify-center text-[10px] font-bold text-on-surface">
@@ -423,17 +422,17 @@ export default function ApplicationDetailPage() {
                           </div>
                         </div>
                         <p className="text-xs text-on-surface-variant mt-1 italic">
-                          15 anonymized community votes cast
+                          15 suara komunitas anonim terkumpul
                         </p>
                       </div>
 
                       <div className="relative">
                         <div className="absolute -left-[33px] top-0 w-4 h-4 rounded-full bg-outline-variant ring-4 ring-white"></div>
                         <p className="text-sm font-semibold text-on-surface-variant">
-                          Final Verification
+                          Verifikasi Akhir
                         </p>
                         <p className="text-sm text-on-surface-variant italic">
-                          Awaiting node finalization
+                          Menunggu finalisasi node
                         </p>
                       </div>
                     </div>
@@ -442,7 +441,7 @@ export default function ApplicationDetailPage() {
                   {/* Activity History Log */}
                   <div className="bg-surface border border-border-subtle rounded-xl p-6 shadow-level1">
                     <h3 className="text-sm font-semibold mb-4 flex items-center justify-between">
-                      Activity History
+                      Riwayat Aktivitas
                       <Info className="w-4 h-4 text-on-surface-variant" />
                     </h3>
                     <div className="space-y-4">
@@ -450,13 +449,13 @@ export default function ApplicationDetailPage() {
                         <RefreshCw className="w-5 h-5 text-primary shrink-0" />
                         <div>
                           <p className="text-sm text-on-surface">
-                            Status changed to{" "}
+                            Status berubah menjadi{" "}
                             <span className="text-success font-bold">
-                              In Review
+                              Dalam Review
                             </span>
                           </p>
                           <p className="text-xs text-on-surface-variant">
-                            Today, 08:20 AM
+                            Hari ini, 08:20
                           </p>
                         </div>
                       </div>
@@ -464,11 +463,11 @@ export default function ApplicationDetailPage() {
                         <Wrench className="w-5 h-5 text-on-surface-variant shrink-0" />
                         <div>
                           <p className="text-sm text-on-surface">
-                            Ministry Official added a note regarding document
-                            clarity.
+                            Pejabat menambahkan catatan tentang kejelasan
+                            dokumen.
                           </p>
                           <p className="text-xs text-on-surface-variant">
-                            Yesterday, 11:30 PM
+                            Kemarin, 23:30
                           </p>
                         </div>
                       </div>
@@ -476,16 +475,16 @@ export default function ApplicationDetailPage() {
                         <FileText className="w-5 h-5 text-on-surface-variant shrink-0" />
                         <div>
                           <p className="text-sm text-on-surface">
-                            Application was modified by the applicant.
+                            Pengajuan diubah oleh pemohon.
                           </p>
                           <p className="text-xs text-on-surface-variant">
-                            Oct 24, 02:40 PM
+                            24 Okt, 14:40
                           </p>
                         </div>
                       </div>
                     </div>
                     <button className="w-full mt-6 py-2 border border-border-subtle rounded-lg text-sm font-semibold hover:bg-surface-container transition-colors">
-                      View Full Audit Log
+                      Lihat Log Audit Lengkap
                     </button>
                   </div>
 
@@ -493,14 +492,14 @@ export default function ApplicationDetailPage() {
                   <div className="bg-primary-container p-6 rounded-xl text-on-primary relative overflow-hidden">
                     <div className="relative z-10">
                       <h3 className="text-sm font-semibold mb-2">
-                        Need Help?
+                        Butuh Bantuan?
                       </h3>
                       <p className="text-sm opacity-90 mb-4 leading-relaxed">
-                        Our community moderators are here to help if you have
-                        questions about the audit process.
+                        Moderator komunitas kami siap membantu jika Anda
+                        memiliki pertanyaan tentang proses audit.
                       </p>
                       <button className="px-4 py-2 bg-on-primary text-primary rounded-lg text-sm font-semibold hover:opacity-90 transition-opacity">
-                        Contact Support
+                        Hubungi Dukungan
                       </button>
                     </div>
                     <Wrench className="absolute -bottom-4 -right-4 w-32 h-32 opacity-10" />
@@ -520,25 +519,24 @@ export default function ApplicationDetailPage() {
               BANTUVERIF
             </span>
             <p className="text-secondary">
-              © 2026 BantuVerif Citizen Platform. Secure &amp; Transparent
-              Civic Tech.
+              © 2026 BantuVerif — Platform Warga yang Aman &amp; Transparan.
             </p>
           </div>
           <div className="flex flex-wrap justify-center gap-6 font-medium">
             <a className="hover:text-primary underline transition-all" href="#">
-              Privacy Policy
+              Kebijakan Privasi
             </a>
             <a className="hover:text-primary underline transition-all" href="#">
-              Terms of Service
+              Ketentuan Layanan
             </a>
             <a className="hover:text-primary underline transition-all" href="#">
               FAQ
             </a>
             <a className="hover:text-primary underline transition-all" href="#">
-              Audit Transparency
+              Transparansi Audit
             </a>
             <a className="hover:text-primary underline transition-all" href="#">
-              Contact Support
+              Hubungi Dukungan
             </a>
           </div>
         </div>

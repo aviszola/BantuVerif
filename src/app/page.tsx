@@ -95,7 +95,7 @@ const roleDetails: Record<RoleKey, RoleDetail> = {
     ],
   },
   publik: {
-    title: "Dashboard Transparansi Akses Publik",
+    title: "Dasbor Transparansi Akses Publik",
     desc: "Monitoring akuntabilitas penyaluran bantuan bagi masyarakat umum.",
     points: [
       "Data agregat anonim tanpa mengekspos identitas individu.",

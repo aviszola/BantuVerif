@@ -724,7 +724,7 @@ export default function ApplyPage() {
               BANTUVERIF
             </span>
             <p className="text-secondary">
-              © 2026 BantuVerif Citizen Platform. Secure &amp; Transparent Civic Tech.
+              © 2026 BantuVerif — Platform Warga yang Aman &amp; Transparan.
             </p>
           </div>
           <nav className="flex flex-wrap justify-center gap-6 font-medium">

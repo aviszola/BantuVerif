@@ -193,7 +193,7 @@ export default function ApplicationSubmittedPage() {
                 className="w-full sm:w-auto min-h-[48px] px-6 py-3 bg-[#2563eb] text-white text-sm font-semibold rounded-lg hover:bg-[#1d4ed8] active:scale-[0.99] transition-all flex items-center justify-center gap-2 shadow-xs"
               >
                 <LayoutDashboard className="w-4.5 h-4.5" />
-                <span>Ke Dashboard Saya</span>
+                <span>Ke Dasbor Saya</span>
               </Link>
               <Link
                 href="/tracking"

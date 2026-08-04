@@ -303,7 +303,7 @@ export default function RiwayatPage() {
         <div className="max-w-[1280px] mx-auto flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-on-surface-variant">
           <div className="flex flex-col gap-1">
             <span className="font-bold tracking-wider uppercase text-on-surface">BANTUVERIF</span>
-            <p className="text-secondary">© 2026 BantuVerif Citizen Platform. Secure &amp; Transparent Civic Tech.</p>
+            <p className="text-secondary">© 2026 BantuVerif — Platform Warga yang Aman &amp; Transparan.</p>
           </div>
           <nav className="flex flex-wrap justify-center gap-6 font-medium">
             <a className="hover:text-primary transition-all" href="#">Kebijakan Privasi</a>
