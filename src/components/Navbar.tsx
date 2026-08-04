@@ -63,7 +63,7 @@ export default function Navbar() {
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
-  if (pathname === "/login") return null;
+  if (pathname === "/login" || pathname.startsWith("/ops")) return null;
 
   const handleSignOut = async () => {
     await supabase.auth.signOut();
