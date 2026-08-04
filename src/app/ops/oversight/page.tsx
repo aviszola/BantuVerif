@@ -93,26 +93,26 @@ export default function OversightDashboardPage() {
           <div className="flex justify-between items-center px-4 md:px-gutter h-16 w-full max-w-container-max mx-auto">
             <div className="flex items-center gap-8">
               <h1 className="font-display text-lg font-extrabold text-on-surface">
-                Ops Dashboard
+                Dashboard Ops
               </h1>
               <nav className="hidden md:flex gap-6 text-sm font-semibold">
                 <a
                   className="text-primary border-b-2 border-primary pb-1"
                   href="#"
                 >
-                  Overview
+                  Ringkasan
                 </a>
                 <a
                   className="text-on-surface-variant hover:text-on-surface transition-colors"
                   href="#"
                 >
-                  Reports
+                  Laporan
                 </a>
                 <a
                   className="text-on-surface-variant hover:text-on-surface transition-colors"
                   href="#"
                 >
-                  Inventory
+                  Audit Logs
                 </a>
               </nav>
             </div>
@@ -121,7 +121,7 @@ export default function OversightDashboardPage() {
                 <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant" />
                 <input
                   type="text"
-                  placeholder="Search applications..."
+                  placeholder="Cari aplikasi..."
                   className="pl-10 pr-4 py-2 bg-surface-container-low border-none rounded-full text-sm w-64 focus:ring-2 focus:ring-primary focus:bg-surface transition-all placeholder:text-on-surface-variant"
                 />
               </div>
@@ -152,25 +152,24 @@ export default function OversightDashboardPage() {
           <div className="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div>
               <h2 className="font-display text-2xl md:text-3xl font-bold text-on-surface mb-1">
-                Institutional Oversight
+                Pengawasan Institusional
               </h2>
               <p className="text-on-surface-variant text-sm md:text-base max-w-2xl leading-relaxed">
-                Monitor real-time citizen verification flows across RT/RW
-                jurisdictions with institutional empathy and precision.
+                Pantau alur verifikasi warga secara real-time di seluruh yurisdiksi RT/RW dengan empati dan presisi institusional.
               </p>
             </div>
             <div className="flex gap-3">
               {/* TODO: sambungkan ke data asli — rentang waktu */}
               <div className="flex items-center gap-2 px-4 py-2 bg-surface border border-border-subtle rounded-lg text-sm font-semibold text-on-surface-variant">
                 <Calendar className="w-4 h-4" />
-                Last 30 Days
+                30 Hari Terakhir
               </div>
               <button
                 type="button"
                 className="px-4 py-2 bg-primary text-white rounded-lg text-sm font-semibold flex items-center gap-2 shadow-sm"
               >
                 <Download className="w-4 h-4" />
-                Export Report
+                Ekspor Laporan
               </button>
             </div>
           </div>
@@ -183,18 +182,18 @@ export default function OversightDashboardPage() {
                   <Handshake className="w-5 h-5 text-secondary" />
                 </div>
                 <span className="px-2 py-1 bg-success/10 text-success rounded text-[11px] font-bold">
-                  +12% vs last week
+                  +12% minggu lalu
                 </span>
               </div>
               <h3 className="text-xs font-bold tracking-[0.05em] text-on-surface-variant mb-1 uppercase">
-                Applications in Consensus
+                Aplikasi dalam Konsensus
               </h3>
               <div className="flex items-baseline gap-2">
                 <span className="font-display text-4xl font-bold text-on-surface leading-none">
                   1,284
                 </span>
                 <span className="text-on-surface-variant text-sm font-semibold">
-                  Pending
+                  Menunggu
                 </span>
               </div>
               <div className="mt-4 w-full bg-surface-container-low h-1.5 rounded-full overflow-hidden">
@@ -208,18 +207,18 @@ export default function OversightDashboardPage() {
                   <MessageSquarePlus className="w-5 h-5 text-warning" />
                 </div>
                 <span className="px-2 py-1 bg-danger/10 text-danger rounded text-[11px] font-bold">
-                  Priority Action
+                  Tindakan Prioritas
                 </span>
               </div>
               <h3 className="text-xs font-bold tracking-[0.05em] text-on-surface-variant mb-1 uppercase">
-                Ready for Final Review
+                Siap untuk Ulasan Final
               </h3>
               <div className="flex items-baseline gap-2">
                 <span className="font-display text-4xl font-bold text-on-surface leading-none">
                   42
                 </span>
                 <span className="text-on-surface-variant text-sm font-semibold">
-                  Queue
+                  Antrian
                 </span>
               </div>
               <div className="mt-4 flex -space-x-2">
@@ -246,24 +245,24 @@ export default function OversightDashboardPage() {
                   <BadgeCheck className="w-5 h-5 text-success" />
                 </div>
                 <span className="px-2 py-1 bg-surface-container-high text-on-surface-variant rounded text-[11px] font-bold">
-                  Stable
+                  Stabil
                 </span>
               </div>
               <h3 className="text-xs font-bold tracking-[0.05em] text-on-surface-variant mb-1 uppercase">
-                Recent Approvals
+                Persetujuan Terbaru
               </h3>
               <div className="flex items-baseline gap-2">
                 <span className="font-display text-4xl font-bold text-on-surface leading-none">
                   8,902
                 </span>
                 <span className="text-on-surface-variant text-sm font-semibold">
-                  Lifetime
+                  Seumur Hidup
                 </span>
               </div>
               <div className="mt-4 flex items-center gap-2">
                 <TrendingUp className="w-4 h-4 text-success" />
                 <span className="text-sm text-on-surface-variant font-semibold">
-                  98.2% Approval Rating
+                  98.2% Tingkat Persetujuan
                 </span>
               </div>
             </div>
@@ -276,10 +275,10 @@ export default function OversightDashboardPage() {
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8">
                 <div>
                   <h3 className="font-display text-xl font-bold text-on-surface">
-                    Verification Timeline
+                    Garis Waktu Verifikasi
                   </h3>
                   <p className="text-sm text-on-surface-variant">
-                    Daily application volume vs completion time
+                    Volume aplikasi harian vs waktu penyelesaian
                   </p>
                 </div>
                 {/* TODO: sambungkan ke data asli — toggle rentang */}

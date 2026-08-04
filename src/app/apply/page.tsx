@@ -36,6 +36,7 @@ export default function ApplyPage() {
   const [currentStep, setCurrentStep] = useState(1);
   const [user, setUser] = useState<any>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
 
   // Form State
   const [formData, setFormData] = useState({
@@ -111,26 +112,49 @@ export default function ApplyPage() {
   };
 
   const handleSubmit = async () => {
+    if (!formData.agreeTerms) return;
     setIsSubmitting(true);
     try {
-      if (user) {
-        await supabase.from("applications").insert([
+      const { data, error } = await supabase
+        .from("applications")
+        .insert([
           {
-            user_id: user.id,
-            category: "BLT Sembako & Tunai",
+            user_id: user?.id,
+            category: formData.reasonCategory || "BLT Sembako",
             status: "submitted",
-            notes: formData.reasonDescription,
+            full_name: `${formData.firstName} ${formData.lastName}`.trim(),
+            nik: formData.nik,
+            email: formData.email,
+            phone: formData.phone,
+            birth_date: `${formData.birthDay} ${formData.birthMonth} ${formData.birthYear}`.trim(),
+            family_members: formData.familyMembers === "5+" ? 5 : Number(formData.familyMembers),
+            house_ownership: formData.houseOwnership,
+            address: formData.address,
+            rt_rw: formData.rtRw,
+            kelurahan: formData.kelurahan,
+            kecamatan: formData.kecamatan,
+            monthly_income: formData.monthlyIncome,
+            occupation: formData.occupation,
+            reason_category: formData.reasonCategory,
+            reason_description: formData.reasonDescription,
+            ktp_uploaded: formData.ktpUploaded,
+            kk_uploaded: formData.kkUploaded,
+            tracking_code: `BANTU-${Date.now().toString().slice(-6)}`,
           },
-        ]);
-      }
-    } catch {
-      // Abaikan jika tabel belum dikonfigurasi di Supabase
-    }
+        ])
+        .select("id");
 
-    setTimeout(() => {
+      if (error) throw error;
+
+      const appId = data?.[0]?.id;
+      router.push(`/application-submitted${appId ? `?id=${appId}` : ""}`);
+    } catch (err) {
+      console.error("Gagal menyimpan pengajuan:", err);
+      setSubmitError(
+        "Gagal menyimpan pengajuan. Periksa koneksi dan pastikan tabel applications sudah dibuat di Supabase (jalankan supabase/schema.sql)."
+      );
       setIsSubmitting(false);
-      router.push("/application-submitted");
-    }, 1200);
+    }
   };
 
   const stepsList = [
@@ -616,6 +640,12 @@ export default function ApplyPage() {
                       Saya menyatakan bahwa seluruh data yang diisikan adalah benar dan bersedia dilakukan verifikasi oleh tim validator publik resmi.
                     </span>
                   </label>
+
+                  {submitError && (
+                    <div className="p-4 rounded-xl bg-red-50 border border-red-200 text-xs text-red-700 font-semibold">
+                      {submitError}
+                    </div>
+                  )}
 
                   <button
                     type="button"

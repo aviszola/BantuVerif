@@ -93,19 +93,19 @@ export default function VerifierDashboardPage() {
                   className="text-primary border-b-2 border-primary pb-1 font-semibold"
                   href="#"
                 >
-                  Overview
+                  Ikhtisar
                 </a>
                 <a
                   className="text-on-surface-variant hover:text-on-surface transition-colors"
                   href="#"
                 >
-                  Reports
+                  Laporan
                 </a>
                 <a
                   className="text-on-surface-variant hover:text-on-surface transition-colors"
                   href="#"
                 >
-                  Inventory
+                  Inventaris
                 </a>
               </nav>
             </div>
@@ -121,7 +121,7 @@ export default function VerifierDashboardPage() {
                     James Kwesi
                   </p>
                   <p className="text-[10px] text-on-surface-variant uppercase tracking-wider mt-0.5">
-                    Community Verifier
+                    Verifikator Komunitas
                   </p>
                 </div>
                 <div className="w-9 h-9 rounded-full bg-surface-container-highest flex items-center justify-center">
@@ -140,12 +140,11 @@ export default function VerifierDashboardPage() {
           <section className="flex flex-col md:flex-row justify-between items-end gap-4">
             <div>
               <h2 className="font-display text-2xl md:text-3xl font-bold text-on-surface">
-                Verifier Dashboard
+                Dashboard Verifikator
               </h2>
               {/* TODO: sambungkan ke data asli — nama verifier & jumlah tugas */}
               <p className="text-sm md:text-base text-on-surface-variant">
-                Welcome back, James. You have 12 pending tasks in your
-                vicinity.
+                Selamat kembali, James. Anda memiliki 12 tugas tertunda di sekitar Anda.
               </p>
             </div>
             {/* TODO: sambungkan ke data asli — toggle range waktu */}
@@ -160,7 +159,7 @@ export default function VerifierDashboardPage() {
                 type="button"
                 className="px-4 py-2 text-on-surface-variant hover:bg-surface-container-low rounded-lg text-sm font-semibold transition-colors"
               >
-                Last 30 Days
+                30 Hari Terakhir
               </button>
             </div>
           </section>
@@ -173,7 +172,7 @@ export default function VerifierDashboardPage() {
             >
               <div className="flex justify-between items-start">
                 <span className="text-xs font-bold tracking-[0.05em] text-on-surface-variant uppercase">
-                  Community Trust Score
+                  Skor Kepercayaan Komunitas
                 </span>
                 <BadgeCheck className="w-5 h-5 text-success" />
               </div>
@@ -196,7 +195,7 @@ export default function VerifierDashboardPage() {
             >
               <div className="flex justify-between items-start">
                 <span className="text-xs font-bold tracking-[0.05em] text-on-surface-variant uppercase">
-                  Pending Verifications
+                  Verifikasi Tertunda
                 </span>
                 <Clock className="w-5 h-5 text-warning" />
               </div>
@@ -205,7 +204,7 @@ export default function VerifierDashboardPage() {
                   12
                 </span>
                 <p className="text-on-surface-variant text-sm mt-1">
-                  4 Urgent (within 2km)
+                  4 Mendesak (dalam 2km)
                 </p>
               </div>
               <div className="mt-4 flex -space-x-2">
@@ -230,7 +229,7 @@ export default function VerifierDashboardPage() {
             >
               <div className="flex justify-between items-start">
                 <span className="text-xs font-bold tracking-[0.05em] text-on-surface-variant uppercase">
-                  Total Contributed
+                  Total Dikontribusikan
                 </span>
                 <BarChart3 className="w-5 h-5 text-primary" />
               </div>
@@ -239,12 +238,12 @@ export default function VerifierDashboardPage() {
                   452
                 </span>
                 <p className="text-on-surface-variant text-sm mt-1">
-                  Lifetime Verifications
+                  Verifikasi Seumur Hidup
                 </p>
               </div>
               <div className="mt-4 flex items-center gap-2">
                 <span className="px-2 py-1 bg-primary/10 text-primary rounded text-[10px] font-bold uppercase tracking-widest">
-                  Platinum Tier
+                  Tingkat Platinum
                 </span>
               </div>
             </div>
@@ -255,7 +254,7 @@ export default function VerifierDashboardPage() {
             >
               <div className="flex justify-between items-start">
                 <span className="text-xs font-bold tracking-[0.05em] text-on-surface-variant uppercase">
-                  Verification Accuracy
+                  Akurasi Verifikasi
                 </span>
                 <Target className="w-5 h-5 text-secondary" />
               </div>
@@ -264,13 +263,13 @@ export default function VerifierDashboardPage() {
                   99.4%
                 </span>
                 <p className="text-on-surface-variant text-sm mt-1">
-                  Based on peer audits
+                  Berdasarkan audit rekan
                 </p>
               </div>
               <div className="mt-4 flex items-center gap-1">
                 <div className="w-2 h-2 rounded-full bg-success"></div>
                 <span className="text-xs text-on-surface-variant">
-                  High Precision Standard
+                  Standar Presisi Tinggi
                 </span>
               </div>
             </div>
@@ -282,7 +281,7 @@ export default function VerifierDashboardPage() {
             <section className="lg:col-span-2 flex flex-col gap-4">
               <div className="flex items-center justify-between">
                 <h3 className="font-display text-xl font-bold text-on-surface">
-                  Pending Verification Tasks
+                  Tugas Verifikasi Tertunda
                 </h3>
                 <div className="flex items-center gap-2">
                   <Filter className="w-5 h-5 text-on-surface-variant cursor-pointer p-0.5 hover:bg-surface-container-low rounded-full transition-colors" />
@@ -296,11 +295,11 @@ export default function VerifierDashboardPage() {
                     <thead className="bg-surface-container-low border-b border-border-subtle">
                       <tr>
                         {[
-                          "Applicant ID",
-                          "Type",
-                          "Distance",
-                          "Expiry",
-                          "Action",
+                          "ID Pelamar",
+                          "Tipe",
+                          "Jarak",
+                          "Kadaluarsa",
+                          "Aksi",
                         ].map((h) => (
                           <th
                             key={h}
@@ -350,7 +349,7 @@ export default function VerifierDashboardPage() {
                               type="button"
                               className="bg-primary text-white px-4 py-2 rounded-lg text-xs font-semibold hover:bg-primary-container transition-all active:scale-95 shadow-sm"
                             >
-                              Start Verification
+                              Mulai Verifikasi
                             </button>
                           </td>
                         </tr>
@@ -360,7 +359,7 @@ export default function VerifierDashboardPage() {
                 </div>
                 <div className="px-6 py-4 bg-surface-container-low border-t border-border-subtle flex items-center justify-between">
                   <span className="text-xs text-on-surface-variant font-medium">
-                    Showing 4 of 12 active tasks
+                    Menampilkan 4 dari 12 tugas aktif
                   </span>
                   <div className="flex gap-2">
                     <button
@@ -386,13 +385,13 @@ export default function VerifierDashboardPage() {
               <div className="bg-surface rounded-xl border border-border-subtle shadow-sm flex flex-col overflow-hidden">
                 <div className="px-6 py-4 border-b border-border-subtle flex items-center justify-between">
                   <h3 className="font-display text-lg font-bold text-on-surface">
-                    Recent History
+                    Riwayat Terbaru
                   </h3>
                   <a
                     className="text-primary text-xs font-semibold hover:underline"
                     href="#"
                   >
-                    View All
+                    Lihat Semua
                   </a>
                 </div>
                 <div className="p-4 space-y-4">
@@ -402,10 +401,10 @@ export default function VerifierDashboardPage() {
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-semibold text-on-surface truncate">
-                        USR-8821-M Verified
+                        USR-8821-M Terverifikasi
                       </p>
                       <p className="text-[10px] text-on-surface-variant uppercase font-bold tracking-tighter">
-                        Completed 2h ago
+                        Selesai 2j yang lalu
                       </p>
                     </div>
                     <div className="text-right">

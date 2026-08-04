@@ -102,6 +102,22 @@ export default function DashboardPage() {
     }, 1200);
   };
 
+  // Data riwayat pengajuan dari database
+  const [applications, setApplications] = useState<any[]>([]);
+
+  useEffect(() => {
+    if (!user) return;
+    (async () => {
+      const { data, error } = await supabase
+        .from("applications")
+        .select("*")
+        .eq("user_id", user.id)
+        .order("created_at", { ascending: false })
+        .limit(5);
+      if (!error && data) setApplications(data);
+    })();
+  }, [user]);
+
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#f7f9fb]">
@@ -318,83 +334,68 @@ export default function DashboardPage() {
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-[#e2e8f0]/60">
-                      {/* Row 1 */}
-                      <tr className="hover:bg-[#f8fafc] transition-colors">
-                        <td className="py-4 font-semibold text-on-surface">
-                          <div className="flex items-center gap-3">
-                            <div className="w-9 h-9 rounded-xl bg-[#eff6ff] text-[#2563eb] border border-[#dbeafe] flex items-center justify-center">
-                              <Home className="w-4.5 h-4.5" />
-                            </div>
-                            <div>
-                              <div className="font-bold text-sm">Subsidi Perumahan Warga</div>
-                              <div className="text-[11px] text-on-surface-variant font-normal">Program RT 04</div>
-                            </div>
-                          </div>
-                        </td>
-                        <td className="py-4 text-on-surface-variant font-medium">12 Okt 2023</td>
-                        <td className="py-4">
-                          <span className="px-3 py-1 rounded-full text-[11px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 inline-flex items-center gap-1">
-                            <CheckCircle2 className="w-3 h-3" /> Disetujui
-                          </span>
-                        </td>
-                        <td className="py-4 text-right">
-                          <button className="w-8 h-8 rounded-lg hover:bg-[#eceef0] inline-flex items-center justify-center text-on-surface-variant transition-colors">
-                            <Eye className="w-4.5 h-4.5" />
-                          </button>
-                        </td>
-                      </tr>
-
-                      {/* Row 2 */}
-                      <tr className="hover:bg-[#f8fafc] transition-colors">
-                        <td className="py-4 font-semibold text-on-surface">
-                          <div className="flex items-center gap-3">
-                            <div className="w-9 h-9 rounded-xl bg-[#f2f4f6] text-on-surface-variant border border-[#e2e8f0] flex items-center justify-center">
-                              <GraduationCap className="w-4.5 h-4.5" />
-                            </div>
-                            <div>
-                              <div className="font-bold text-sm">Beasiswa Pendidikan Anak</div>
-                              <div className="text-[11px] text-on-surface-variant font-normal">Tingkat Sekolah Dasar</div>
-                            </div>
-                          </div>
-                        </td>
-                        <td className="py-4 text-on-surface-variant font-medium">24 Agt 2023</td>
-                        <td className="py-4">
-                          <span className="px-3 py-1 rounded-full text-[11px] font-bold bg-slate-100 text-slate-700 border border-slate-200">
-                            Selesai
-                          </span>
-                        </td>
-                        <td className="py-4 text-right">
-                          <button className="w-8 h-8 rounded-lg hover:bg-[#eceef0] inline-flex items-center justify-center text-on-surface-variant transition-colors">
-                            <Eye className="w-4.5 h-4.5" />
-                          </button>
-                        </td>
-                      </tr>
-
-                      {/* Row 3 */}
-                      <tr className="hover:bg-[#f8fafc] transition-colors">
-                        <td className="py-4 font-semibold text-on-surface">
-                          <div className="flex items-center gap-3">
-                            <div className="w-9 h-9 rounded-xl bg-[#f2f4f6] text-on-surface-variant border border-[#e2e8f0] flex items-center justify-center">
-                              <Briefcase className="w-4.5 h-4.5" />
-                            </div>
-                            <div>
-                              <div className="font-bold text-sm">Perpanjangan Kartu Sehat</div>
-                              <div className="text-[11px] text-on-surface-variant font-normal">Layanan Jaminan KIS</div>
-                            </div>
-                          </div>
-                        </td>
-                        <td className="py-4 text-on-surface-variant font-medium">05 Jan 2024</td>
-                        <td className="py-4">
-                          <span className="px-3 py-1 rounded-full text-[11px] font-bold bg-amber-50 text-amber-700 border border-amber-200 inline-flex items-center gap-1">
-                            <Clock className="w-3 h-3" /> Menunggu
-                          </span>
-                        </td>
-                        <td className="py-4 text-right">
-                          <button className="w-8 h-8 rounded-lg hover:bg-[#eceef0] inline-flex items-center justify-center text-on-surface-variant transition-colors">
-                            <Eye className="w-4.5 h-4.5" />
-                          </button>
-                        </td>
-                      </tr>
+                      {applications.length === 0 ? (
+                        <tr>
+                          <td colSpan={4} className="py-10 text-center">
+                            <p className="text-sm font-semibold text-on-surface-variant">
+                              Belum ada pengajuan. Mulai pengajuan pertama Anda.
+                            </p>
+                          </td>
+                        </tr>
+                      ) : (
+                        applications.map((app) => {
+                          const statusLabel: Record<string, { text: string; cls: string }> = {
+                            draft: { text: "Draft", cls: "bg-slate-100 text-slate-700 border-slate-200" },
+                            submitted: { text: "Diajukan", cls: "bg-amber-50 text-amber-700 border-amber-200" },
+                            verification: { text: "Verifikasi", cls: "bg-blue-50 text-blue-700 border-blue-200" },
+                            rt_review: { text: "Menunggu RT/RW", cls: "bg-indigo-50 text-indigo-700 border-indigo-200" },
+                            approved: { text: "Disetujui", cls: "bg-emerald-50 text-emerald-700 border-emerald-200" },
+                            rejected: { text: "Ditolak", cls: "bg-rose-50 text-rose-700 border-rose-200" },
+                            distributed: { text: "Tersalurkan", cls: "bg-emerald-50 text-emerald-700 border-emerald-200" },
+                          };
+                          const s = statusLabel[app.status] || statusLabel.submitted;
+                          return (
+                            <tr key={app.id} className="hover:bg-[#f8fafc] transition-colors">
+                              <td className="py-4 font-semibold text-on-surface">
+                                <div className="flex items-center gap-3">
+                                  <div className="w-9 h-9 rounded-xl bg-[#eff6ff] text-[#2563eb] border border-[#dbeafe] flex items-center justify-center">
+                                    <Home className="w-4.5 h-4.5" />
+                                  </div>
+                                  <div>
+                                    <div className="font-bold text-sm">{app.category}</div>
+                                    <div className="text-[11px] text-on-surface-variant font-normal">
+                                      {app.tracking_code || app.id.slice(0, 8)}
+                                    </div>
+                                  </div>
+                                </div>
+                              </td>
+                              <td className="py-4 text-on-surface-variant font-medium">
+                                {app.created_at
+                                  ? new Date(app.created_at).toLocaleDateString("id-ID", {
+                                      day: "numeric",
+                                      month: "short",
+                                      year: "numeric",
+                                    })
+                                  : "—"}
+                              </td>
+                              <td className="py-4">
+                                <span className={`px-3 py-1 rounded-full text-[11px] font-bold border inline-flex items-center gap-1 ${s.cls}`}>
+                                  {s.text}
+                                </span>
+                              </td>
+                              <td className="py-4 text-right">
+                                <Link
+                                  href={`/tracking/${app.id}`}
+                                  className="w-8 h-8 rounded-lg hover:bg-[#eceef0] inline-flex items-center justify-center text-on-surface-variant transition-colors"
+                                  aria-label={`Lihat detail ${app.category}`}
+                                >
+                                  <Eye className="w-4.5 h-4.5" />
+                                </Link>
+                              </td>
+                            </tr>
+                          );
+                        })
+                      )}
                     </tbody>
                   </table>
                 </div>

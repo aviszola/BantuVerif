@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { supabase } from "@/lib/supabase";
 import {
   ShieldCheck,
   ArrowRight,
@@ -29,6 +28,9 @@ import {
   Zap,
 } from "lucide-react";
 import { REGISTER_ROLES, type RegisterRole } from "@/lib/register";
+import { supabase, isDemoMode, type AppRole } from "@/lib/supabase";
+
+const DEMO_BYPASS = isDemoMode();
 
 export default function LoginPage() {
   const router = useRouter();
@@ -60,35 +62,19 @@ export default function LoginPage() {
     return "Warga Pemohon";
   };
 
-  // Helper to ensure Supabase Auth session is created & persisted locally
-  const ensureSupabaseAuthSession = async (userEmail: string) => {
-    try {
-      const emailToUse = (userEmail || "warga.terverifikasi@bantuverif.go.id").trim().toLowerCase();
-      const defaultPassword = `BantuVerif!2026_${emailToUse.split("@")[0]}`;
+  // Simpan role ke tabel profiles setelah auth sukses (jika belum ada)
+  const persistRole = async (userId: string, role: AppRole) => {
+    const { error } = await supabase.from("profiles").upsert(
+      { id: userId, role },
+      { onConflict: "id" }
+    );
+    if (error) console.warn("Persist role gagal:", error.message);
+  };
 
-      // 1. Try signing in with default password
-      const { data: signInData } = await supabase.auth.signInWithPassword({
-        email: emailToUse,
-        password: defaultPassword,
-      });
-
-      if (signInData?.session) {
-        return signInData.session;
-      }
-
-      // 2. If user doesn't exist, sign up user to create session
-      const { data: signUpData } = await supabase.auth.signUp({
-        email: emailToUse,
-        password: defaultPassword,
-      });
-
-      if (signUpData?.session) {
-        return signUpData.session;
-      }
-    } catch (err) {
-      console.warn("Supabase Auth session handler note:", err);
-    }
-    return null;
+  const goToDashboard = (role: RegisterRole, delayMs = 1000) => {
+    const targetUrl = getDashboardUrlForRole(role);
+    setTimeout(() => router.push(targetUrl), delayMs);
+    return targetUrl;
   };
 
   const handleSubmitIdentifier = async (e: React.FormEvent) => {
@@ -111,7 +97,7 @@ export default function LoginPage() {
         .then(({ error }) => {
           if (error) console.warn("signInWithOtp (register) warning:", error.message);
         })
-        .catch((err: any) => console.warn("signInWithOtp (register) failed:", err?.message ?? err));
+        .catch((err) => console.warn("signInWithOtp (register) failed:", err?.message ?? err));
       return;
     }
 
@@ -152,47 +138,44 @@ export default function LoginPage() {
         type: "email",
       });
 
-      if (data?.session) {
+      if (error) {
         setIsLoading(false);
-        setIsSuccess(true);
-        const targetUrl = getDashboardUrlForRole(selectedRole);
-        setTimeout(() => {
-          router.push(targetUrl);
-        }, 1000);
+        setErrorMessage("Kode OTP salah atau kedaluwarsa. Coba lagi.");
         return;
       }
 
-      // If OTP check was bypassed or demo, ensure session via Supabase Auth
-      await ensureSupabaseAuthSession(identifier);
+      if (data?.session) {
+        await persistRole(data.session.user.id, selectedRole);
+        setIsLoading(false);
+        setIsSuccess(true);
+        goToDashboard(selectedRole);
+      }
+    } catch {
       setIsLoading(false);
-      setIsSuccess(true);
-      const targetUrl = getDashboardUrlForRole(selectedRole);
-      setTimeout(() => {
-        router.push(targetUrl);
-      }, 1000);
-    } catch (err: any) {
-      console.error("Unexpected verify error:", err);
-      await ensureSupabaseAuthSession(identifier);
-      setIsLoading(false);
-      setIsSuccess(true);
-      const targetUrl = getDashboardUrlForRole(selectedRole);
-      setTimeout(() => {
-        router.push(targetUrl);
-      }, 1000);
+      setErrorMessage("Terjadi kesalahan saat verifikasi. Coba lagi.");
     }
   };
 
   const handlePasskeyLogin = async () => {
+    if (!DEMO_BYPASS) {
+      setErrorMessage("Fitur demo dinonaktifkan. Gunakan email + OTP.");
+      return;
+    }
     const demoEmail = identifier || "warga.terverifikasi@bantuverif.go.id";
     setIdentifier(demoEmail);
     setIsLoading(true);
-    await ensureSupabaseAuthSession(demoEmail);
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: demoEmail,
+      password: "BantuVerif!2026",
+    });
     setIsLoading(false);
+    if (error || !data.session) {
+      setErrorMessage("Akun demo belum dibuat. Daftar dulu lewat email + OTP.");
+      return;
+    }
+    await persistRole(data.session.user.id, selectedRole);
     setIsSuccess(true);
-    const targetUrl = getDashboardUrlForRole(selectedRole);
-    setTimeout(() => {
-      router.push(targetUrl);
-    }, 1000);
+    goToDashboard(selectedRole);
   };
 
   const handleContinueRole = async () => {
@@ -203,16 +186,10 @@ export default function LoginPage() {
     setRoleError("");
     if (selectedRole === "rtrw") {
       setRoleStep("wilayah");
-    } else {
-      setIsLoading(true);
-      await ensureSupabaseAuthSession(identifier || "warga.terverifikasi@bantuverif.go.id");
-      setIsLoading(false);
-      setIsSuccess(true);
-      const targetUrl = getDashboardUrlForRole(selectedRole);
-      setTimeout(() => {
-        router.push(targetUrl);
-      }, 1000);
+      return;
     }
+    // warga & verifikator: lanjut ke OTP (email sudah dikirim saat submit identitas)
+    setStep("otp");
   };
 
   const handleContinueWilayah = async (e: React.FormEvent) => {
@@ -227,12 +204,36 @@ export default function LoginPage() {
     }
     setRoleError("");
     setIsLoading(true);
-    await ensureSupabaseAuthSession(identifier || "rtrw.wilayah@bantuverif.go.id");
+
+    // Pastikan kode OTP sudah dikirim ke email (untuk alur RT/RW yang
+    // melewati step wilayah langsung)
+    if (!otpCode.trim()) {
+      const { error } = await supabase.auth.signInWithOtp({
+        email: identifier,
+        options: { shouldCreateUser: true },
+      });
+      setIsLoading(false);
+      if (error) {
+        setRoleError("Gagal mengirim kode OTP. Coba lagi.");
+        return;
+      }
+      setRoleError("Kode OTP telah dikirim ke email Anda. Masukkan kode di kolom di atas.");
+      return;
+    }
+
+    const { data, error } = await supabase.auth.verifyOtp({
+      email: identifier,
+      token: otpCode,
+      type: "email",
+    });
     setIsLoading(false);
+    if (error || !data.session) {
+      setRoleError("Verifikasi OTP gagal. Pastikan email & kode benar.");
+      return;
+    }
+    await persistRole(data.session.user.id, "rtrw");
     setIsSuccess(true);
-    setTimeout(() => {
-      router.push("/dashboard-rt");
-    }, 1000);
+    goToDashboard("rtrw");
   };
 
   // Quick switch role from side panel
@@ -569,6 +570,24 @@ export default function LoginPage() {
                             }}
                           />
                         </label>
+                      </div>
+
+                      <div>
+                        <label className="block text-xs font-bold text-on-surface mb-1.5 uppercase tracking-wider">
+                          Kode OTP Email
+                        </label>
+                        <input
+                          type="text"
+                          required
+                          maxLength={8}
+                          value={otpCode}
+                          onChange={(e) => setOtpCode(e.target.value)}
+                          placeholder="Masukkan 6 digit kode OTP dari email Anda"
+                          className="w-full h-11 px-4 rounded-xl bg-[#f2f4f6] border border-transparent text-sm outline-none focus:bg-white focus:border-blue-600 font-medium"
+                        />
+                        <p className="text-[11px] text-slate-500 mt-1.5">
+                          Kode OTP dikirim ke {identifier || "email Anda"} saat pendaftaran.
+                        </p>
                       </div>
 
                       {roleError && (

@@ -19,36 +19,65 @@ import {
   XCircle,
 } from "lucide-react";
 import OpsSidebar from "@/components/OpsSidebar";
+import { useParams, useRouter } from "next/navigation";
+import { supabase } from "@/lib/supabase";
 
 type Decision = "agree" | "unsure" | "disagree";
 
 const evidenceFiles = [
   {
-    name: "Community_Letter_Redacted.pdf",
-    meta: "Signed by Sector Lead",
+    name: "Surat_Keterangan_Masyarakat_Redacted.pdf",
+    meta: "Ditandatangani Ketua RW",
     icon: FileText,
     iconBg: "bg-error-container text-error",
   },
   {
-    name: "Utility_Statement_M4.jpg",
-    meta: "Address Validation",
+    name: "Tagihan_Listrik_M4.jpg",
+    meta: "Validasi Alamat",
     icon: ImageIcon,
     iconBg: "bg-primary-fixed text-primary",
   },
   {
-    name: "Work_ID_Masked.png",
-    meta: "Employment Proof",
+    name: "Kartu_Identitas_Masked.png",
+    meta: "Bukti Pekerjaan",
     icon: FileText,
     iconBg: "bg-tertiary-fixed text-tertiary",
   },
 ];
 
 export default function VerificationDetailPage() {
+  const params = useParams<{ id: string }>();
+  const router = useRouter();
+  const appId = params?.id;
   const [decision, setDecision] = useState<Decision | null>(null);
   const [notes, setNotes] = useState("");
+  const [submitState, setSubmitState] = useState<"idle" | "loading" | "done" | "error">("idle");
 
   const decisionActive = (type: Decision) =>
     decision === type ? "ring-2 ring-primary bg-primary/5 border-primary" : "border-border-subtle";
+
+  const handleSubmitVerification = async () => {
+    if (!decision || !appId) return;
+    setSubmitState("loading");
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session) {
+      setSubmitState("error");
+      return;
+    }
+    const { error } = await supabase.from("verifications").insert({
+      application_id: appId,
+      verifier_id: session.user.id,
+      decision,
+      notes,
+    });
+    if (error) {
+      console.error("Gagal menyimpan verifikasi:", error.message);
+      setSubmitState("error");
+      return;
+    }
+    setSubmitState("done");
+    setTimeout(() => router.push("/ops/verifications"), 1200);
+  };
 
   return (
     <div className="bg-background text-on-surface font-body min-h-screen selection:bg-primary-container selection:text-white overflow-x-hidden">
@@ -79,7 +108,7 @@ export default function VerificationDetailPage() {
                 <Search className="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant" />
                 <input
                   type="text"
-                  placeholder="Search operations..."
+                  placeholder="Cari operasi..."
                   className="w-full pl-10 pr-4 py-2 bg-surface-container-low border-none rounded-full focus:ring-2 focus:ring-primary text-sm placeholder:text-on-surface-variant"
                 />
               </div>
@@ -104,7 +133,7 @@ export default function VerificationDetailPage() {
                 type="button"
                 className="hover:bg-surface-container-low rounded-full p-1 pl-3 flex items-center gap-2 border border-border-subtle ml-2"
               >
-                <span className="text-sm font-semibold pr-1">Ops Lead</span>
+                <span className="text-sm font-semibold pr-1">Ketua Tim</span>
                 <div className="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container">
                   <span className="text-xs font-bold">OL</span>
                 </div>
@@ -121,11 +150,10 @@ export default function VerificationDetailPage() {
               <ShieldCheck className="w-5 h-5" />
             </div>
             <div className="flex-1">
-              <h4 className="text-sm font-semibold">Privacy Reminder</h4>
+              <h4 className="text-sm font-semibold">Pengingat Privasi</h4>
               <p className="text-sm opacity-90 leading-relaxed">
-                Personal Identifiable Information (PII) is masked for this
-                Community Verifier role. You are viewing a generalized profile
-                for consensus validation.
+                Informasi Identitas Pribadi (PII) disamarkan untuk peran Verifikator
+                Komunitas ini. Anda melihat profil umum untuk validasi konsensus.
               </p>
             </div>
             <button
@@ -154,36 +182,36 @@ export default function VerificationDetailPage() {
                       </h3>
                       <p className="text-on-surface-variant flex items-center gap-2 text-sm">
                         <MapPin className="w-4 h-4" />
-                        Sector 4-B, Northern District
+                        Sektor 4-B, Distrik Utara
                       </p>
                     </div>
                   </div>
                   <div className="flex flex-col items-start sm:items-end">
                     <span className="px-3 py-1 bg-warning/10 text-warning rounded-full text-xs font-bold tracking-[0.05em] border border-warning/20 uppercase">
-                      Pending Consensus
+                      Konsensus Berjalan
                     </span>
                     <span className="text-sm text-on-surface-variant mt-2">
-                      Submitted 14h ago
+                      Diajukan 14 jam lalu
                     </span>
                   </div>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6 border-t border-border-subtle">
                   <div className="space-y-1">
                     <p className="text-xs font-bold tracking-[0.05em] text-on-surface-variant uppercase">
-                      Household Size
+                      Jumlah Anggota Rumah Tangga
                     </p>
                     <div className="flex items-baseline gap-2">
                       <span className="text-xl font-bold text-on-surface">
-                        5 Members
+                        5 Anggota
                       </span>
                       <span className="text-sm text-on-surface-variant">
-                        (3 children)
+                        (3 anak)
                       </span>
                     </div>
                   </div>
                   <div className="space-y-1">
                     <p className="text-xs font-bold tracking-[0.05em] text-on-surface-variant uppercase">
-                      Reported Income
+                      Penghasilan Dilaporkan
                     </p>
                     <span className="text-xl font-bold text-success">
                       L-Tier 1
@@ -191,10 +219,10 @@ export default function VerificationDetailPage() {
                   </div>
                   <div className="space-y-1">
                     <p className="text-xs font-bold tracking-[0.05em] text-on-surface-variant uppercase">
-                      Residency Duration
+                      Lama Tinggal
                     </p>
                     <span className="text-xl font-bold text-on-surface">
-                      8.4 Years
+                      8.4 Tahun
                     </span>
                   </div>
                 </div>
@@ -207,7 +235,7 @@ export default function VerificationDetailPage() {
                   <div className="p-6">
                     <h4 className="text-sm font-semibold mb-4 flex items-center gap-2">
                       <Map className="w-5 h-5 text-primary" />
-                      Geographic Proximity
+                      Kedekatan Geografis
                     </h4>
                     <div className="relative h-64 w-full rounded-lg bg-surface-container overflow-hidden">
                       {/* TODO: sambungkan ke data asli — peta lokasi applicant */}
@@ -225,10 +253,10 @@ export default function VerificationDetailPage() {
                   </div>
                   <div className="mt-auto p-4 bg-surface-container-low border-t border-border-subtle flex justify-between">
                     <span className="text-sm text-on-surface-variant">
-                      Distance to center: 1.2km
+                      Jarak ke pusat: 1.2km
                     </span>
                     <span className="text-sm font-semibold text-primary">
-                      Verified Zone
+                      Zona Terverifikasi
                     </span>
                   </div>
                 </div>
@@ -237,7 +265,7 @@ export default function VerificationDetailPage() {
                 <div className="bg-surface border border-border-subtle rounded-xl p-6 shadow-level1">
                   <h4 className="text-sm font-semibold mb-4 flex items-center gap-2">
                     <FileText className="w-5 h-5 text-primary" />
-                    Evidence Files
+                    Berkas Pendukung
                   </h4>
                   <div className="space-y-3">
                     {evidenceFiles.map((file) => {
@@ -274,7 +302,7 @@ export default function VerificationDetailPage() {
             <div className="col-span-12 lg:col-span-4 space-y-8">
               {/* Consensus Progress */}
               <section className="bg-surface border border-border-subtle rounded-xl p-6 shadow-level1">
-                <h4 className="text-sm font-semibold mb-6">Consensus Progress</h4>
+                <h4 className="text-sm font-semibold mb-6">Progres Konsensus</h4>
                 <div className="flex items-center gap-4 mb-4">
                   <div className="flex -space-x-2">
                     <div className="w-10 h-10 rounded-full border-2 border-surface bg-success text-white flex items-center justify-center">
@@ -287,23 +315,23 @@ export default function VerificationDetailPage() {
                       <Clock className="w-5 h-5" />
                     </div>
                   </div>
-                  <span className="text-base font-bold">2 of 3 votes collected</span>
+                  <span className="text-base font-bold">2 dari 3 suara terkumpul</span>
                 </div>
                 <div className="w-full bg-surface-container-low rounded-full h-2">
                   <div className="bg-success h-2 rounded-full w-[66%]"></div>
                 </div>
                 <p className="text-sm text-on-surface-variant mt-4 leading-relaxed">
-                  One more verification is required to finalize the eligibility
-                  of this applicant.
+                  Satu verifikasi lagi diperlukan untuk memfinalisasi kelayakan
+                  pemohon ini.
                 </p>
               </section>
 
               {/* Action Panel */}
               <section className="bg-surface border border-border-subtle rounded-xl p-6 shadow-level1 border-t-4 border-t-primary">
-                <h4 className="text-sm font-semibold mb-4">Your Assessment</h4>
+                <h4 className="text-sm font-semibold mb-4">Penilaian Anda</h4>
                 <p className="text-sm text-on-surface-variant mb-6 leading-relaxed">
-                  Based on the provided household summary and evidence, do you
-                  verify this applicant&apos;s claims?
+                  Berdasarkan ringkasan rumah tangga dan bukti yang diberikan,
+                  apakah Anda memverifikasi klaim pemohon ini?
                 </p>
                 <div className="space-y-4">
                   <button
@@ -313,9 +341,9 @@ export default function VerificationDetailPage() {
                   >
                     <div className="flex items-center gap-3">
                       <CheckCircle2 className="w-5 h-5 text-outline group-hover:text-success" />
-                      <span className="text-sm font-semibold">Agree</span>
+                      <span className="text-sm font-semibold">Setuju</span>
                     </div>
-                    <span className="text-sm opacity-60">Confirmed Information</span>
+                    <span className="text-sm opacity-60">Informasi Terkonfirmasi</span>
                   </button>
                   <button
                     type="button"
@@ -324,9 +352,9 @@ export default function VerificationDetailPage() {
                   >
                     <div className="flex items-center gap-3">
                       <HelpCircle className="w-5 h-5 text-outline group-hover:text-warning" />
-                      <span className="text-sm font-semibold">Unsure</span>
+                      <span className="text-sm font-semibold">Ragu</span>
                     </div>
-                    <span className="text-sm opacity-60">Needs More Info</span>
+                    <span className="text-sm opacity-60">Perlu Info Lebih Lanjut</span>
                   </button>
                   <button
                     type="button"
@@ -335,32 +363,42 @@ export default function VerificationDetailPage() {
                   >
                     <div className="flex items-center gap-3">
                       <XCircle className="w-5 h-5 text-outline group-hover:text-danger" />
-                      <span className="text-sm font-semibold">Disagree</span>
+                      <span className="text-sm font-semibold">Tolak</span>
                     </div>
-                    <span className="text-sm opacity-60">Discrepancy Noted</span>
+                    <span className="text-sm opacity-60">Terdapat Ketidaksesuaian</span>
                   </button>
                 </div>
                 <div className="mt-8 space-y-2">
                   <label className="text-xs font-bold tracking-[0.05em] text-on-surface-variant uppercase">
-                    Justification Notes
+                    Catatan Justifikasi
                   </label>
                   <textarea
                     value={notes}
                     onChange={(e) => setNotes(e.target.value)}
                     className="w-full p-4 bg-surface-container-low border-none rounded-xl focus:ring-2 focus:ring-primary h-32 text-sm resize-none placeholder:text-on-surface-variant"
-                    placeholder="Explain your decision for audit purposes..."
+                    placeholder="Jelaskan keputusan Anda untuk keperluan audit..."
                   ></textarea>
                 </div>
-                {/* TODO: sambungkan ke data asli — submit keputusan ke API */}
+                {/* Submit keputusan ke tabel verifications (RLS: verifikator) */}
                 <button
                   type="button"
-                  className="w-full py-4 mt-6 bg-primary text-white rounded-xl text-sm font-semibold shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all"
+                  disabled={!decision || submitState === "loading"}
+                  onClick={handleSubmitVerification}
+                  className="w-full py-4 mt-6 bg-primary text-white rounded-xl text-sm font-semibold shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50 disabled:hover:scale-100"
                 >
-                  Submit Verification
+                  {submitState === "loading"
+                    ? "Menyimpan..."
+                    : submitState === "done"
+                      ? "Tersimpan ✓"
+                      : "Kirim Verifikasi"}
                 </button>
+                {submitState === "error" && (
+                  <p className="text-center text-danger text-xs font-semibold mt-3">
+                    Gagal menyimpan. Pastikan tabel verifications sudah dibuat (jalankan supabase/schema.sql) dan akun Anda berperan verifikator.
+                  </p>
+                )}
                 <p className="text-center text-sm text-on-surface-variant mt-4">
-                  This action will be recorded on the public ledger under your
-                  anonymized ID.
+                  Tindakan ini akan dicatat pada buku publik dengan ID anonim Anda.
                 </p>
               </section>
             </div>

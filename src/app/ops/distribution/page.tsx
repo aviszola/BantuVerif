@@ -14,49 +14,49 @@ import OpsSidebar from "@/components/OpsSidebar";
 const disbursements = [
   {
     id: "#AID-99230",
-    category: "Food & Hygiene",
-    status: "IN TRANSIT",
+    category: "Sembako & Higienis",
+    status: "DALAM PENGIRIMAN",
     statusBg: "bg-primary/10 text-primary",
-    arrival: "14:30 PM",
+    arrival: "14:30",
     disabled: false,
   },
   {
     id: "#AID-99231",
-    category: "Medical Kit",
-    status: "READY",
+    category: "Paket Medis",
+    status: "SIAP",
     statusBg: "bg-success/10 text-success",
-    arrival: "14:45 PM",
+    arrival: "14:45",
     disabled: false,
   },
   {
     id: "#AID-99235",
-    category: "Winter Clothing",
-    status: "STAGED",
+    category: "Pakaian Hangat",
+    status: "DIKEMAS",
     statusBg: "bg-warning/10 text-warning",
-    arrival: "15:10 PM",
+    arrival: "15:10",
     disabled: true,
   },
 ];
 
 const schedule = [
   {
-    time: "09:00 AM",
-    title: "Main Supply Drop",
-    meta: "Cargo Port A12 - Completed",
+    time: "09:00",
+    title: "Pasokan Utama",
+    meta: "Kargo Pelabuhan A12 - Selesai",
     dot: "bg-primary",
     active: true,
   },
   {
-    time: "12:30 PM",
-    title: "Lunch Distribution",
-    meta: "Mobile Unit 4 - In Progress",
+    time: "12:30",
+    title: "Distribusi Siang",
+    meta: "Unit Mobile 4 - Berjalan",
     dot: "bg-primary",
     active: true,
   },
   {
-    time: "15:00 PM",
-    title: "Medical Resupply",
-    meta: "Central Clinic - Upcoming",
+    time: "15:00",
+    title: "Pasokan Medis",
+    meta: "Klinik Pusat - Akan Datang",
     dot: "bg-outline",
     active: false,
   },
@@ -129,10 +129,10 @@ export default function DistributionLogisticsPage() {
           <div className="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div>
               <p className="text-xs font-bold tracking-widest text-primary uppercase mb-1">
-                Logistics Overview
+                Ringkasan Logistik
               </p>
               <h2 className="font-display text-2xl md:text-3xl font-bold text-on-surface">
-                Distribution Center
+                Pusat Distribusi
               </h2>
             </div>
             {/* TODO: sambungkan ke data asli — statistik harian */}
@@ -143,7 +143,7 @@ export default function DistributionLogisticsPage() {
                 </div>
                 <div>
                   <p className="text-xs font-bold tracking-[0.05em] text-on-surface-variant uppercase">
-                    Delivered Today
+                    Terkirim Hari Ini
                   </p>
                   <p className="text-2xl font-bold">1,284</p>
                 </div>
@@ -154,7 +154,7 @@ export default function DistributionLogisticsPage() {
                 </div>
                 <div>
                   <p className="text-xs font-bold tracking-[0.05em] text-on-surface-variant uppercase">
-                    Pending Logistics
+                    Logistik Menunggu
                   </p>
                   <p className="text-2xl font-bold">452</p>
                 </div>
@@ -169,24 +169,24 @@ export default function DistributionLogisticsPage() {
               <div className="p-6 border-b border-border-subtle flex justify-between items-center">
                 <div>
                   <h3 className="font-display text-xl font-bold text-on-surface">
-                    Upcoming Disbursements
+                    Penyaluran Mendatang
                   </h3>
                   <p className="text-sm text-on-surface-variant">
-                    Current active window: Sector 7G - Water &amp; Sanitation
+                    Jendela aktif saat ini: Sektor 7G - Air &amp; Sanitasi
                   </p>
                 </div>
                 <button
                   type="button"
                   className="text-primary text-sm font-semibold hover:underline"
                 >
-                  View All
+                  Lihat Semua
                 </button>
               </div>
               <div className="overflow-x-auto">
                 <table className="w-full text-left">
                   <thead className="bg-surface-container-low">
                     <tr>
-                      {["Recipient ID", "Category", "Status", "Arrival Est.", "Action"].map(
+                      {["ID Penerima", "Kategori", "Status", "Perkiraan Tiba", "Aksi"].map(
                         (h) => (
                           <th
                             key={h}
@@ -229,7 +229,7 @@ export default function DistributionLogisticsPage() {
                                 : "bg-primary-container text-white hover:bg-primary"
                             }`}
                           >
-                            {row.disabled ? "Wait" : "Verify ID"}
+                            {row.disabled ? "Tunggu" : "Verifikasi ID"}
                           </button>
                         </td>
                       </tr>
@@ -239,11 +239,11 @@ export default function DistributionLogisticsPage() {
               </div>
             </section>
 
-            {/* Distribution Schedule */}
+            {/* Jadwal Distribusi */}
             <section className="col-span-12 lg:col-span-4 bg-surface rounded-xl border border-border-subtle shadow-level1 flex flex-col">
               <div className="p-6 border-b border-border-subtle">
                 <h3 className="font-display text-xl font-bold text-on-surface mb-4">
-                  Daily Schedule
+                  Jadwal Harian
                 </h3>
                 {/* TODO: sambungkan ke data asli — toggle jadwal */}
                 <div className="flex gap-2">
@@ -332,7 +332,7 @@ export default function DistributionLogisticsPage() {
                   </div>
                   <div>
                     <label className="block text-sm font-semibold mb-2">
-                      Recipient Signature (Digital Pad)
+                      Tanda Tangan Penerima (Digital Pad)
                     </label>
                     <div className="w-full h-32 bg-surface-container-lowest border-2 border-dashed border-outline-variant rounded-lg flex items-center justify-center relative group">
                       <span className="text-on-surface-variant text-sm font-semibold group-hover:hidden">

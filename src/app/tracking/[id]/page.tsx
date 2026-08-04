@@ -2,6 +2,8 @@
 
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import { useParams } from "next/navigation";
+import { supabase } from "@/lib/supabase";
 import {
   ArrowLeft,
   ShieldCheck,
@@ -30,8 +32,24 @@ interface AccordionItem {
 }
 
 export default function ApplicationDetailPage() {
+  const params = useParams<{ id: string }>();
+  const appId = params?.id;
   const [openAccordion, setOpenAccordion] = useState<string | null>("acc-1");
   const [dotPulse, setDotPulse] = useState(true);
+  const [app, setApp] = useState<any>(null);
+
+  // Fetch data pengajuan asli dari database
+  useEffect(() => {
+    if (!appId) return;
+    (async () => {
+      const { data } = await supabase
+        .from("applications")
+        .select("*")
+        .eq("id", appId)
+        .maybeSingle();
+      setApp(data);
+    })();
+  }, [appId]);
 
   // Pulse effect untuk titik "In Review" — TODO: ganti dengan data realtime saat backend live
   useEffect(() => {
@@ -104,24 +122,42 @@ export default function ApplicationDetailPage() {
                       href="/tracking"
                       className="text-primary flex items-center text-sm font-semibold hover:underline"
                     >
-                      <ArrowLeft className="w-4 h-4 mr-1" /> Back to List
+                      <ArrowLeft className="w-4 h-4 mr-1" /> Kembali ke Daftar
                     </Link>
                   </div>
                   <h1 className="font-display text-2xl md:text-3xl font-bold text-on-surface tracking-tight">
-                    Application Detail
+                    Detail Pengajuan
                   </h1>
                   <p className="text-on-surface-variant text-sm mt-1">
-                    ID: #BV-2024-8842 • Community Grant Program
+                    ID: {app?.tracking_code || `#${appId?.slice(0, 8).toUpperCase() || "—"}`} • {app?.category || "Program Bantuan Sosial"}
                   </p>
                 </div>
                 <div className="flex gap-3">
-                  <div className="px-4 py-2 bg-success/10 text-success rounded-full border border-success/20 text-sm font-semibold flex items-center gap-2">
+                  <div
+                    className={`px-4 py-2 rounded-full border text-sm font-semibold flex items-center gap-2 ${
+                      app?.status === "approved" || app?.status === "distributed"
+                        ? "bg-success/10 text-success border-success/20"
+                        : app?.status === "rejected"
+                          ? "bg-danger/10 text-danger border-danger/20"
+                          : "bg-warning/10 text-warning border-warning/20"
+                    }`}
+                  >
                     <span
-                      className={`w-2 h-2 rounded-full bg-success transition-opacity duration-1000 ${
+                      className={`w-2 h-2 rounded-full transition-opacity duration-1000 ${
                         dotPulse ? "opacity-100" : "opacity-40"
                       }`}
                     ></span>
-                    In Review
+                    {app?.status === "approved"
+                      ? "Disetujui"
+                      : app?.status === "rejected"
+                        ? "Ditolak"
+                        : app?.status === "distributed"
+                          ? "Tersalurkan"
+                          : app?.status === "rt_review"
+                            ? "Menunggu Keputusan RT/RW"
+                            : app?.status === "verification"
+                              ? "Dalam Verifikasi"
+                              : "Diajukan"}
                   </div>
                 </div>
               </div>
@@ -133,43 +169,63 @@ export default function ApplicationDetailPage() {
                   {/* Core Info Card */}
                   <div className="bg-surface border border-border-subtle rounded-xl p-8 shadow-level1">
                     <h2 className="font-display text-2xl mb-6 font-bold">
-                      Submitted Content
+                      Konten yang Diajukan
                     </h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                       <div className="space-y-4">
                         <div>
                           <p className="text-on-surface-variant text-xs font-bold tracking-[0.05em] mb-1">
-                            PROGRAM NAME
+                            NAMA PROGRAM
                           </p>
                           <p className="text-lg text-on-surface leading-relaxed">
-                            Small Business Stimulus Fund
+                            {app?.category || "Bantuan Sosial"}
                           </p>
                         </div>
                         <div>
                           <p className="text-on-surface-variant text-xs font-bold tracking-[0.05em] mb-1">
-                            SUBMITTED ON
+                            DIAJUKAN PADA
                           </p>
                           <p className="text-lg text-on-surface leading-relaxed">
-                            October 24, 2024, 14:32 GMT
+                            {app?.created_at
+                              ? new Date(app.created_at).toLocaleDateString("id-ID", {
+                                  day: "numeric",
+                                  month: "long",
+                                  year: "numeric",
+                                })
+                              : "—"}
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-on-surface-variant text-xs font-bold tracking-[0.05em] mb-1">
+                            PEMOHON
+                          </p>
+                          <p className="text-lg text-on-surface leading-relaxed">
+                            {app?.full_name || "—"}
                           </p>
                         </div>
                       </div>
                       <div className="space-y-4">
                         <div>
                           <p className="text-on-surface-variant text-xs font-bold tracking-[0.05em] mb-1">
-                            ESTIMATED COMPLETION
+                            PERKIRAAN SELESAI
                           </p>
                           <p className="text-lg text-on-surface leading-relaxed">
-                            November 05, 2024
+                            {app?.created_at
+                              ? new Date(new Date(app.created_at).getTime() + 14 * 24 * 60 * 60 * 1000).toLocaleDateString("id-ID", {
+                                  day: "numeric",
+                                  month: "long",
+                                  year: "numeric",
+                                })
+                              : "—"}
                           </p>
                         </div>
                         <div>
                           <p className="text-on-surface-variant text-xs font-bold tracking-[0.05em] mb-1">
-                            VERIFICATION METHOD
+                            METODE VERIFIKASI
                           </p>
                           <p className="text-lg text-on-surface flex items-center gap-2">
                             <ShieldCheck className="w-5 h-5 text-primary" />
-                            Community Distributed Ledger
+                            Konsensus Komunitas Terdistribusi
                           </p>
                         </div>
                       </div>

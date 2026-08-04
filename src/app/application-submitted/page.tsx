@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { supabase } from "@/lib/supabase";
 import {
   CheckCircle2,
   Copy,
@@ -25,8 +26,23 @@ interface Particle {
 
 export default function ApplicationSubmittedPage() {
   const [copied, setCopied] = useState(false);
+  const [applicationId, setApplicationId] = useState("#BANTU-2026-8842");
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const applicationId = "#BANTU-2026-8842";
+
+  // Ambil ID pengajuan dari query param ?id=<uuid> dan tampilkan kode tracking asli
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get("id");
+    if (!id) return;
+    (async () => {
+      const { data } = await supabase
+        .from("applications")
+        .select("tracking_code")
+        .eq("id", id)
+        .maybeSingle();
+      setApplicationId(data?.tracking_code ? `#${data.tracking_code}` : `#${id.slice(0, 8).toUpperCase()}`);
+    })();
+  }, []);
 
   const handleCopy = async () => {
     try {

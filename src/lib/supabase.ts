@@ -1,6 +1,31 @@
-import { createClient } from "@supabase/supabase-js";
+import { createClient, type User } from "@supabase/supabase-js";
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://jwksanqlflwsnupqyeep.supabase.co";
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp3a3NhbnFsZmx3c251cHF5ZWVwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU2NzgwOTMsImV4cCI6MjEwMTI1NDA5M30.HvbDZX5QM_Wq0XMCkS5PETMI5l6qp2KA_NAtz0bEzDk";
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+if (!supabaseUrl || !supabaseAnonKey) {
+  throw new Error(
+    "NEXT_PUBLIC_SUPABASE_URL dan NEXT_PUBLIC_SUPABASE_ANON_KEY wajib diisi di .env.local"
+  );
+}
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+
+/** Mode demo: mengaktifkan jalur login cepat (passkey/OTP-bypass) — HANYA untuk demo live, matikan di production. */
+export const isDemoMode = () => process.env.NEXT_PUBLIC_DEMO_MODE === "true";
+
+export type AppRole = "warga" | "verifikator" | "rtrw" | "admin";
+
+/** Ambil role dari tabel profiles; null kalau profil belum ada / gagal. */
+export async function getUserRole(userId: string | undefined): Promise<AppRole | null> {
+  if (!userId) return null;
+  const { data, error } = await supabase
+    .from("profiles")
+    .select("role")
+    .eq("id", userId)
+    .maybeSingle();
+  if (error || !data) return null;
+  return (data.role as AppRole) ?? null;
+}
+
+export type { User };

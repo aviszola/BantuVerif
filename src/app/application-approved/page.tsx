@@ -108,15 +108,14 @@ export default function ApplicationApprovedPage() {
                 <BadgeCheck className="w-12 h-12 text-success" strokeWidth={2.5} />
               </div>
               <h1 className="font-display text-3xl md:text-4xl font-extrabold text-on-surface mb-4 tracking-tight">
-                Application Approved
+                Pengajuan Disetujui
               </h1>
               <p className="text-sm md:text-lg text-on-surface-variant max-w-2xl mx-auto leading-relaxed">
-                Your request for{" "}
+                Pengajuan Anda untuk{" "}
                 <span className="font-bold text-on-surface">
-                  Social Assistance
+                  Bantuan Sosial
                 </span>{" "}
-                has been verified by your community. We are pleased to inform
-                you that your eligibility status is confirmed.
+                telah diverifikasi oleh komunitas Anda. Status kelayakan Anda telah dikonfirmasi.
               </p>
             </div>
           </section>
@@ -126,46 +125,46 @@ export default function ApplicationApprovedPage() {
             {/* Disbursement Details */}
             <div className="md:col-span-7 bg-surface rounded-xl border border-border-subtle p-6 hover:shadow-level2 transition-shadow">
               <h3 className="text-xs font-bold tracking-[0.05em] text-on-surface-variant mb-6 uppercase">
-                Assistance Summary
+                Ringkasan Bantuan
               </h3>
               <div className="space-y-6">
                 <div className="flex justify-between items-end border-b border-surface-container-high pb-4">
                   <div>
                     <p className="text-sm text-on-surface-variant">
-                      Total Aid Amount
+                      Total Nominal Bantuan
                     </p>
                     {/* TODO: sambungkan ke data asli — nominal bantuan dari DB */}
                     <p className="font-display text-2xl md:text-3xl font-bold text-primary leading-tight">
-                      ₦125,000.00
+                      Rp 1.500.000
                     </p>
                   </div>
                   <div className="bg-primary-fixed px-3 py-1 rounded-full mb-1">
                     <p className="text-sm font-semibold text-on-primary-fixed">
-                      One-time Grant
+                      Bantuan Sekali Terima
                     </p>
                   </div>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div>
                     <p className="text-sm text-on-surface-variant mb-1">
-                      Verification Method
+                      Metode Verifikasi
                     </p>
                     <div className="flex items-center gap-2">
                       <Users className="w-5 h-5 text-success" />
                       <span className="text-sm font-semibold">
-                        Community Consensus
+                        Konsensus Komunitas
                       </span>
                     </div>
                   </div>
                   <div>
                     <p className="text-sm text-on-surface-variant mb-1">
-                      Disbursement Date
+                      Tanggal Penyaluran
                     </p>
                     <div className="flex items-center gap-2">
                       <Calendar className="w-5 h-5 text-secondary" />
                       {/* TODO: sambungkan ke data asli — tanggal penyaluran */}
                       <span className="text-sm font-semibold">
-                        Within 48 Hours
+                        Dalam 48 Jam
                       </span>
                     </div>
                   </div>
@@ -176,12 +175,12 @@ export default function ApplicationApprovedPage() {
             {/* Next Actions Card */}
             <div className="md:col-span-5 bg-surface-container-low rounded-xl p-6 flex flex-col">
               <h3 className="text-xs font-bold tracking-[0.05em] text-on-surface-variant mb-6 uppercase">
-                Next Step
+                Langkah Berikutnya
               </h3>
               <p className="text-sm md:text-base text-on-surface-variant mb-8 leading-relaxed">
-                To finalize your payment, please confirm your preferred
-                distribution method below. You can choose between direct bank
-                transfer or local community center pickup.
+                Untuk memfinalisasi bantuan Anda, konfirmasikan metode penyaluran
+                yang diinginkan di bawah. Anda dapat memilih transfer bank
+                langsung atau pengambilan di pusat komunitas setempat.
               </p>
               <div className="mt-auto space-y-4">
                 {/* TODO: sambungkan ke data asli — redirect ke /distribution-confirmation */}
@@ -189,7 +188,7 @@ export default function ApplicationApprovedPage() {
                   href="/distribution-confirmation"
                   className="w-full bg-primary-container text-white font-semibold text-sm py-4 px-6 rounded-lg flex items-center justify-center gap-2 hover:opacity-90 active:scale-[0.98] transition-all"
                 >
-                  Confirm Distribution Method
+                  Konfirmasi Metode Penyaluran
                   <ArrowRight className="w-5 h-5" />
                 </a>
                 <div className="relative group">
@@ -199,11 +198,11 @@ export default function ApplicationApprovedPage() {
                     className="w-full border border-outline-variant text-outline font-semibold text-sm py-4 px-6 rounded-lg cursor-not-allowed opacity-50 flex items-center justify-center gap-2"
                   >
                     <Gavel className="w-5 h-5" />
-                    Appeal Decision
+                    Ajukan Banding
                   </button>
                   {/* Tooltip for Disabled State */}
                   <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-full max-w-[200px] bg-inverse-surface text-inverse-on-surface text-xs p-2 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none text-center">
-                    Appeals are only available for rejected applications.
+                    Banding hanya tersedia untuk pengajuan yang ditolak.
                   </div>
                 </div>
               </div>
@@ -213,9 +212,9 @@ export default function ApplicationApprovedPage() {
           {/* Footer Transparency Note */}
           <div className="mt-12 text-center max-w-lg mx-auto">
             <p className="text-sm text-on-surface-variant leading-relaxed">
-              This decision was reached based on the verified data provided and
-              local community validation. All disbursements are subject to
-              audit for transparency.
+              Keputusan ini dicapai berdasarkan data terverifikasi yang diberikan
+              dan validasi komunitas setempat. Semua penyaluran tunduk pada
+              audit untuk transparansi.
             </p>
           </div>
         </div>

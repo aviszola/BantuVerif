@@ -56,13 +56,36 @@ export default function SettingsPage() {
       if (session?.user) {
         setUser(session.user);
         if (session.user.email) setEmail(session.user.email);
+        // Ambil profil dari DB
+        const { data: profile } = await supabase
+          .from("profiles")
+          .select("*")
+          .eq("id", session.user.id)
+          .maybeSingle();
+        if (profile) {
+          if (profile.full_name) setFullName(profile.full_name);
+          if (profile.nik) setNik(profile.nik);
+          if (profile.phone) setPhone(profile.phone);
+          if (profile.address) setAddress(profile.address);
+        }
       }
     };
     fetchSession();
   }, []);
 
-  const handleSaveProfile = (e: React.FormEvent) => {
+  const handleSaveProfile = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!user) return;
+    const { error } = await supabase.from("profiles").update({
+      full_name: fullName,
+      nik,
+      phone,
+      address,
+    }).eq("id", user.id);
+    if (error) {
+      console.error("Gagal menyimpan profil:", error.message);
+      return;
+    }
     setIsSaved(true);
     setTimeout(() => setIsSaved(false), 3000);
   };

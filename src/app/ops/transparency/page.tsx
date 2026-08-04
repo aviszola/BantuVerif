@@ -26,29 +26,53 @@ const ledgerEvents = [
     title: "Batch Verified",
     region: "REG-8821-X",
     hash: "0x4f...9e21",
-    status: "Success",
+    status: "Berhasil",
     statusBg: "bg-success/10 text-success",
-    time: "Just now",
+    time: "Baru saja",
   },
   {
     icon: Landmark,
     iconColor: "text-primary",
-    title: "Fund Disbursed",
+    title: "Dana Disalurkan",
     region: "REG-1044-A",
     hash: "0x8a...331b",
-    status: "Settled",
+    status: "Selesai",
     statusBg: "bg-success/10 text-success",
-    time: "2 mins ago",
+    time: "2 menit lalu",
   },
   {
     icon: RefreshCw,
     iconColor: "text-tertiary",
-    title: "Consensus Reached",
+    title: "Konsensus Tercapai",
     region: "NODE-004",
     hash: "0x22...ff11",
-    status: "Active",
+    status: "Aktif",
     statusBg: "bg-primary/10 text-primary",
-    time: "5 mins ago",
+    time: "5 menit lalu",
+  },
+];
+
+const stats = [
+  {
+    label: "Total Disalurkan",
+    value: "$148 Jt",
+    sub: "Sejak 2021",
+    icon: Wallet,
+    cls: "text-success bg-success/10",
+  },
+  {
+    label: "Penerima Manfaat",
+    value: "1.24 Jt",
+    sub: "Kepala Keluarga",
+    icon: Users,
+    cls: "text-primary bg-primary/10",
+  },
+  {
+    label: "Tingkat Persetujuan",
+    value: "99.98%",
+    sub: "Audit Publik",
+    icon: BadgeCheck,
+    cls: "text-tertiary bg-tertiary/10",
   },
 ];
 
@@ -62,16 +86,16 @@ export default function TransparencyDashboardPage() {
             <div className="inline-flex items-center gap-2 px-3 py-1 bg-success/10 text-success rounded-full mb-4">
               <BadgeCheck className="w-[18px] h-[18px]" />
               <span className="text-xs font-bold tracking-[0.05em] uppercase">
-                Public Transparency Live
+                Transparansi Publik Langsung
               </span>
             </div>
             <h1 className="font-display text-3xl md:text-4xl font-extrabold text-on-surface mb-2 tracking-tight">
               BantuVerif Dashboard
             </h1>
             <p className="text-lg text-on-surface-variant max-w-2xl leading-relaxed">
-              Real-time governance and distribution metrics. We believe in
-              institutional empathy&mdash;providing clear, unedited proof of
-              aid reaching those in need.
+              Metrik tata kelola dan penyaluran secara real-time. BantuVerif
+              meyakini empati institusional&mdash;bukti yang jelas, tanpa
+              suntingan, bahwa bantuan sampai ke yang membutuhkan.
             </p>
           </div>
           {/* TODO: sambungkan ke data asli — export & share report */}
@@ -81,14 +105,14 @@ export default function TransparencyDashboardPage() {
               className="flex items-center gap-2 px-4 py-3 bg-surface border border-border-subtle rounded-xl text-sm font-semibold hover:bg-surface-container-low transition-colors shadow-level2"
             >
               <Download className="w-5 h-5" />
-              Export Transparency Report
+              Ekspor Laporan Transparansi
             </button>
             <button
               type="button"
               className="flex items-center gap-2 px-4 py-3 bg-surface border border-border-subtle rounded-xl text-sm font-semibold hover:bg-surface-container-low transition-colors shadow-level2"
             >
               <Share2 className="w-5 h-5" />
-              Share Data
+              Bagikan Data
             </button>
           </div>
         </section>
@@ -105,10 +129,13 @@ export default function TransparencyDashboardPage() {
               </span>
             </div>
             <p className="text-on-surface-variant text-xs font-bold tracking-[0.05em] mb-1 uppercase">
-              Total Aid Distributed
+              Total Bantuan Disalurkan
             </p>
             <h2 className="text-2xl md:text-3xl font-bold">$148,290,400</h2>
-            <p className="text-sm text-outline mt-2 italic">Updated 5m ago</p>
+            <p className="text-sm text-outline mt-2 italic">Diperbarui 5 menit lalu</p>
+            <p className="mt-2 inline-flex px-2 py-0.5 rounded bg-warning/10 text-warning text-[10px] font-bold uppercase tracking-wider">
+              Data Simulasi
+            </p>
           </div>
 
           <div className="bg-surface p-6 rounded-xl border border-border-subtle shadow-level2 transition-transform hover:-translate-y-1">
@@ -121,15 +148,18 @@ export default function TransparencyDashboardPage() {
               </span>
             </div>
             <p className="text-on-surface-variant text-xs font-bold tracking-[0.05em] mb-1 uppercase">
-              Verified Households
+              Rumah Tangga Terverifikasi
             </p>
             <h2 className="text-2xl md:text-3xl font-bold text-on-surface">
               1,240,512
             </h2>
             <div className="flex items-center gap-1 mt-2">
               <ShieldCheck className="w-4 h-4 text-success" />
-              <span className="text-sm text-outline">Privacy-first aggregation</span>
+              <span className="text-sm text-outline">Agregasi privasi-first</span>
             </div>
+            <p className="mt-2 inline-flex px-2 py-0.5 rounded bg-warning/10 text-warning text-[10px] font-bold uppercase tracking-wider">
+              Data Simulasi
+            </p>
           </div>
 
           <div className="bg-surface p-6 rounded-xl border border-border-subtle shadow-level2 transition-transform hover:-translate-y-1">
@@ -142,10 +172,10 @@ export default function TransparencyDashboardPage() {
               </span>
             </div>
             <p className="text-on-surface-variant text-xs font-bold tracking-[0.05em] mb-1 uppercase">
-              Average Processing Time
+              Rata-Rata Waktu Proses
             </p>
             <h2 className="text-2xl md:text-3xl font-bold text-on-surface">
-              2.4 Days
+              2.4 Hari
             </h2>
             <div className="w-full bg-surface-container-high h-1 rounded-full mt-4">
               <div className="bg-tertiary h-1 rounded-full w-[85%]"></div>
@@ -162,12 +192,15 @@ export default function TransparencyDashboardPage() {
               </span>
             </div>
             <p className="text-on-surface-variant text-xs font-bold tracking-[0.05em] mb-1 uppercase">
-              Consensus Accuracy Rate
+              Tingkat Akurasi Konsensus
             </p>
             <h2 className="text-2xl md:text-3xl font-bold text-on-surface">
               99.98%
             </h2>
-            <p className="text-sm text-outline mt-2">Verified via multi-sig nodes</p>
+            <p className="text-sm text-outline mt-2">Terverifikasi via node multi-sig</p>
+            <p className="mt-2 inline-flex px-2 py-0.5 rounded bg-warning/10 text-warning text-[10px] font-bold uppercase tracking-wider">
+              Data Simulasi
+            </p>
           </div>
         </section>
 
@@ -178,10 +211,10 @@ export default function TransparencyDashboardPage() {
             <div className="flex flex-col sm:flex-row justify-between items-start mb-8 relative z-10">
               <div>
                 <h3 className="font-display text-xl md:text-2xl font-bold text-on-surface">
-                  Regional Distribution Heatmap
+                  Peta Panas Distribusi Regional
                 </h3>
                 <p className="text-on-surface-variant text-sm">
-                  Intensity reflects aid volume and household density by province.
+                  Intensitas mencerminkan volume bantuan dan kepadatan rumah tangga per provinsi.
                 </p>
               </div>
               {/* TODO: sambungkan ke data asli — toggle metrik */}
@@ -216,7 +249,7 @@ export default function TransparencyDashboardPage() {
               {/* Floating Map Legend */}
               <div className="absolute bottom-6 right-6 glass-card p-4 rounded-xl border border-border-subtle shadow-level2">
                 <p className="text-[10px] mb-2 uppercase font-bold tracking-wider text-on-surface-variant">
-                  Distribution Intensity
+                  Intensitas Distribusi
                 </p>
                 <div className="flex items-center gap-2">
                   <span className="text-xs">Low</span>
@@ -229,11 +262,11 @@ export default function TransparencyDashboardPage() {
                 <div className="w-4 h-4 bg-primary rounded-full ring-4 ring-primary/20 animate-pulse"></div>
                 <div className="absolute bottom-8 left-1/2 -translate-x-1/2 w-48 glass-card p-3 rounded-xl border border-border-subtle opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
                   {/* TODO: sambungkan ke data asli — data district */}
-                  <p className="text-sm font-semibold">Central District</p>
-                  <p className="text-xs text-on-surface-variant mb-1">Aid: $12.4M</p>
+                  <p className="text-sm font-semibold">Distrik Pusat</p>
+                  <p className="text-xs text-on-surface-variant mb-1">Bantuan: $12.4 Jt</p>
                   <div className="flex justify-between items-center text-[10px] text-success font-bold">
-                    <span>98% Verified</span>
-                    <span>Live Update</span>
+                    <span>98% Terverifikasi</span>
+                    <span>Pembaruan Langsung</span>
                   </div>
                 </div>
               </div>
@@ -246,7 +279,7 @@ export default function TransparencyDashboardPage() {
             <div className="bg-surface border border-border-subtle rounded-2xl p-6 shadow-level2 flex-1">
               <div className="flex justify-between items-center mb-6">
                 <h3 className="text-sm font-semibold text-on-surface">
-                  Application Trends
+                  Tren Pengajuan
                 </h3>
                 <MoreVertical className="w-5 h-5 text-outline" />
               </div>
@@ -279,14 +312,14 @@ export default function TransparencyDashboardPage() {
                 <div className="flex justify-between items-center">
                   <div className="flex items-center gap-2">
                     <div className="w-2 h-2 rounded-full bg-primary"></div>
-                    <span className="text-sm text-on-surface-variant">Applications</span>
+                    <span className="text-sm text-on-surface-variant">Pengajuan</span>
                   </div>
                   <span className="text-sm font-semibold">245.2k</span>
                 </div>
                 <div className="flex justify-between items-center">
                   <div className="flex items-center gap-2">
                     <div className="w-2 h-2 rounded-full bg-success"></div>
-                    <span className="text-sm text-on-surface-variant">Approvals</span>
+                    <span className="text-sm text-on-surface-variant">Persetujuan</span>
                   </div>
                   <span className="text-sm font-semibold">212.8k</span>
                 </div>
@@ -297,26 +330,26 @@ export default function TransparencyDashboardPage() {
             <div className="bg-inverse-surface text-inverse-on-surface border border-outline-variant rounded-2xl p-6 shadow-xl relative overflow-hidden">
               <div className="relative z-10">
                 <div className="inline-flex items-center gap-2 px-2 py-0.5 bg-on-surface-variant/30 rounded text-[10px] font-bold tracking-widest uppercase mb-4">
-                  Privacy Lock
+                  Kunci Privasi
                 </div>
                 <h3 className="font-display text-xl font-bold mb-2">
-                  Aggregated Data Only
+                  Hanya Data Agregat
                 </h3>
                 <p className="text-surface-variant text-sm mb-6 leading-relaxed">
-                  Personal identifiable information (PII) is cryptographically
-                  scrubbed before entering public ledgers.
+                  Informasi identitas pribadi (PII) dibersihkan secara kriptografis
+                  sebelum masuk ke buku besar publik.
                 </p>
                 <ul className="space-y-3">
                   <li className="flex items-center gap-3">
                     <CheckCircle2 className="w-5 h-5 text-primary-fixed-dim" />
                     <span className="text-sm font-semibold">
-                      Zero-Knowledge Verification
+                      Verifikasi Zero-Knowledge
                     </span>
                   </li>
                   <li className="flex items-center gap-3">
                     <CheckCircle2 className="w-5 h-5 text-primary-fixed-dim" />
                     <span className="text-sm font-semibold">
-                      GDPR &amp; NDPR Compliant
+                      Sesuai UU PDP
                     </span>
                   </li>
                 </ul>
@@ -330,13 +363,13 @@ export default function TransparencyDashboardPage() {
         <section className="mt-12">
           <div className="flex justify-between items-center mb-6">
             <h3 className="font-display text-xl md:text-2xl font-bold">
-              Live Verification Ledger
+              Buku Besar Verifikasi Langsung
             </h3>
             <a
               className="text-primary text-sm font-semibold hover:underline flex items-center gap-1"
               href="#"
             >
-              View Full Audit Log
+              Lihat Audit Log Penuh
               <ArrowRight className="w-4 h-4" />
             </a>
           </div>
@@ -345,7 +378,7 @@ export default function TransparencyDashboardPage() {
               <table className="w-full text-left border-collapse">
                 <thead>
                   <tr className="bg-surface-container-low border-b border-border-subtle">
-                    {["Event Type", "Region ID", "Hash Signature", "Status", "Time"].map(
+                    {["Tipe Event", "ID Wilayah", "Tanda Tangan Hash", "Status", "Waktu"].map(
                       (h) => (
                         <th
                           key={h}
@@ -410,9 +443,9 @@ export default function TransparencyDashboardPage() {
               </span>
             </div>
             <p className="text-on-surface-variant text-sm max-w-sm mb-6 leading-relaxed">
-              A mission-driven platform dedicated to radical transparency in
-              social aid distribution. Built for citizens, verified by
-              communities.
+              Platform yang didedikasikan untuk transparansi radikal dalam
+              penyaluran bantuan sosial. Dibangun untuk warga, diverifikasi oleh
+              komunitas.
             </p>
             <div className="flex gap-4">
               <a
@@ -433,10 +466,10 @@ export default function TransparencyDashboardPage() {
           </div>
           <div>
             <h4 className="text-sm font-semibold text-on-surface mb-4 uppercase tracking-wider text-xs">
-              Resources
+              Sumber Daya
             </h4>
             <ul className="space-y-3 text-sm">
-              {["Verification Process", "Regional Node List", "Privacy Policy", "API Documentation"].map(
+              {["Proses Verifikasi", "Daftar Node Wilayah", "Kebijakan Privasi", "Dokumentasi API"].map(
                 (l) => (
                   <li key={l}>
                     <a className="text-on-surface-variant hover:text-primary transition-colors" href="#">
@@ -449,10 +482,10 @@ export default function TransparencyDashboardPage() {
           </div>
           <div>
             <h4 className="text-sm font-semibold text-on-surface mb-4 uppercase tracking-wider text-xs">
-              Governance
+              Tata Kelola
             </h4>
             <ul className="space-y-3 text-sm">
-              {["Integrity Council", "Transparency Charter", "Whistleblower Portal", "Annual Reports"].map(
+              {["Dewan Integritas", "Piagam Transparansi", "Portal Whistleblower", "Laporan Tahunan"].map(
                 (l) => (
                   <li key={l}>
                     <a className="text-on-surface-variant hover:text-primary transition-colors" href="#">
@@ -470,7 +503,7 @@ export default function TransparencyDashboardPage() {
             under Open Government License.
           </p>
           <div className="flex gap-6 text-xs text-outline">
-            {["Privacy", "Terms", "Accessibility"].map((l) => (
+            {["Privasi", "Ketentuan", "Aksesibilitas"].map((l) => (
               <a key={l} className="hover:text-on-surface" href="#">
                 {l}
               </a>

@@ -35,6 +35,22 @@ export default function TrackingPage() {
     return () => clearInterval(interval);
   }, []);
 
+  // Aplikasi terbaru milik user
+  const [latestApp, setLatestApp] = useState<any>(null);
+  useEffect(() => {
+    if (!user) return;
+    (async () => {
+      const { data } = await supabase
+        .from("applications")
+        .select("id, tracking_code, status, consensus_score, verifier_count")
+        .eq("user_id", user.id)
+        .order("created_at", { ascending: false })
+        .limit(1)
+        .maybeSingle();
+      setLatestApp(data);
+    })();
+  }, [user]);
+
   return (
     <div className="min-h-screen bg-[#f7f9fb] text-[#191c1e] font-body flex flex-col justify-between selection:bg-[#2563eb] selection:text-white">
       <div className="max-w-[1280px] mx-auto px-4 md:px-6 py-6 md:py-8 w-full flex-1">
@@ -55,7 +71,7 @@ export default function TrackingPage() {
                     Dalam Proses
                   </span>
                   <span className="text-on-surface-variant text-sm font-medium">
-                    ID: BV-2026-883921
+                    ID: {latestApp?.tracking_code || "BV-2026-883921"}
                   </span>
                 </div>
                 <h1 className="font-display text-2xl md:text-3xl font-bold text-on-surface tracking-tight">
