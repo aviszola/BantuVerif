@@ -227,12 +227,6 @@ export default function VerificationsListPage() {
               <nav className="hidden md:flex gap-6 text-sm font-semibold">
                 <Link
                   className="text-on-surface-variant hover:text-on-surface transition-colors"
-                  href="/ops/oversight"
-                >
-                  Ikhtisar
-                </Link>
-                <Link
-                  className="text-on-surface-variant hover:text-on-surface transition-colors"
                   href="#"
                 >
                   Laporan

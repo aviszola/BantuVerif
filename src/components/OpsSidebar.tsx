@@ -7,9 +7,7 @@ import {
   Plus,
   LayoutDashboard,
   ShieldCheck,
-  Clipboard,
   Truck,
-  Globe,
   History,
   Settings,
   HelpCircle,
@@ -20,7 +18,6 @@ type ActiveItem =
   | "verifications"
   | "approvals"
   | "distribution"
-  | "transparency"
   | "audit";
 
 interface OpsSidebarProps {
@@ -32,9 +29,7 @@ export default function OpsSidebar({ active = "verifications" }: OpsSidebarProps
   const navItems: { key: ActiveItem; label: string; href: string; icon: typeof LayoutDashboard }[] = [
     { key: "dashboard", label: "Dasbor", href: "/ops/dashboard", icon: LayoutDashboard },
     { key: "verifications", label: "Verifikasi", href: "/ops/verifications", icon: ShieldCheck },
-    { key: "approvals", label: "Persetujuan", href: "/ops/oversight", icon: Clipboard },
     { key: "distribution", label: "Penyaluran", href: "/ops/distribution", icon: Truck },
-    { key: "transparency", label: "Transparansi", href: "/ops/transparency", icon: Globe },
     { key: "audit", label: "Log Audit", href: "/ops/dashboard", icon: History },
   ];
 

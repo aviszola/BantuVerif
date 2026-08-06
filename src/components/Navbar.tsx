@@ -80,6 +80,7 @@ export default function Navbar() {
         { label: "Cara Kerja", href: "#cara-kerja" },
         { label: "Simulasi", href: "#simulasi" },
         { label: "Kriteria & FAQ", href: "#faq" },
+        { label: "Transparansi", href: "/transparency" },
       ]
     : [
         { label: "Dasbor", href: "/dashboard", matchRoutes: ["/dashboard"] },
