@@ -1,4 +1,7 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
+import { supabase } from "@/lib/supabase";
 import {
   Wallet,
   BadgeCheck,
@@ -52,31 +55,30 @@ const ledgerEvents = [
   },
 ];
 
-const stats = [
-  {
-    label: "Total Disalurkan",
-    value: "$148 Jt",
-    sub: "Sejak 2021",
-    icon: Wallet,
-    cls: "text-success bg-success/10",
-  },
-  {
-    label: "Penerima Manfaat",
-    value: "1.24 Jt",
-    sub: "Kepala Keluarga",
-    icon: Users,
-    cls: "text-primary bg-primary/10",
-  },
-  {
-    label: "Tingkat Persetujuan",
-    value: "99.98%",
-    sub: "Audit Publik",
-    icon: BadgeCheck,
-    cls: "text-tertiary bg-tertiary/10",
-  },
-];
-
 export default function TransparencyDashboardPage() {
+  const [totalApps, setTotalApps] = useState(0);
+  const [approvedApps, setApprovedApps] = useState(0);
+  const [distributedApps, setDistributedApps] = useState(0);
+  const [approvalRate, setApprovalRate] = useState("100%");
+
+  useEffect(() => {
+    (async () => {
+      const { data } = await supabase
+        .from("applications")
+        .select("id, status");
+      if (data) {
+        const total = data.length;
+        const approved = data.filter((a) => a.status === "approved" || a.status === "distributed").length;
+        const distributed = data.filter((a) => a.status === "distributed").length;
+        setTotalApps(total);
+        setApprovedApps(approved);
+        setDistributedApps(distributed);
+        if (total > 0) {
+          setApprovalRate(`${((approved / total) * 100).toFixed(1)}%`);
+        }
+      }
+    })();
+  }, []);
   return (
     <div className="bg-background text-on-surface font-body min-h-screen flex flex-col selection:bg-primary-container selection:text-white">
       <main className="pt-10 md:pt-16 pb-12 px-4 md:px-gutter max-w-container-max mx-auto w-full">
@@ -129,13 +131,10 @@ export default function TransparencyDashboardPage() {
               </span>
             </div>
             <p className="text-on-surface-variant text-xs font-bold tracking-[0.05em] mb-1 uppercase">
-              Total Bantuan Disalurkan
+              Total Pengajuan Terdaftar
             </p>
-            <h2 className="text-2xl md:text-3xl font-bold">$148,290,400</h2>
-            <p className="text-sm text-outline mt-2 italic">Diperbarui 5 menit lalu</p>
-            <p className="mt-2 inline-flex px-2 py-0.5 rounded bg-warning/10 text-warning text-[10px] font-bold uppercase tracking-wider">
-              Data Simulasi
-            </p>
+            <h2 className="text-2xl md:text-3xl font-bold">{totalApps}</h2>
+            <p className="text-sm text-outline mt-2 italic">Data langsung dari database</p>
           </div>
 
           <div className="bg-surface p-6 rounded-xl border border-border-subtle shadow-level2 transition-transform hover:-translate-y-1">
@@ -144,22 +143,19 @@ export default function TransparencyDashboardPage() {
                 <Users className="w-5 h-5 text-secondary" />
               </div>
               <span className="text-success text-sm font-semibold flex items-center gap-1">
-                <TrendingUp className="w-4 h-4" /> 8.4k
+                <ShieldCheck className="w-4 h-4" /> Real-time
               </span>
             </div>
             <p className="text-on-surface-variant text-xs font-bold tracking-[0.05em] mb-1 uppercase">
-              Rumah Tangga Terverifikasi
+              Pengajuan Disetujui / Disalurkan
             </p>
             <h2 className="text-2xl md:text-3xl font-bold text-on-surface">
-              1,240,512
+              {approvedApps}
             </h2>
             <div className="flex items-center gap-1 mt-2">
               <ShieldCheck className="w-4 h-4 text-success" />
-              <span className="text-sm text-outline">Agregasi privasi-first</span>
+              <span className="text-sm text-outline">Penerima Manfaat</span>
             </div>
-            <p className="mt-2 inline-flex px-2 py-0.5 rounded bg-warning/10 text-warning text-[10px] font-bold uppercase tracking-wider">
-              Data Simulasi
-            </p>
           </div>
 
           <div className="bg-surface p-6 rounded-xl border border-border-subtle shadow-level2 transition-transform hover:-translate-y-1">
@@ -167,18 +163,15 @@ export default function TransparencyDashboardPage() {
               <div className="p-2 bg-tertiary-fixed rounded-lg">
                 <Timer className="w-5 h-5 text-tertiary" />
               </div>
-              <span className="text-danger text-sm font-semibold flex items-center gap-1">
-                <TrendingDown className="w-4 h-4" /> 0.5d
-              </span>
             </div>
             <p className="text-on-surface-variant text-xs font-bold tracking-[0.05em] mb-1 uppercase">
-              Rata-Rata Waktu Proses
+              Bantuan Tersalurkan
             </p>
             <h2 className="text-2xl md:text-3xl font-bold text-on-surface">
-              2.4 Hari
+              {distributedApps}
             </h2>
             <div className="w-full bg-surface-container-high h-1 rounded-full mt-4">
-              <div className="bg-tertiary h-1 rounded-full w-[85%]"></div>
+              <div className="bg-tertiary h-1 rounded-full w-[100%]"></div>
             </div>
           </div>
 
@@ -188,15 +181,18 @@ export default function TransparencyDashboardPage() {
                 <ClipboardCheck className="w-5 h-5 text-success" />
               </div>
               <span className="text-outline text-sm font-semibold">
-                Target: 99%
+                Target: 100%
               </span>
             </div>
             <p className="text-on-surface-variant text-xs font-bold tracking-[0.05em] mb-1 uppercase">
-              Tingkat Akurasi Konsensus
+              Tingkat Persetujuan
             </p>
             <h2 className="text-2xl md:text-3xl font-bold text-on-surface">
-              99.98%
+              {approvalRate}
             </h2>
+            <div className="w-full bg-surface-container-high h-1 rounded-full mt-4">
+              <div className="bg-success h-1 rounded-full w-[100%]"></div>
+            </div>
             <p className="text-sm text-outline mt-2">Terverifikasi via node multi-sig</p>
             <p className="mt-2 inline-flex px-2 py-0.5 rounded bg-warning/10 text-warning text-[10px] font-bold uppercase tracking-wider">
               Data Simulasi

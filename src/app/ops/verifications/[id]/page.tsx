@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   ArrowLeft,
   Search,
@@ -52,6 +52,19 @@ export default function VerificationDetailPage() {
   const [decision, setDecision] = useState<Decision | null>(null);
   const [notes, setNotes] = useState("");
   const [submitState, setSubmitState] = useState<"idle" | "loading" | "done" | "error">("idle");
+  const [appData, setAppData] = useState<any>(null);
+
+  useEffect(() => {
+    if (!appId) return;
+    (async () => {
+      const { data } = await supabase
+        .from("applications")
+        .select("*")
+        .eq("id", appId)
+        .maybeSingle();
+      if (data) setAppData(data);
+    })();
+  }, [appId]);
 
   const decisionActive = (type: Decision) =>
     decision === type ? "ring-2 ring-primary bg-primary/5 border-primary" : "border-border-subtle";
@@ -92,15 +105,15 @@ export default function VerificationDetailPage() {
             <div className="flex items-center gap-4">
               <button
                 type="button"
+                onClick={() => router.back()}
                 className="p-2 hover:bg-surface-container-low rounded-full transition-colors"
                 aria-label="Kembali"
               >
                 <ArrowLeft className="w-5 h-5" />
               </button>
               <div className="h-8 w-px bg-border-subtle"></div>
-              {/* TODO: sambungkan ke data asli — ID kasus */}
               <h2 className="font-display text-base md:text-lg font-extrabold text-on-surface">
-                Kasus #BV-2024-8891
+                Kasus #{appData?.tracking_code || (appId ? String(appId).slice(0, 8).toUpperCase() : "BV-2024-8891")}
               </h2>
             </div>
             <div className="hidden lg:flex items-center gap-4 flex-1 max-w-md mx-8">

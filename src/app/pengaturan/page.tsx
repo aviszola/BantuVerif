@@ -1,3 +1,5 @@
-import SettingsPage from "../settings/page";
+import { redirect } from "next/navigation";
 
-export default SettingsPage;
+export default function PengaturanAliasPage() {
+  redirect("/settings");
+}

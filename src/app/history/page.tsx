@@ -1,3 +1,5 @@
-import DistributionConfirmationPage from "../distribution-confirmation/page";
+import { redirect } from "next/navigation";
 
-export default DistributionConfirmationPage;
+export default function HistoryAliasPage() {
+  redirect("/distribution-confirmation");
+}

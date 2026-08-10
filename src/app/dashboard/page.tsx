@@ -111,11 +111,8 @@ export default function DashboardPage() {
 
   const handleCreateApp = (e: React.FormEvent) => {
     e.preventDefault();
-    setAppSubmitted(true);
-    setTimeout(() => {
-      setAppSubmitted(false);
-      setIsNewAppModalOpen(false);
-    }, 1200);
+    setIsNewAppModalOpen(false);
+    router.push("/apply");
   };
 
   // Data riwayat pengajuan dari database
