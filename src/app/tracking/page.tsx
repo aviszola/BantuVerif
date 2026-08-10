@@ -12,6 +12,26 @@ import {
 } from "lucide-react";
 import PortalSidebar from "@/components/PortalSidebar";
 
+const STATUS_BADGE: Record<string, { label: string; cls: string }> = {
+  draft:         { label: "Draft",                  cls: "bg-slate-100 text-slate-700" },
+  submitted:     { label: "Menunggu Verifikasi",    cls: "bg-blue-100 text-blue-700" },
+  verification:  { label: "Verifikasi Berjalan",    cls: "bg-indigo-100 text-indigo-700" },
+  rt_review:     { label: "Menunggu Keputusan RT",  cls: "bg-amber-100 text-amber-700" },
+  approved:      { label: "Disetujui",              cls: "bg-emerald-100 text-emerald-700" },
+  rejected:      { label: "Ditolak",                cls: "bg-red-100 text-red-700" },
+  distributed:   { label: "Tersalurkan",            cls: "bg-green-100 text-green-700" },
+};
+
+function timeAgo(dateStr: string): string {
+  const diff = Date.now() - new Date(dateStr).getTime();
+  const mins = Math.floor(diff / 60000);
+  if (mins < 2) return "baru saja";
+  if (mins < 60) return `${mins} menit lalu`;
+  const hours = Math.floor(mins / 60);
+  if (hours < 24) return `${hours} jam lalu`;
+  return `${Math.floor(hours / 24)} hari lalu`;
+}
+
 export default function TrackingPage() {
   const [badgeVisible, setBadgeVisible] = useState(true);
   const [user, setUser] = useState<any>(null);
@@ -42,7 +62,7 @@ export default function TrackingPage() {
     (async () => {
       const { data } = await supabase
         .from("applications")
-        .select("id, tracking_code, status, consensus_score, verifier_count")
+        .select("id, tracking_code, status, consensus_score, verifier_count, updated_at, created_at")
         .eq("user_id", user.id)
         .order("created_at", { ascending: false })
         .limit(1)
@@ -64,21 +84,23 @@ export default function TrackingPage() {
               <div>
                 <div className="flex items-center gap-3 mb-2">
                   <span
-                    className={`px-3 py-1 rounded-full bg-[#dbeafe] text-[#1e40af] text-sm font-semibold transition-opacity duration-500 ${
+                    className={`px-3 py-1 rounded-full text-sm font-semibold transition-opacity duration-500 ${STATUS_BADGE[latestApp?.status]?.cls || "bg-blue-100 text-blue-700"} ${
                       badgeVisible ? "opacity-100" : "opacity-60"
                     }`}
                   >
-                    Dalam Proses
+                    {STATUS_BADGE[latestApp?.status]?.label || "Dalam Proses"}
                   </span>
                   <span className="text-on-surface-variant text-sm font-medium">
-                    ID: {latestApp?.tracking_code || "BV-2026-883921"}
+                    ID: {latestApp?.tracking_code || "-"}
                   </span>
                 </div>
                 <h1 className="font-display text-2xl md:text-3xl font-bold text-on-surface tracking-tight">
                   Pelacakan Pengajuan Bantuan Sosial
                 </h1>
                 <p className="text-on-surface-variant text-sm md:text-base mt-1">
-                  Diperbarui 2 jam lalu oleh Auditor Sistem
+                  {latestApp?.updated_at
+                    ? `Diperbarui ${timeAgo(latestApp.updated_at)}`
+                    : "Belum ada pengajuan aktif"}
                 </p>
               </div>
               <div className="flex gap-2">

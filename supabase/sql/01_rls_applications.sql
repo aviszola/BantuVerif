@@ -30,30 +30,18 @@ CREATE POLICY "applications_insert_own" ON applications
 DROP POLICY IF EXISTS "applications_select_rtrw" ON applications;
 CREATE POLICY "applications_select_rtrw" ON applications
   FOR SELECT USING (
-    EXISTS (
-      SELECT 1 FROM profiles p
-      WHERE p.id = auth.uid()
-        AND p.role IN ('rtrw','admin')
-        AND (p.role = 'admin' OR p.rt_rw = applications.rt_rw)
-    )
+    get_my_role() IN ('rtrw','admin')
+    AND (get_my_role() = 'admin' OR get_my_rtrw() = applications.rt_rw)
   );
 
 -- RT/RW & admin: UPDATE keputusan hanya wilayahnya
 DROP POLICY IF EXISTS "applications_update_rtrw" ON applications;
 CREATE POLICY "applications_update_rtrw" ON applications
   FOR UPDATE USING (
-    EXISTS (
-      SELECT 1 FROM profiles p
-      WHERE p.id = auth.uid()
-        AND p.role IN ('rtrw','admin')
-        AND (p.role = 'admin' OR p.rt_rw = applications.rt_rw)
-    )
+    get_my_role() IN ('rtrw','admin')
+    AND (get_my_role() = 'admin' OR get_my_rtrw() = applications.rt_rw)
   )
   WITH CHECK (
-    EXISTS (
-      SELECT 1 FROM profiles p
-      WHERE p.id = auth.uid()
-        AND p.role IN ('rtrw','admin')
-        AND (p.role = 'admin' OR p.rt_rw = applications.rt_rw)
-    )
+    get_my_role() IN ('rtrw','admin')
+    AND (get_my_role() = 'admin' OR get_my_rtrw() = applications.rt_rw)
   );
